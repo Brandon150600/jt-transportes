@@ -520,14 +520,15 @@ export default function Home(): JSX.Element {
           <div className="grid gap-10 md:grid-cols-4">
             <div className="md:col-span-2">
               <Link href="/" className="flex items-center gap-3">
-                <div className="relative overflow-hidden ">
-                  <Image
-                    src="/logo_ind.png"
-                    alt="JT Transportes"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
+                <Image
+                  src="/logo_ind.png"
+                  alt="JT Transportes"
+                  width={80}
+                  height={80}
+                // className="object-cover"
+
+                />
+
 
                 <div>
                   <div className="font-black">JT TRANSPORTES</div>

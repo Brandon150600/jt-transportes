@@ -80,14 +80,8 @@ export default function LoginPage() {
 
             <LoginForm />
 
-            <p className="mt-8 text-center text-sm text-zinc-500">
-              ¿Aún no tienes una cuenta?{" "}
-              <Link
-                href="/contact"
-                className="font-semibold text-company-600 hover:text-company-700"
-              >
-                Solicita acceso
-              </Link>
+            <p className="mt-8 text-center text-xs text-zinc-500">
+              Si necesitas acceso, contacta al administrador del sistema.
             </p>
           </div>
 

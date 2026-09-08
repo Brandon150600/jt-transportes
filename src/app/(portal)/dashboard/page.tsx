@@ -10,7 +10,6 @@ import {
   Users,
 } from "lucide-react";
 
-import { requireUser } from "@/lib/auth/session";
 
 const stats = [
   {
@@ -64,7 +63,6 @@ const trips = [
 ];
 
 export default async function DashboardPage() {
-  const user = await requireUser();
 
   const firstName = user.name?.split(" ")[0] ?? "Usuario";
 

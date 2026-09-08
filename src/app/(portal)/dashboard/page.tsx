@@ -1,6 +1,4 @@
 import {
-  ArrowUpRight,
-  Bell,
   CalendarDays,
   ChevronRight,
   Clock3,
@@ -64,43 +62,22 @@ const trips = [
 
 export default async function DashboardPage() {
 
-  const firstName = user.name?.split(" ")[0] ?? "Usuario";
-
   return (
-    <main className="min-h-screen bg-zinc-50 text-zinc-900">
+    <main className="bg-zinc-50">
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <div className="mb-8">
+          <p className="text-sm font-medium text-company-600">
+            JT Transportes
+          </p>
 
-        {/* Header */}
-        <header className="mb-8 flex items-start justify-between gap-4">
-          <div>
-            <div className="mb-2 flex items-center gap-2">
-              <span className="size-2 rounded-full bg-company" />
-              <span className="text-xs font-bold uppercase tracking-widest text-company-600">
-                Portal JT Transportes
-              </span>
-            </div>
+          <h1 className="mt-1 text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl">
+            Resumen de operación
+          </h1>
 
-            <h1 className="text-3xl font-extrabold tracking-tight text-zinc-950 sm:text-4xl">
-              Buenos días, {firstName}
-            </h1>
-
-            <p className="mt-2 max-w-xl text-sm leading-6 text-zinc-500">
-              Consulta el estado de la operación, tus viajes y la actividad
-              reciente de JT Transportes.
-            </p>
-          </div>
-
-          <button
-            type="button"
-            aria-label="Notificaciones"
-            className="relative flex size-11 shrink-0 items-center justify-center rounded-xl border border-zinc-200 bg-white text-zinc-700 shadow-sm transition hover:border-zinc-300 hover:bg-zinc-50"
-          >
-            <Bell className="size-5" />
-
-            <span className="absolute right-2 top-2 size-2 rounded-full bg-company" />
-          </button>
-        </header>
-
+          <p className="mt-1 text-sm text-zinc-500">
+            Aquí tienes el resumen de la operación.
+          </p>
+        </div>
         {/* Stats */}
         <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {stats.map((stat) => {
@@ -301,29 +278,6 @@ export default async function DashboardPage() {
           </aside>
         </div>
 
-        {/* Bottom CTA */}
-        <section className="mt-6 overflow-hidden rounded-2xl border border-company-100 bg-company-50">
-          <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
-            <div>
-              <p className="text-sm font-bold text-company-800">
-                ¿Necesitas ayuda con una operación?
-              </p>
-
-              <p className="mt-1 text-sm text-company-700/70">
-                Nuestro equipo está disponible para apoyarte.
-              </p>
-            </div>
-
-            <button
-              type="button"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-company px-4 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-company-600"
-            >
-              Contactar soporte
-              <ArrowUpRight className="size-4" />
-            </button>
-          </div>
-        </section>
-
       </div>
     </main>
   );
@@ -338,10 +292,9 @@ function StatusBadge({ status }: { status: string }) {
 
   return (
     <span
-      className={`rounded-full border px-3 py-1 text-xs font-bold ${
-        styles[status as keyof typeof styles] ??
+      className={`rounded-full border px-3 py-1 text-xs font-bold ${styles[status as keyof typeof styles] ??
         "bg-zinc-100 text-zinc-700 border-zinc-200"
-      }`}
+        }`}
     >
       {status}
     </span>

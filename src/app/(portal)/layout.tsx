@@ -1,3 +1,4 @@
+import { PortalFooter } from "@/components/portal/portal-footer";
 import { PortalHeader } from "@/components/portal/portal-header";
 import { requireUser } from "@/lib/auth/session";
 
@@ -15,6 +16,7 @@ export default async function PortalLayout({
             <div className="min-h-[calc(100vh-4rem)]">
                 {children}
             </div>
+            <PortalFooter />
         </div>
     );
 }

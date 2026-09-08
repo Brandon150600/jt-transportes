@@ -16,11 +16,12 @@ import {
     X,
 } from "lucide-react";
 import { useState } from "react";
+import { logout } from "@/app/actions/auth";
 
 type PortalUser = {
     name: string | null;
     email: string;
-    role: "CLIENT" | "ADMIN" | "SUPER_ADMIN";
+    role: "EMPLOYEE" | "ADMIN" | "SUPER_ADMIN";
 };
 
 type NavItem = {
@@ -43,7 +44,7 @@ const navigation: NavItem[] = [
     },
     {
         label: "Flota",
-        href: "/fleet",
+        href: "/fleet-management",
         icon: Truck,
     },
     {
@@ -53,7 +54,7 @@ const navigation: NavItem[] = [
         roles: ["ADMIN", "SUPER_ADMIN"],
     },
     {
-        label: "Usuarios",
+        label: "Operadores",
         href: "/users",
         icon: Users,
         roles: ["ADMIN", "SUPER_ADMIN"],
@@ -146,8 +147,8 @@ export function PortalHeader({ user }: { user: PortalUser }) {
                                     key={item.href}
                                     href={item.href}
                                     className={`inline-flex items-center gap-2 rounded-xl px-3.5 py-2 text-sm font-medium transition ${active
-                                            ? "bg-company-50 text-company-700"
-                                            : "text-zinc-600 hover:bg-zinc-100 hover:text-zinc-950"
+                                        ? "bg-company-50 text-company-700"
+                                        : "text-zinc-600 hover:bg-zinc-100 hover:text-zinc-950"
                                         }`}
                                 >
                                     <Icon className="size-4" />
@@ -224,7 +225,7 @@ export function PortalHeader({ user }: { user: PortalUser }) {
                                         Configuración
                                     </Link>
 
-                                    <form action="/api/logout" method="POST">
+                                    <form action={logout} method="POST">
                                         <button
                                             type="submit"
                                             className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-zinc-700 transition hover:bg-red-50 hover:text-company-700"
@@ -276,8 +277,8 @@ export function PortalHeader({ user }: { user: PortalUser }) {
                                         href={item.href}
                                         onClick={() => setMobileOpen(false)}
                                         className={`flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium transition ${active
-                                                ? "bg-company-50 text-company-700"
-                                                : "text-zinc-600 hover:bg-zinc-100 hover:text-zinc-950"
+                                            ? "bg-company-50 text-company-700"
+                                            : "text-zinc-600 hover:bg-zinc-100 hover:text-zinc-950"
                                             }`}
                                     >
                                         <Icon className="size-5" />

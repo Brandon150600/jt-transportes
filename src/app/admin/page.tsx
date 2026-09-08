@@ -1,8 +1,8 @@
 import { logout } from "@/app/actions/auth";
-import { requireRole } from "@/lib/auth/session";
+import { requireAnyRole } from "@/lib/auth/session";
 
 export default async function AdminPage() {
-  const user = await requireRole("ADMIN");
+  const user = await requireAnyRole("ADMIN", "SUPER_ADMIN");
 
   return (
     <main className="min-h-screen bg-zinc-950 px-4 py-8 text-white">

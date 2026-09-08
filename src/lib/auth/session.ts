@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 import { prisma } from "@/lib/prisma";
+import { Role } from "@prisma/client";
 
 const SESSION_COOKIE = "jt_session";
 const SESSION_TTL_MS = 1000 * 60 * 60 * 24 * 30;
@@ -11,28 +12,45 @@ function hashToken(token: string) {
   return createHash("sha256").update(token).digest("hex");
 }
 
-function cookieOptions(expires: Date) {
+function cookieOptions(expires: Date, remember: boolean) {
   return {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax" as const,
     path: "/",
-    expires,
+    ...(remember ? { expires } : {}),
   };
 }
 
-export async function createSession(userId: string, remember = false) {
+
+export async function createSession(
+  userId: string,
+  remember = false,
+) {
   const token = randomBytes(32).toString("base64url");
+
   const expiresAt = new Date(
-    Date.now() + (remember ? SESSION_TTL_MS : 1000 * 60 * 60 * 8),
+    Date.now() +
+    (remember
+      ? SESSION_TTL_MS
+      : 1000 * 60 * 60 * 8),
   );
 
   await prisma.session.create({
-    data: { userId, tokenHash: hashToken(token), expiresAt },
+    data: {
+      userId,
+      tokenHash: hashToken(token),
+      expiresAt,
+    },
   });
 
   const cookieStore = await cookies();
-  cookieStore.set(SESSION_COOKIE, token, cookieOptions(expiresAt));
+
+  cookieStore.set(
+    SESSION_COOKIE,
+    token,
+    cookieOptions(expiresAt, remember),
+  );
 }
 
 export async function deleteCurrentSession() {
@@ -76,10 +94,12 @@ export async function requireUser() {
   return user;
 }
 
-export async function requireRole(role: "CLIENT" | "ADMIN") {
+export async function requireAnyRole(...roles: Role[]) {
   const user = await requireUser();
-  if (user.role !== role) {
-    redirect(user.role === "ADMIN" ? "/admin" : "/dashboard");
+
+  if (!roles.includes(user.role)) {
+    redirect("/dashboard");
   }
+
   return user;
 }

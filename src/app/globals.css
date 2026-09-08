@@ -3,13 +3,40 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* JT Transportes */
+  --company-red: #E10600;
+  --company-red-50: #FFEAEA;
+  --company-red-100: #FFD5D5;
+  --company-red-200: #FFAAAA;
+  --company-red-300: #FF7F7F;
+  --company-red-400: #FF5555;
+  --company-red-600: #C10B00;
+  --company-red-700: #940800;
+  --company-red-800: #620500;
+  --company-red-900: #3A0200;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
+  /* JT Transportes */
+  --color-company: var(--company-red);
+  --color-company-50: var(--company-red-50);
+  --color-company-100: var(--company-red-100);
+  --color-company-200: var(--company-red-200);
+  --color-company-300: var(--company-red-300);
+  --color-company-400: var(--company-red-400);
+  --color-company-600: var(--company-red-600);
+  --color-company-700: var(--company-red-700);
+  --color-company-800: var(--company-red-800);
+  --color-company-900: var(--company-red-900);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --shadow-company-md: 0 6px 18px rgba(225, 16, 0, 0.12);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,6 +44,14 @@
     --background: #0a0a0a;
     --foreground: #ededed;
   }
+}
+
+:root,
+input,
+button,
+textarea,
+select {
+  accent-color: var(--company-red);
 }
 
 body {

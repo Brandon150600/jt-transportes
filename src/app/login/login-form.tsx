@@ -2,9 +2,11 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff, LoaderCircle, LockKeyhole, Mail } from "lucide-react";
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+
+import { login, type LoginState } from "@/app/actions/auth";
 
 const loginSchema = z.object({
   email: z.string().trim().email("Ingresa un correo electrónico válido."),
@@ -17,21 +19,26 @@ type LoginInput = z.infer<typeof loginSchema>;
 export function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [submitMessage, setSubmitMessage] = useState<string | null>(null);
+  const [state, formAction, isPending] = useActionState<LoginState, FormData>(
+    login,
+    {},
+  );
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "", remember: false },
   });
 
-  async function onSubmit(values: LoginInput) {
+  function onSubmit(values: LoginInput) {
     setSubmitMessage(null);
-    await new Promise((resolve) => setTimeout(resolve, 400));
-    setSubmitMessage(
-      `Datos validados para ${values.email}. La autenticación se conectará al portal empresarial.`,
-    );
+    const formData = new FormData();
+    formData.set("email", values.email);
+    formData.set("password", values.password);
+    if (values.remember) formData.set("remember", "on");
+    formAction(formData);
   }
 
   return (
@@ -108,19 +115,19 @@ export function LoginForm() {
 
       <button
         type="submit"
-        disabled={isSubmitting}
+        disabled={isPending}
         className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-company px-4 text-sm font-bold text-white shadow-lg shadow-red-200 transition hover:bg-company-600 disabled:cursor-not-allowed disabled:opacity-70"
       >
-        {isSubmitting && <LoaderCircle className="size-4 animate-spin" />}
-        {isSubmitting ? "Validando..." : "Ingresar al portal"}
+        {isPending && <LoaderCircle className="size-4 animate-spin" />}
+        {isPending ? "Validando..." : "Ingresar al portal"}
       </button>
 
-      {submitMessage && (
+      {(state.error || submitMessage) && (
         <p
           role="status"
           className="rounded-xl bg-company-50 p-3 text-sm text-company-800"
         >
-          {submitMessage}
+          {state.error ?? submitMessage}
         </p>
       )}
     </form>

@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff, LoaderCircle, LockKeyhole, Mail } from "lucide-react";
-import { useActionState, useState } from "react";
+import { startTransition, useActionState, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -34,11 +34,19 @@ export function LoginForm() {
 
   function onSubmit(values: LoginInput) {
     setSubmitMessage(null);
+
     const formData = new FormData();
+
     formData.set("email", values.email);
     formData.set("password", values.password);
-    if (values.remember) formData.set("remember", "on");
-    formAction(formData);
+
+    if (values.remember) {
+      formData.set("remember", "on");
+    }
+
+    startTransition(() => {
+      formAction(formData);
+    });
   }
 
   return (

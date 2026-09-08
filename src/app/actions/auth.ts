@@ -35,11 +35,22 @@ export async function login(
   }
 
   const user = await prisma.user.findUnique({
-    where: { email: parsed.data.email.toLowerCase() },
-    select: { id: true, passwordHash: true, role: true },
+    where: {
+      email: parsed.data.email.toLowerCase(),
+    },
+    select: {
+      id: true,
+      passwordHash: true,
+      role: true,
+      isActive: true,
+    },
   });
 
-  if (!user || !(await verifyPassword(parsed.data.password, user.passwordHash))) {
+  if (
+    !user ||
+    !user.isActive ||
+    !(await verifyPassword(parsed.data.password, user.passwordHash))
+  ) {
     return { error: "Correo o contraseña inválidos." };
   }
 

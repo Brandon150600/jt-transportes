@@ -1,3 +1,4 @@
+import { PortalHeader } from "@/components/portal/portal-header";
 import {
     AlertTriangle,
     CheckCircle2,
@@ -11,102 +12,96 @@ import {
     Truck,
     Wrench,
 } from "lucide-react";
+import Link from "next/link";
+
+import { prisma } from "@/lib/prisma";
+
+const vehicles = await prisma.vehicle.findMany({
+    orderBy: {
+        economicNumber: "asc",
+    },
+    include: {
+        driver: {
+            select: {
+                id: true,
+                name: true,
+                licenseNumber: true,
+            },
+        },
+    },
+});
+
+const statusLabels = {
+    AVAILABLE: "Disponible",
+    IN_ROUTE: "En ruta",
+    MAINTENANCE: "Mantenimiento",
+    INACTIVE: "Inactiva",
+};
+
 
 const fleetStats = [
     {
         label: "Total de unidades",
-        value: "18",
+        value: vehicles.length.toString(),
         description: "Flota registrada",
         icon: Truck,
     },
     {
-        label: "En operación",
-        value: "12",
+        label: "En ruta",
+        value: vehicles.filter((v) => v.status === "IN_ROUTE").length.toString(),
         description: "Unidades activas",
         icon: CheckCircle2,
     },
     {
         label: "En mantenimiento",
-        value: "3",
+        value: vehicles.filter((v) => v.status === "MAINTENANCE").length.toString(),
         description: "Requieren atención",
         icon: Wrench,
     },
     {
         label: "Disponibles",
-        value: "3",
+        value: vehicles.filter((v) => v.status === "AVAILABLE").length.toString(),
         description: "Listas para asignar",
         icon: CircleDot,
     },
 ];
 
-const vehicles = [
-    {
-        id: "JT-001",
-        model: "Kenworth T680",
-        year: "2025",
-        plate: "XX-12-345",
-        status: "En ruta",
-        location: "Monterrey, NL",
-        driver: "Carlos Martínez",
-        fuel: "78%",
-    },
-    {
-        id: "JT-002",
-        model: "Kenworth T680",
-        year: "2025",
-        plate: "XX-23-456",
-        status: "Disponible",
-        location: "Patio Monterrey",
-        driver: "Sin asignar",
-        fuel: "94%",
-    },
-    {
-        id: "JT-003",
-        model: "Kenworth T880",
-        year: "2024",
-        plate: "XX-34-567",
-        status: "Mantenimiento",
-        location: "Taller Monterrey",
-        driver: "Sin asignar",
-        fuel: "42%",
-    },
-    {
-        id: "JT-004",
-        model: "Kenworth T680",
-        year: "2024",
-        plate: "XX-45-678",
-        status: "En ruta",
-        location: "Saltillo, COAH",
-        driver: "Jorge Ramírez",
-        fuel: "61%",
-    },
-    {
-        id: "JT-005",
-        model: "Kenworth T680",
-        year: "2023",
-        plate: "XX-56-789",
-        status: "Disponible",
-        location: "Patio Monterrey",
-        driver: "Sin asignar",
-        fuel: "87%",
-    },
-];
-
 function statusStyles(status: string) {
     switch (status) {
-        case "En ruta":
+        case "IN_ROUTE":
             return "bg-blue-50 text-blue-700 ring-blue-600/10";
 
-        case "Disponible":
+        case "AVAILABLE":
             return "bg-emerald-50 text-emerald-700 ring-emerald-600/10";
 
-        case "Mantenimiento":
+        case "MAINTENANCE":
             return "bg-amber-50 text-amber-700 ring-amber-600/10";
+
+        case "INACTIVE":
+            return "bg-zinc-50 text-zinc-700 ring-zinc-600/10";
 
         default:
             return "bg-zinc-100 text-zinc-700 ring-zinc-600/10";
     }
 }
+
+
+const in_routeVehicles = vehicles.filter((v) => v.status === "IN_ROUTE");
+const availableVehicles = vehicles.filter((v) => v.status === "AVAILABLE");
+const maintenanceVehicles = vehicles.filter((v) => v.status === "MAINTENANCE");
+const inactiveVehicles = vehicles.filter((v) => v.status === "INACTIVE");
+
+const totalVehicles = vehicles.length;
+
+const percentageInRoute = totalVehicles > 0 ? (in_routeVehicles.length / totalVehicles) * 100 : 0;
+const percentageAvailable = totalVehicles > 0 ? (availableVehicles.length / totalVehicles) * 100 : 0;
+const percentageMaintenance = totalVehicles > 0 ? (maintenanceVehicles.length / totalVehicles) * 100 : 0;
+const percentageInactive = totalVehicles > 0 ? (inactiveVehicles.length / totalVehicles) * 100 : 0;
+
+const classnameinroute = `w-[${percentageInRoute}%] bg-blue-500`;
+const classnameavailable = `w-[${percentageAvailable}%] bg-emerald-500`;
+const classnamemaintenance = `w-[${percentageMaintenance}%] bg-amber-500`;
+const classnameinactive = `w-[${percentageInactive}%] bg-zinc-500`;
 
 export default function FleetManagementPage() {
     return (
@@ -133,14 +128,13 @@ export default function FleetManagementPage() {
                             de JT Transportes.
                         </p>
                     </div>
-
-                    <button
-                        type="button"
+                    <Link
+                        href="/fleet-management/new"
                         className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-company px-4 text-sm font-bold text-white shadow-lg shadow-red-200 transition hover:bg-company-600"
                     >
-                        <Plus className="size-4" />
                         Nueva unidad
-                    </button>
+                        <Plus className="size-4" />
+                    </Link>
                 </div>
 
                 {/* Stats */}
@@ -193,26 +187,35 @@ export default function FleetManagementPage() {
                         <div className="flex flex-wrap gap-3 text-xs">
                             <div className="flex items-center gap-2 rounded-full bg-blue-50 px-3 py-1.5 font-medium text-blue-700">
                                 <span className="size-2 rounded-full bg-blue-600" />
-                                12 en ruta
+                                {in_routeVehicles.length} en ruta
                             </div>
 
                             <div className="flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 font-medium text-emerald-700">
                                 <span className="size-2 rounded-full bg-emerald-600" />
-                                3 disponibles
+                                {availableVehicles.length} disponibles
                             </div>
 
                             <div className="flex items-center gap-2 rounded-full bg-amber-50 px-3 py-1.5 font-medium text-amber-700">
                                 <span className="size-2 rounded-full bg-amber-600" />
-                                3 mantenimiento
+                                {maintenanceVehicles.length} mantenimiento
                             </div>
                         </div>
                     </div>
 
                     <div className="mt-5 h-3 overflow-hidden rounded-full bg-zinc-100">
                         <div className="flex h-full">
-                            <div className="w-[67%] bg-blue-500" />
-                            <div className="w-[17%] bg-emerald-500" />
-                            <div className="w-[16%] bg-amber-500" />
+                            <div
+                                className="h-full bg-blue-500"
+                                style={{ width: `${percentageInRoute}%` }}
+                            />
+                            <div
+                                className="h-full bg-emerald-500"
+                                style={{ width: `${percentageAvailable}%` }}
+                            />
+                            <div
+                                className="h-full bg-amber-500"
+                                style={{ width: `${percentageMaintenance}%` }}
+                            />
                         </div>
                     </div>
                 </section>
@@ -230,7 +233,7 @@ export default function FleetManagementPage() {
                                 </h2>
 
                                 <p className="mt-1 text-xs text-zinc-500">
-                                    18 unidades registradas en la flota.
+                                    {totalVehicles} unidades registradas en la flota.
                                 </p>
                             </div>
 
@@ -284,7 +287,7 @@ export default function FleetManagementPage() {
 
                                                 <div>
                                                     <p className="text-sm font-semibold text-zinc-900">
-                                                        {vehicle.id}
+                                                        {vehicle.economicNumber} - {vehicle.brand}
                                                     </p>
 
                                                     <p className="mt-0.5 text-xs text-zinc-500">
@@ -306,7 +309,7 @@ export default function FleetManagementPage() {
                                         </td>
 
                                         <td className="px-5 py-4 text-sm text-zinc-600">
-                                            {vehicle.driver}
+                                            {vehicle.driver?.name || "Sin asignar"}
                                         </td>
 
                                         <td className="px-5 py-4">
@@ -317,13 +320,13 @@ export default function FleetManagementPage() {
                                                     <div className="h-1.5 overflow-hidden rounded-full bg-zinc-100">
                                                         <div
                                                             className="h-full rounded-full bg-company"
-                                                            style={{ width: vehicle.fuel }}
+                                                            style={{ width: `${vehicle.fuelLevel}` }}
                                                         />
                                                     </div>
                                                 </div>
 
                                                 <span className="text-xs font-medium text-zinc-600">
-                                                    {vehicle.fuel}
+                                                    {vehicle.fuelLevel}%
                                                 </span>
                                             </div>
                                         </td>
@@ -334,17 +337,18 @@ export default function FleetManagementPage() {
                                                     vehicle.status,
                                                 )}`}
                                             >
-                                                {vehicle.status}
+                                                {statusLabels[vehicle.status]}
                                             </span>
                                         </td>
 
                                         <td className="px-5 py-4 text-right">
-                                            <button
-                                                type="button"
-                                                className="text-sm font-semibold text-company-600 hover:text-company-700"
+                                            <Link
+                                                href={`/fleet-management/${vehicle.id}`}
+                                                className="inline-flex items-center gap-1 text-sm font-semibold text-company-600 hover:text-company-700"
                                             >
                                                 Ver unidad
-                                            </button>
+                                                <ChevronRight className="size-4" />
+                                            </Link>
                                         </td>
                                     </tr>
                                 ))}
@@ -394,7 +398,7 @@ export default function FleetManagementPage() {
                                     <div>
                                         <p className="text-zinc-400">Operador</p>
                                         <p className="mt-1 font-medium text-zinc-700">
-                                            {vehicle.driver}
+                                            {vehicle.driver?.name || "Sin asignar"}
                                         </p>
                                     </div>
 
@@ -402,7 +406,7 @@ export default function FleetManagementPage() {
                                         <p className="text-zinc-400">Combustible</p>
                                         <p className="mt-1 flex items-center gap-1.5 font-medium text-zinc-700">
                                             <Fuel className="size-3.5" />
-                                            {vehicle.fuel}
+                                            {vehicle.fuelLevel}%
                                         </p>
                                     </div>
 
@@ -428,11 +432,11 @@ export default function FleetManagementPage() {
                     {/* Footer */}
                     <div className="flex flex-col gap-3 border-t border-zinc-100 px-5 py-4 text-xs text-zinc-500 sm:flex-row sm:items-center sm:justify-between">
                         <span>
-                            Mostrando 5 de 18 unidades
+                            Mostrando {vehicles.length} de {totalVehicles} unidades
                         </span>
 
                         <div className="flex items-center gap-2">
-                            <button
+                            {/* <button
                                 type="button"
                                 disabled
                                 className="rounded-lg border border-zinc-200 px-3 py-2 disabled:cursor-not-allowed disabled:opacity-40"
@@ -442,10 +446,11 @@ export default function FleetManagementPage() {
 
                             <button
                                 type="button"
+                                disabled
                                 className="rounded-lg border border-zinc-200 px-3 py-2 hover:bg-zinc-50"
                             >
                                 Siguiente
-                            </button>
+                            </button> */}
                         </div>
                     </div>
                 </section>
@@ -459,7 +464,7 @@ export default function FleetManagementPage() {
 
                         <div>
                             <h2 className="font-semibold text-amber-900">
-                                3 unidades requieren atención
+                                {maintenanceVehicles.length} unidades requieren atención
                             </h2>
 
                             <p className="mt-1 text-sm text-amber-800">

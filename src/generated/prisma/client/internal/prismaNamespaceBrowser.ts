@@ -52,7 +52,9 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
-  Session: 'Session'
+  Session: 'Session',
+  Driver: 'Driver',
+  Vehicle: 'Vehicle'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -95,6 +97,46 @@ export const SessionScalarFieldEnum = {
 } as const
 
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
+
+
+export const DriverScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  phone: 'phone',
+  licenseNumber: 'licenseNumber',
+  licenseType: 'licenseType',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DriverScalarFieldEnum = (typeof DriverScalarFieldEnum)[keyof typeof DriverScalarFieldEnum]
+
+
+export const VehicleScalarFieldEnum = {
+  id: 'id',
+  economicNumber: 'economicNumber',
+  type: 'type',
+  brand: 'brand',
+  model: 'model',
+  year: 'year',
+  color: 'color',
+  plate: 'plate',
+  vin: 'vin',
+  status: 'status',
+  location: 'location',
+  mileage: 'mileage',
+  fuelLevel: 'fuelLevel',
+  driverId: 'driverId',
+  lastServiceAt: 'lastServiceAt',
+  nextServiceAt: 'nextServiceAt',
+  insuranceStatus: 'insuranceStatus',
+  registrationStatus: 'registrationStatus',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type VehicleScalarFieldEnum = (typeof VehicleScalarFieldEnum)[keyof typeof VehicleScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -13,6 +13,28 @@ enum Role {
   SUPER_ADMIN
 }
 
+enum VehicleType {
+  TRACTOR
+  TRUCK
+  TRAILER
+  DRY_VAN
+  PLATFORM
+  OTHER
+}
+
+enum VehicleStatus {
+  AVAILABLE
+  IN_ROUTE
+  MAINTENANCE
+  INACTIVE
+}
+
+enum DriverStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
 model User {
   id           String    @id @default(cuid())
   email        String    @unique
@@ -23,6 +45,7 @@ model User {
   lastLoginAt  DateTime?
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
+
   sessions     Session[]
 }
 
@@ -37,4 +60,57 @@ model Session {
 
   @@index([userId])
   @@index([expiresAt])
+}
+
+model Driver {
+  id            String       @id @default(cuid())
+
+  name          String
+  phone         String?
+  licenseNumber String?
+  licenseType   String?
+  status        DriverStatus @default(ACTIVE)
+
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  vehicles      Vehicle[]
+
+  @@index([status])
+}
+
+model Vehicle {
+  id                 String        @id @default(cuid())
+
+  economicNumber     String        @unique
+
+  type               VehicleType
+  brand              String
+  model              String
+  year               Int
+  color              String?
+
+  plate              String?       @unique
+  vin                String?       @unique
+
+  status             VehicleStatus @default(AVAILABLE)
+  location           String?
+  mileage            Int           @default(0)
+  fuelLevel          Int           @default(0)
+
+  driverId           String?
+  driver             Driver?       @relation(fields: [driverId], references: [id], onDelete: SetNull)
+
+  lastServiceAt      DateTime?
+  nextServiceAt      DateTime?
+
+  insuranceStatus    String?
+  registrationStatus String?
+
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  @@index([status])
+  @@index([driverId])
+  @@index([type])
 }

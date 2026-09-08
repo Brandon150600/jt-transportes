@@ -16,3 +16,34 @@ export const Role = {
 } as const
 
 export type Role = (typeof Role)[keyof typeof Role]
+
+
+export const VehicleType = {
+  TRACTOR: 'TRACTOR',
+  TRUCK: 'TRUCK',
+  TRAILER: 'TRAILER',
+  DRY_VAN: 'DRY_VAN',
+  PLATFORM: 'PLATFORM',
+  OTHER: 'OTHER'
+} as const
+
+export type VehicleType = (typeof VehicleType)[keyof typeof VehicleType]
+
+
+export const VehicleStatus = {
+  AVAILABLE: 'AVAILABLE',
+  IN_ROUTE: 'IN_ROUTE',
+  MAINTENANCE: 'MAINTENANCE',
+  INACTIVE: 'INACTIVE'
+} as const
+
+export type VehicleStatus = (typeof VehicleStatus)[keyof typeof VehicleStatus]
+
+
+export const DriverStatus = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+  SUSPENDED: 'SUSPENDED'
+} as const
+
+export type DriverStatus = (typeof DriverStatus)[keyof typeof DriverStatus]

@@ -54,7 +54,7 @@ const advantages = [
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white text-zinc-950">
+    <main className="min-h-screen w-full overflow-x-hidden bg-white text-zinc-950">
       {/* =========================================================
           HEADER
       ========================================================= */}
@@ -114,14 +114,14 @@ export default function Home() {
             <div className="flex items-center gap-2">
               <Link
                 href="/login"
-                className="hidden rounded-xl px-4 py-2.5 text-sm font-semibold text-zinc-300 transition hover:bg-white/10 hover:text-white sm:block"
+                className="inline-flex items-center rounded-xl border border-white/15 px-3 py-2.5 text-sm font-semibold text-white transition hover:bg-white/10 sm:px-4"
               >
                 Iniciar sesión
               </Link>
 
               <Link
                 href="/contact"
-                className="group inline-flex items-center gap-2 rounded-xl bg-company px-4 py-2.5 text-sm font-bold text-white shadow-lg shadow-company/20 transition hover:bg-company-600"
+                className="group hidden items-center gap-2 rounded-xl bg-company px-4 py-2.5 text-sm font-bold text-white shadow-lg shadow-company/20 transition hover:bg-company-600 sm:inline-flex"
               >
                 Cotizar
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -575,7 +575,7 @@ export default function Home() {
                   href="/login"
                   className="block text-sm text-zinc-500 hover:text-white"
                 >
-                  Área de clientes
+                  Portal de empleados
                 </Link>
               </div>
             </div>

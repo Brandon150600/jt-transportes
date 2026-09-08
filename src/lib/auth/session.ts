@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 import { prisma } from "@/lib/prisma";
-import { Role } from "@prisma/client";
+import { Role } from "@/generated/prisma/client/enums";
 
 const SESSION_COOKIE = "jt_session";
 const SESSION_TTL_MS = 1000 * 60 * 60 * 24 * 30;

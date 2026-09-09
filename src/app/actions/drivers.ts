@@ -35,7 +35,7 @@ const driverSchema = z.object({
         .optional()
         .or(z.literal("")),
 
-    status: z.enum(["ACTIVE", "INACTIVE"]),
+    status: z.enum(["ACTIVE", "INACTIVE", "SUSPENDED"]),
 });
 
 const updateDriverSchema = driverSchema.extend({

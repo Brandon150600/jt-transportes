@@ -47,6 +47,7 @@ export default async function DriverPage({
     const statusLabel = {
         ACTIVE: "Activo",
         INACTIVE: "Inactivo",
+        SUSPENDED: "Suspendido",
     }[driver.status];
 
     const statusClass =
@@ -139,13 +140,13 @@ export default async function DriverPage({
                             <InfoItem
                                 icon={FileText}
                                 label="Número de licencia"
-                                value={driver.licenseNumber}
+                                value={driver.licenseNumber? driver.licenseNumber : "No registrada"}
                             />
 
                             <InfoItem
                                 icon={BadgeCheck}
                                 label="Tipo de licencia"
-                                value={driver.licenseType}
+                                value={driver.licenseType? driver.licenseType : "No registrada"}
                             />
 
                             <InfoItem

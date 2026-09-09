@@ -787,6 +787,7 @@ export const DriverScalarFieldEnum = {
   phone: 'phone',
   licenseNumber: 'licenseNumber',
   licenseType: 'licenseType',
+  licenseExpiresAt: 'licenseExpiresAt',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

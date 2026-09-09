@@ -66,22 +66,29 @@ export async function deleteCurrentSession() {
 
 export async function getCurrentUser() {
   const cookieStore = await cookies();
+
   const token = cookieStore.get(SESSION_COOKIE)?.value;
 
   if (!token) return null;
 
   const session = await prisma.session.findUnique({
-    where: { tokenHash: hashToken(token) },
+    where: {
+      tokenHash: hashToken(token),
+    },
     select: {
       expiresAt: true,
       user: {
-        select: { id: true, email: true, name: true, role: true },
+        select: {
+          id: true,
+          email: true,
+          name: true,
+          role: true,
+        },
       },
     },
   });
 
   if (!session || session.expiresAt <= new Date()) {
-    await deleteCurrentSession();
     return null;
   }
 

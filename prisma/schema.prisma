@@ -69,6 +69,7 @@ model Driver {
   phone         String?
   licenseNumber String?
   licenseType   String?
+  licenseExpiresAt DateTime?
   status        DriverStatus @default(ACTIVE)
 
   createdAt     DateTime     @default(now())

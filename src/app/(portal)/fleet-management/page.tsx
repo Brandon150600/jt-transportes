@@ -304,7 +304,7 @@ export default function FleetManagementPage() {
                                         <td className="px-5 py-4">
                                             <div className="flex items-center gap-2 text-sm text-zinc-600">
                                                 <MapPin className="size-4 text-zinc-400" />
-                                                {vehicle.location}
+                                                {vehicle.location? vehicle.location : "Sin ubicación"}
                                             </div>
                                         </td>
 

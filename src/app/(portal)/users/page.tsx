@@ -12,96 +12,8 @@ import {
     UserRound,
     Users,
 } from "lucide-react";
-
-const operatorStats = [
-    {
-        label: "Operadores registrados",
-        value: "16",
-        description: "Total de operadores",
-        icon: Users,
-    },
-    {
-        label: "Activos",
-        value: "13",
-        description: "Disponibles para operación",
-        icon: CheckCircle2,
-    },
-    {
-        label: "En ruta",
-        value: "9",
-        description: "Actualmente asignados",
-        icon: MapPin,
-    },
-    {
-        label: "Por renovar",
-        value: "2",
-        description: "Documentación próxima a vencer",
-        icon: FileText,
-    },
-];
-
-const operators = [
-    {
-        id: "OP-001",
-        name: "Carlos Martínez",
-        initials: "CM",
-        phone: "81 1234 5678",
-        license: "FED-123456",
-        licenseType: "Federal Tipo B",
-        expires: "15/04/2027",
-        unit: "JT-001",
-        route: "Monterrey → CDMX",
-        status: "En ruta",
-    },
-    {
-        id: "OP-002",
-        name: "Jorge Ramírez",
-        initials: "JR",
-        phone: "844 234 5678",
-        license: "FED-234567",
-        licenseType: "Federal Tipo B",
-        expires: "22/08/2027",
-        unit: "JT-004",
-        route: "Saltillo → Monterrey",
-        status: "En ruta",
-    },
-    {
-        id: "OP-003",
-        name: "Miguel Hernández",
-        initials: "MH",
-        phone: "81 3456 7890",
-        license: "FED-345678",
-        licenseType: "Federal Tipo B",
-        expires: "10/02/2027",
-        unit: "Sin asignar",
-        route: "—",
-        status: "Disponible",
-    },
-    {
-        id: "OP-004",
-        name: "Daniel Torres",
-        initials: "DT",
-        phone: "81 4567 8901",
-        license: "FED-456789",
-        licenseType: "Federal Tipo B",
-        expires: "05/11/2026",
-        unit: "Sin asignar",
-        route: "—",
-        status: "Documentación",
-    },
-    {
-        id: "OP-005",
-        name: "Ricardo López",
-        initials: "RL",
-        phone: "81 5678 9012",
-        license: "FED-567890",
-        licenseType: "Federal Tipo B",
-        expires: "18/06/2027",
-        unit: "JT-008",
-        route: "Monterrey → Querétaro",
-        status: "En ruta",
-    },
-];
+import Link from "next/link";
+import { prisma } from "@/lib/prisma";
 
 function statusStyles(status: string) {
     switch (status) {
@@ -119,7 +31,92 @@ function statusStyles(status: string) {
     }
 }
 
-export default function UsersPage() {
+
+export default async function UsersPage() {
+    const operators = await prisma.driver.findMany({
+        orderBy: {
+            name: "asc",
+        },
+        include: {
+            vehicles: {
+                select: {
+                    economicNumber: true,
+                    status: true,
+                },
+            },
+        },
+    });
+    const totalOperators = operators.length;
+
+    const activeOperators = operators.filter(
+        (operator) => operator.status === "ACTIVE",
+    ).length;
+
+    const operatorsInRoute = operators.filter((operator) =>
+        operator.vehicles.some((vehicle) => vehicle.status === "IN_ROUTE"),
+    ).length;
+
+    const today = new Date();
+
+    const thirtyDaysFromNow = new Date();
+    thirtyDaysFromNow.setDate(today.getDate() + 30);
+
+    const operatorsToRenew = operators.filter((operator) => {
+        if (!operator.licenseExpiresAt) return false;
+
+        return (
+            operator.licenseExpiresAt >= today &&
+            operator.licenseExpiresAt <= thirtyDaysFromNow
+        );
+    }).length;
+
+
+    function getOperatorStatus(
+        operator: (typeof operators)[number],
+    ) {
+        if (
+            operator.status === "ACTIVE" &&
+            operator.vehicles.some((vehicle) => vehicle.status === "IN_ROUTE")
+        ) {
+            return "En ruta";
+        }
+
+        if (operator.status === "ACTIVE") {
+            return "Disponible";
+        }
+
+        return "Inactivo";
+    }
+
+
+    const operatorStats = [
+        {
+            label: "Operadores registrados",
+            value: totalOperators.toString(),
+            description: "Total de operadores",
+            icon: Users,
+        },
+        {
+            label: "Activos",
+            value: activeOperators.toString(),
+            description: "Disponibles para operación",
+            icon: CheckCircle2,
+        },
+        {
+            label: "En ruta",
+            value: operatorsInRoute.toString(),
+            description: "Actualmente asignados",
+            icon: MapPin,
+        },
+        {
+            label: "Por renovar",
+            value: operatorsToRenew.toString(),
+            description: "Documentación próxima a vencer",
+            icon: FileText,
+        },
+    ];
+
+
     return (
         <main className="bg-zinc-50">
             <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
@@ -144,14 +141,13 @@ export default function UsersPage() {
                             JT Transportes.
                         </p>
                     </div>
-
-                    <button
-                        type="button"
+                    <Link
+                        href="/users/new"
                         className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-company px-4 text-sm font-bold text-white shadow-lg shadow-red-200 transition hover:bg-company-600"
                     >
-                        <Plus className="size-4" />
                         Nuevo operador
-                    </button>
+                        <Plus className="size-4" />
+                    </Link>
                 </div>
 
                 {/* Stats */}
@@ -247,220 +243,243 @@ export default function UsersPage() {
                             </thead>
 
                             <tbody className="divide-y divide-zinc-100">
-                                {operators.map((operator) => (
-                                    <tr
-                                        key={operator.id}
-                                        className="transition hover:bg-zinc-50"
-                                    >
-                                        {/* Operator */}
-                                        <td className="px-5 py-4">
-                                            <div className="flex items-center gap-3">
-                                                <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-company-50 text-sm font-bold text-company-600">
-                                                    {operator.initials}
-                                                </div>
+                                {operators.map((operator) => {
+                                    const initials = operator.name
+                                        .split(" ")
+                                        .slice(0, 2)
+                                        .map((name) => name[0])
+                                        .join("")
+                                        .toUpperCase();
 
-                                                <div>
-                                                    <p className="text-sm font-semibold text-zinc-900">
-                                                        {operator.name}
-                                                    </p>
+                                    const vehicle = operator.vehicles[0];
 
-                                                    <div className="mt-1 flex items-center gap-1.5 text-xs text-zinc-400">
-                                                        <Phone className="size-3.5" />
-                                                        {operator.phone}
+                                    const status = getOperatorStatus(operator);
+                                    return (
+                                        <tr
+                                            key={operator.id}
+                                            className="transition hover:bg-zinc-50"
+                                        >
+                                            {/* Operator */}
+                                            <td className="px-5 py-4">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-company-50 text-sm font-bold text-company-600">
+                                                        {initials}
                                                     </div>
 
-                                                    <p className="mt-0.5 text-xs text-zinc-400">
-                                                        {operator.id}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </td>
+                                                    <div>
+                                                        <p className="text-sm font-semibold text-zinc-900">
+                                                            {operator.name}
+                                                        </p>
 
-                                        {/* License */}
-                                        <td className="px-5 py-4">
-                                            <div className="flex items-start gap-2">
-                                                <Award className="mt-0.5 size-4 text-zinc-400" />
+                                                        <div className="mt-1 flex items-center gap-1.5 text-xs text-zinc-400">
+                                                            <Phone className="size-3.5" />
+                                                            {operator.phone ?? "Sin teléfono"}
+                                                        </div>
 
-                                                <div>
-                                                    <p className="text-sm font-medium text-zinc-700">
-                                                        {operator.license}
-                                                    </p>
-
-                                                    <p className="mt-0.5 text-xs text-zinc-400">
-                                                        {operator.licenseType}
-                                                    </p>
-
-                                                    <div className="mt-1 flex items-center gap-1 text-xs text-zinc-400">
-                                                        <CalendarDays className="size-3.5" />
-                                                        Vence {operator.expires}
+                                                        <p className="mt-0.5 text-xs text-zinc-400">
+                                                            {operator.id}
+                                                        </p>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </td>
+                                            </td>
 
-                                        {/* Unit */}
-                                        <td className="px-5 py-4">
-                                            <p className="text-sm font-semibold text-zinc-700">
-                                                {operator.unit}
-                                            </p>
+                                            {/* License */}
+                                            <td className="px-5 py-4">
+                                                <div className="flex items-start gap-2">
+                                                    <Award className="mt-0.5 size-4 text-zinc-400" />
 
-                                            {operator.unit !== "Sin asignar" && (
-                                                <p className="mt-0.5 text-xs text-zinc-400">
-                                                    Unidad asignada
+                                                    <div>
+                                                        <p className="text-sm font-medium text-zinc-700">
+                                                            {operator.licenseNumber ?? "Sin licencia"}
+                                                        </p>
+
+                                                        <p className="mt-0.5 text-xs text-zinc-400">
+                                                            {operator.licenseType}
+                                                        </p>
+
+                                                        <div className="mt-1 flex items-center gap-1 text-xs text-zinc-400">
+                                                            <CalendarDays className="size-3.5" />
+                                                            {operator.licenseExpiresAt
+                                                                ? operator.licenseExpiresAt.toLocaleDateString("es-MX")
+                                                                : "Sin fecha"}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                            {/* Unit */}
+                                            <td className="px-5 py-4">
+                                                <p className="text-sm font-semibold text-zinc-700">
+                                                    {vehicle?.economicNumber ?? "Sin asignar"}
                                                 </p>
-                                            )}
-                                        </td>
+                                            </td>
 
-                                        {/* Operation */}
-                                        <td className="px-5 py-4">
-                                            {operator.route !== "—" ? (
-                                                <>
-                                                    <div className="flex items-center gap-2 text-sm text-zinc-600">
-                                                        <MapPin className="size-4 text-zinc-400" />
-                                                        {operator.route}
-                                                    </div>
+                                            {/* Operation */}
+                                            <td className="px-5 py-4">
+                                                {vehicle?.status === "IN_ROUTE" ? (
+                                                    <>
+                                                        <div className="flex items-center gap-2 text-sm text-zinc-600">
+                                                            <MapPin className="size-4 text-zinc-400" />
+                                                            En ruta
+                                                        </div>
 
-                                                    <p className="mt-1 flex items-center gap-1.5 text-xs text-zinc-400">
-                                                        <Clock3 className="size-3.5" />
-                                                        Operación activa
-                                                    </p>
-                                                </>
-                                            ) : (
-                                                <span className="text-sm text-zinc-400">
-                                                    Sin operación
+                                                        <p className="mt-1 flex items-center gap-1.5 text-xs text-zinc-400">
+                                                            <Clock3 className="size-3.5" />
+                                                            Operación activa
+                                                        </p>
+                                                    </>
+                                                ) : (
+                                                    <span className="text-sm text-zinc-400">
+                                                        Sin operación
+                                                    </span>
+                                                )}
+                                            </td>
+
+                                            {/* Status */}
+                                            <td className="px-5 py-4">
+                                                <span
+                                                    className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-inset ${statusStyles(
+                                                        status,
+                                                    )}`}
+                                                >
+                                                    {status}
                                                 </span>
-                                            )}
-                                        </td>
+                                            </td>
 
-                                        {/* Status */}
-                                        <td className="px-5 py-4">
-                                            <span
-                                                className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-inset ${statusStyles(
-                                                    operator.status,
-                                                )}`}
+                                            {/* Actions */}
+                                            <td className="px-5 py-4 text-right">
+                                                   <Link
+                                                href={`/users/${operator.id}`}
+                                                className="inline-flex items-center gap-1 text-sm font-semibold text-company-600 hover:text-company-700"
                                             >
-                                                {operator.status}
-                                            </span>
-                                        </td>
-
-                                        {/* Actions */}
-                                        <td className="px-5 py-4 text-right">
-                                            <button
-                                                type="button"
-                                                className="text-sm font-semibold text-company-600 hover:text-company-700"
-                                            >
-                                                Ver operador
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
+                                                Ver Operador
+                                                <ChevronRight className="size-4" />
+                                            </Link>
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
                             </tbody>
                         </table>
                     </div>
 
                     {/* Mobile cards */}
                     <div className="divide-y divide-zinc-100 md:hidden">
-                        {operators.map((operator) => (
-                            <div key={operator.id} className="p-4">
+                        {operators.map((operator) => {
+                            const initialsmovile = operator.name
+                                .split(" ")
+                                .slice(0, 2)
+                                .map((name) => name[0])
+                                .join("")
+                                .toUpperCase();
 
-                                <div className="flex items-start justify-between gap-3">
-                                    <div className="flex min-w-0 items-center gap-3">
-                                        <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-company-50 text-sm font-bold text-company-600">
-                                            {operator.initials}
+                            const vehicle = operator.vehicles[0];
+
+                            const status = getOperatorStatus(operator);
+                            return (
+                                <div key={operator.id} className="p-4">
+
+                                    <div className="flex items-start justify-between gap-3">
+                                        <div className="flex min-w-0 items-center gap-3">
+                                            <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-company-50 text-sm font-bold text-company-600">
+                                                {initialsmovile}
+                                            </div>
+
+                                            <div className="min-w-0">
+                                                <p className="truncate text-sm font-bold text-zinc-900">
+                                                    {operator.name}
+                                                </p>
+
+                                                <p className="text-xs text-zinc-400">
+                                                    {operator.id}
+                                                </p>
+                                            </div>
                                         </div>
 
-                                        <div className="min-w-0">
-                                            <p className="truncate text-sm font-bold text-zinc-900">
-                                                {operator.name}
-                                            </p>
+                                        <span
+                                            className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-inset ${statusStyles(
+                                                operator.status,
+                                            )}`}
+                                        >
+                                            {operator.status}
+                                        </span>
+                                    </div>
 
+                                    <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-4">
+
+                                        <div>
                                             <p className="text-xs text-zinc-400">
-                                                {operator.id}
+                                                Teléfono
+                                            </p>
+
+                                            <p className="mt-1 flex items-center gap-1.5 text-sm font-medium text-zinc-700">
+                                                <Phone className="size-3.5" />
+                                                {operator.phone}
                                             </p>
                                         </div>
+
+                                        <div>
+                                            <p className="text-xs text-zinc-400">
+                                                Unidad
+                                            </p>
+
+                                            <p className="mt-1 text-sm font-medium text-zinc-700">
+                                                {vehicle?.economicNumber ?? "Sin asignar"}
+                                            </p>
+                                        </div>
+
+                                        <div>
+                                            <p className="text-xs text-zinc-400">
+                                                Licencia
+                                            </p>
+
+                                            <p className="mt-1 text-sm font-medium text-zinc-700">
+                                                {operator.licenseNumber ?? "Sin licencia"}
+                                            </p>
+
+                                            <p className="mt-0.5 text-xs text-zinc-400">
+                                                {operator.licenseType}
+                                            </p>
+                                        </div>
+
+                                        <div>
+                                            <p className="text-xs text-zinc-400">
+                                                Vencimiento
+                                            </p>
+
+                                            <p className="mt-1 flex items-center gap-1.5 text-sm font-medium text-zinc-700">
+                                                <CalendarDays className="size-3.5" />
+                                                {operator.licenseExpiresAt
+                                                    ? operator.licenseExpiresAt.toLocaleDateString("es-MX")
+                                                    : "Sin fecha"}
+                                            </p>
+                                        </div>
+
                                     </div>
 
-                                    <span
-                                        className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-inset ${statusStyles(
-                                            operator.status,
-                                        )}`}
+                                    {/* {operator.route !== "—" && (
+                                        <div className="mt-4 rounded-xl bg-zinc-50 p-3">
+                                            <p className="text-xs text-zinc-400">
+                                                Operación actual
+                                            </p>
+
+                                            <p className="mt-1 flex items-center gap-2 text-sm font-medium text-zinc-700">
+                                                <MapPin className="size-4 text-zinc-400" />
+                                                {operator.route}
+                                            </p>
+                                        </div>
+                                    )} */}
+
+                                    <button
+                                        type="button"
+                                        className="mt-4 flex w-full items-center justify-center gap-1 rounded-xl border border-zinc-200 py-2.5 text-sm font-semibold text-company-600 transition hover:bg-company-50"
                                     >
-                                        {operator.status}
-                                    </span>
+                                        Ver detalles
+                                        <ChevronRight className="size-4" />
+                                    </button>
                                 </div>
-
-                                <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-4">
-
-                                    <div>
-                                        <p className="text-xs text-zinc-400">
-                                            Teléfono
-                                        </p>
-
-                                        <p className="mt-1 flex items-center gap-1.5 text-sm font-medium text-zinc-700">
-                                            <Phone className="size-3.5" />
-                                            {operator.phone}
-                                        </p>
-                                    </div>
-
-                                    <div>
-                                        <p className="text-xs text-zinc-400">
-                                            Unidad
-                                        </p>
-
-                                        <p className="mt-1 text-sm font-medium text-zinc-700">
-                                            {operator.unit}
-                                        </p>
-                                    </div>
-
-                                    <div>
-                                        <p className="text-xs text-zinc-400">
-                                            Licencia
-                                        </p>
-
-                                        <p className="mt-1 text-sm font-medium text-zinc-700">
-                                            {operator.license}
-                                        </p>
-
-                                        <p className="mt-0.5 text-xs text-zinc-400">
-                                            {operator.licenseType}
-                                        </p>
-                                    </div>
-
-                                    <div>
-                                        <p className="text-xs text-zinc-400">
-                                            Vencimiento
-                                        </p>
-
-                                        <p className="mt-1 flex items-center gap-1.5 text-sm font-medium text-zinc-700">
-                                            <CalendarDays className="size-3.5" />
-                                            {operator.expires}
-                                        </p>
-                                    </div>
-
-                                </div>
-
-                                {operator.route !== "—" && (
-                                    <div className="mt-4 rounded-xl bg-zinc-50 p-3">
-                                        <p className="text-xs text-zinc-400">
-                                            Operación actual
-                                        </p>
-
-                                        <p className="mt-1 flex items-center gap-2 text-sm font-medium text-zinc-700">
-                                            <MapPin className="size-4 text-zinc-400" />
-                                            {operator.route}
-                                        </p>
-                                    </div>
-                                )}
-
-                                <button
-                                    type="button"
-                                    className="mt-4 flex w-full items-center justify-center gap-1 rounded-xl border border-zinc-200 py-2.5 text-sm font-semibold text-company-600 transition hover:bg-company-50"
-                                >
-                                    Ver detalles
-                                    <ChevronRight className="size-4" />
-                                </button>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
 
                     {/* Footer */}
@@ -480,6 +499,7 @@ export default function UsersPage() {
 
                             <button
                                 type="button"
+                                disabled
                                 className="rounded-lg border border-zinc-200 px-3 py-2 transition hover:bg-zinc-50"
                             >
                                 Siguiente
@@ -497,7 +517,11 @@ export default function UsersPage() {
 
                         <div>
                             <h2 className="font-semibold text-amber-900">
-                                2 operadores tienen documentación próxima a vencer
+                                {operatorsToRenew === 0
+                                    ? "No hay operadores con documentación próxima a vencer"
+                                    : operatorsToRenew === 1
+                                        ? "1 operador tiene documentación próxima a vencer"
+                                        : `${operatorsToRenew} operadores tienen documentación próxima a vencer`}
                             </h2>
 
                             <p className="mt-1 text-sm text-amber-800">

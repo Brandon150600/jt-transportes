@@ -38,10 +38,16 @@ const navigation: NavItem[] = [
         icon: LayoutDashboard,
     },
     {
-        label: "Operación",
-        href: "/operations",
-        icon: Package,
+        label: "Operadores",
+        href: "/users",
+        icon: Users,
+        roles: ["ADMIN", "SUPER_ADMIN"],
     },
+    // {
+    //     label: "Operación",
+    //     href: "/operations",
+    //     icon: Package,
+    // },
     {
         label: "Flota",
         href: "/fleet-management",
@@ -53,12 +59,7 @@ const navigation: NavItem[] = [
         icon: Users,
         roles: ["ADMIN", "SUPER_ADMIN"],
     },
-    {
-        label: "Operadores",
-        href: "/users",
-        icon: Users,
-        roles: ["ADMIN", "SUPER_ADMIN"],
-    },
+
     {
         label: "Configuración",
         href: "/settings",

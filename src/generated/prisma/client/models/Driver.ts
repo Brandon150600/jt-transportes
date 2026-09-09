@@ -30,6 +30,7 @@ export type DriverMinAggregateOutputType = {
   phone: string | null
   licenseNumber: string | null
   licenseType: string | null
+  licenseExpiresAt: Date | null
   status: $Enums.DriverStatus | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -41,6 +42,7 @@ export type DriverMaxAggregateOutputType = {
   phone: string | null
   licenseNumber: string | null
   licenseType: string | null
+  licenseExpiresAt: Date | null
   status: $Enums.DriverStatus | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -52,6 +54,7 @@ export type DriverCountAggregateOutputType = {
   phone: number
   licenseNumber: number
   licenseType: number
+  licenseExpiresAt: number
   status: number
   createdAt: number
   updatedAt: number
@@ -65,6 +68,7 @@ export type DriverMinAggregateInputType = {
   phone?: true
   licenseNumber?: true
   licenseType?: true
+  licenseExpiresAt?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -76,6 +80,7 @@ export type DriverMaxAggregateInputType = {
   phone?: true
   licenseNumber?: true
   licenseType?: true
+  licenseExpiresAt?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -87,6 +92,7 @@ export type DriverCountAggregateInputType = {
   phone?: true
   licenseNumber?: true
   licenseType?: true
+  licenseExpiresAt?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -171,6 +177,7 @@ export type DriverGroupByOutputType = {
   phone: string | null
   licenseNumber: string | null
   licenseType: string | null
+  licenseExpiresAt: Date | null
   status: $Enums.DriverStatus
   createdAt: Date
   updatedAt: Date
@@ -203,6 +210,7 @@ export type DriverWhereInput = {
   phone?: Prisma.StringNullableFilter<"Driver"> | string | null
   licenseNumber?: Prisma.StringNullableFilter<"Driver"> | string | null
   licenseType?: Prisma.StringNullableFilter<"Driver"> | string | null
+  licenseExpiresAt?: Prisma.DateTimeNullableFilter<"Driver"> | Date | string | null
   status?: Prisma.EnumDriverStatusFilter<"Driver"> | $Enums.DriverStatus
   createdAt?: Prisma.DateTimeFilter<"Driver"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Driver"> | Date | string
@@ -215,6 +223,7 @@ export type DriverOrderByWithRelationInput = {
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   licenseNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   licenseType?: Prisma.SortOrderInput | Prisma.SortOrder
+  licenseExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -230,6 +239,7 @@ export type DriverWhereUniqueInput = Prisma.AtLeast<{
   phone?: Prisma.StringNullableFilter<"Driver"> | string | null
   licenseNumber?: Prisma.StringNullableFilter<"Driver"> | string | null
   licenseType?: Prisma.StringNullableFilter<"Driver"> | string | null
+  licenseExpiresAt?: Prisma.DateTimeNullableFilter<"Driver"> | Date | string | null
   status?: Prisma.EnumDriverStatusFilter<"Driver"> | $Enums.DriverStatus
   createdAt?: Prisma.DateTimeFilter<"Driver"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Driver"> | Date | string
@@ -242,6 +252,7 @@ export type DriverOrderByWithAggregationInput = {
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   licenseNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   licenseType?: Prisma.SortOrderInput | Prisma.SortOrder
+  licenseExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -259,6 +270,7 @@ export type DriverScalarWhereWithAggregatesInput = {
   phone?: Prisma.StringNullableWithAggregatesFilter<"Driver"> | string | null
   licenseNumber?: Prisma.StringNullableWithAggregatesFilter<"Driver"> | string | null
   licenseType?: Prisma.StringNullableWithAggregatesFilter<"Driver"> | string | null
+  licenseExpiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Driver"> | Date | string | null
   status?: Prisma.EnumDriverStatusWithAggregatesFilter<"Driver"> | $Enums.DriverStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Driver"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Driver"> | Date | string
@@ -270,6 +282,7 @@ export type DriverCreateInput = {
   phone?: string | null
   licenseNumber?: string | null
   licenseType?: string | null
+  licenseExpiresAt?: Date | string | null
   status?: $Enums.DriverStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -282,6 +295,7 @@ export type DriverUncheckedCreateInput = {
   phone?: string | null
   licenseNumber?: string | null
   licenseType?: string | null
+  licenseExpiresAt?: Date | string | null
   status?: $Enums.DriverStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -294,6 +308,7 @@ export type DriverUpdateInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   licenseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumDriverStatusFieldUpdateOperationsInput | $Enums.DriverStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -306,6 +321,7 @@ export type DriverUncheckedUpdateInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   licenseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumDriverStatusFieldUpdateOperationsInput | $Enums.DriverStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -318,6 +334,7 @@ export type DriverCreateManyInput = {
   phone?: string | null
   licenseNumber?: string | null
   licenseType?: string | null
+  licenseExpiresAt?: Date | string | null
   status?: $Enums.DriverStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -329,6 +346,7 @@ export type DriverUpdateManyMutationInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   licenseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumDriverStatusFieldUpdateOperationsInput | $Enums.DriverStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -340,6 +358,7 @@ export type DriverUncheckedUpdateManyInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   licenseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumDriverStatusFieldUpdateOperationsInput | $Enums.DriverStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -351,6 +370,7 @@ export type DriverCountOrderByAggregateInput = {
   phone?: Prisma.SortOrder
   licenseNumber?: Prisma.SortOrder
   licenseType?: Prisma.SortOrder
+  licenseExpiresAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -362,6 +382,7 @@ export type DriverMaxOrderByAggregateInput = {
   phone?: Prisma.SortOrder
   licenseNumber?: Prisma.SortOrder
   licenseType?: Prisma.SortOrder
+  licenseExpiresAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -373,6 +394,7 @@ export type DriverMinOrderByAggregateInput = {
   phone?: Prisma.SortOrder
   licenseNumber?: Prisma.SortOrder
   licenseType?: Prisma.SortOrder
+  licenseExpiresAt?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -409,6 +431,7 @@ export type DriverCreateWithoutVehiclesInput = {
   phone?: string | null
   licenseNumber?: string | null
   licenseType?: string | null
+  licenseExpiresAt?: Date | string | null
   status?: $Enums.DriverStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -420,6 +443,7 @@ export type DriverUncheckedCreateWithoutVehiclesInput = {
   phone?: string | null
   licenseNumber?: string | null
   licenseType?: string | null
+  licenseExpiresAt?: Date | string | null
   status?: $Enums.DriverStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -447,6 +471,7 @@ export type DriverUpdateWithoutVehiclesInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   licenseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumDriverStatusFieldUpdateOperationsInput | $Enums.DriverStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -458,6 +483,7 @@ export type DriverUncheckedUpdateWithoutVehiclesInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   licenseNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   licenseType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  licenseExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumDriverStatusFieldUpdateOperationsInput | $Enums.DriverStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -500,6 +526,7 @@ export type DriverSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   phone?: boolean
   licenseNumber?: boolean
   licenseType?: boolean
+  licenseExpiresAt?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -513,6 +540,7 @@ export type DriverSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   phone?: boolean
   licenseNumber?: boolean
   licenseType?: boolean
+  licenseExpiresAt?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -524,6 +552,7 @@ export type DriverSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   phone?: boolean
   licenseNumber?: boolean
   licenseType?: boolean
+  licenseExpiresAt?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -535,12 +564,13 @@ export type DriverSelectScalar = {
   phone?: boolean
   licenseNumber?: boolean
   licenseType?: boolean
+  licenseExpiresAt?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type DriverOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "phone" | "licenseNumber" | "licenseType" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["driver"]>
+export type DriverOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "phone" | "licenseNumber" | "licenseType" | "licenseExpiresAt" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["driver"]>
 export type DriverInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   vehicles?: boolean | Prisma.Driver$vehiclesArgs<ExtArgs>
   _count?: boolean | Prisma.DriverCountOutputTypeDefaultArgs<ExtArgs>
@@ -559,6 +589,7 @@ export type $DriverPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     phone: string | null
     licenseNumber: string | null
     licenseType: string | null
+    licenseExpiresAt: Date | null
     status: $Enums.DriverStatus
     createdAt: Date
     updatedAt: Date
@@ -991,6 +1022,7 @@ export interface DriverFieldRefs {
   readonly phone: Prisma.FieldRef<"Driver", 'String'>
   readonly licenseNumber: Prisma.FieldRef<"Driver", 'String'>
   readonly licenseType: Prisma.FieldRef<"Driver", 'String'>
+  readonly licenseExpiresAt: Prisma.FieldRef<"Driver", 'DateTime'>
   readonly status: Prisma.FieldRef<"Driver", 'DriverStatus'>
   readonly createdAt: Prisma.FieldRef<"Driver", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Driver", 'DateTime'>

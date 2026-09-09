@@ -38,6 +38,10 @@ const driverSchema = z.object({
     status: z.enum(["ACTIVE", "INACTIVE"]),
 });
 
+const updateDriverSchema = driverSchema.extend({
+    id: z.string().min(1, "El operador no es válido."),
+});
+
 export type DriverFormState = {
     error?: string;
     fieldErrors?: Record<string, string>;
@@ -119,7 +123,7 @@ export async function updateDriver(
 ): Promise<DriverFormState> {
     await requireAnyRole("ADMIN", "SUPER_ADMIN");
 
-    const parsed = driverSchema.safeParse({
+    const parsed = updateDriverSchema.safeParse({
         id: formData.get("id"),
         name: formData.get("name"),
         phone: formData.get("phone"),
@@ -128,7 +132,7 @@ export async function updateDriver(
         licenseExpiresAt: formData.get("licenseExpiresAt"),
         status: formData.get("status"),
     });
-
+    
     if (!parsed.success) {
         const fieldErrors: Record<string, string> = {};
 

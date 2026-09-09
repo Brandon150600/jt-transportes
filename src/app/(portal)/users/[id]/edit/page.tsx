@@ -29,18 +29,16 @@ export default async function EditDriverPage({
         <main className="min-h-screen bg-zinc-50">
             <div className="mx-auto max-w-5xl px-4 py-6 sm:px-6 lg:px-8">
 
-                <div className="mb-6">
-                    <Link
-                        href={`/users/${driver.id}`}
-                        className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-600 transition hover:text-zinc-900"
-                    >
-                        <ArrowLeft className="size-4" />
-                        Volver al operador
-                    </Link>
-                </div>
+                <Link
+                    href={`/users/${driver.id}`}
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-600 transition hover:text-zinc-900"
+                >
+                    <ArrowLeft className="size-4" />
+                    Volver al operador
+                </Link>
 
-                <header className="mb-8">
-                    <p className="text-sm font-semibold text-blue-600">
+                <header className="mb-8 mt-6">
+                    <p className="text-sm font-semibold text-company-600">
                         Operadores
                     </p>
 
@@ -54,6 +52,7 @@ export default async function EditDriverPage({
                 </header>
 
                 <DriverForm driver={driver} />
+
             </div>
         </main>
     );

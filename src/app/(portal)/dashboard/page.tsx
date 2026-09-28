@@ -61,11 +61,13 @@ export default async function DashboardPage() {
 
   let monthlyExpenses: { total: number; count: number } | null = null;
   let pendingPayments: { total: number; count: number } | null = null;
+  let monthlyTripPerformance: { count: number; revenue: number; costs: number; margin: number; kmPerLiter: number | null; missingFuelCount: number } | null = null;
   let recentExpenses: Awaited<ReturnType<typeof loadRecentExpenses>> = [];
   let recentVehicles: Awaited<ReturnType<typeof loadRecentVehicles>> = [];
 
   if (isAdmin) {
-    const [monthAggregate, pendingAggregate, expenses] = await Promise.all([
+    const tripMonthRange = getCurrentMexicoMonthRange();
+    const [monthAggregate, pendingAggregate, expenses, completedTrips] = await Promise.all([
       prisma.fleetExpense.aggregate({
         where: { status: "CONFIRMED", expenseDate: { gte: monthRange.start, lt: monthRange.end } },
         _sum: { total: true },
@@ -77,6 +79,15 @@ export default async function DashboardPage() {
         _count: { _all: true },
       }),
       loadRecentExpenses(),
+      prisma.trip.findMany({
+        where: { status: "COMPLETED", completedAt: { gte: tripMonthRange.start, lt: tripMonthRange.end } },
+        select: {
+          revenue: true,
+          mileageStart: true,
+          mileageEnd: true,
+          expenses: { where: { status: "CONFIRMED" }, select: { total: true, category: true, items: { select: { quantity: true, unit: true } } } },
+        },
+      }),
     ]);
 
     stats = [
@@ -88,6 +99,31 @@ export default async function DashboardPage() {
     monthlyExpenses = { total: Number(monthAggregate._sum.total ?? 0), count: monthAggregate._count._all };
     pendingPayments = { total: Number(pendingAggregate._sum.total ?? 0), count: pendingAggregate._count._all };
     recentExpenses = expenses;
+    const tripTotals = completedTrips.reduce((totals, trip) => {
+      const costs = trip.expenses.reduce((sum, expense) => sum + Number(expense.total), 0);
+      const fuelLiters = trip.expenses
+        .filter((expense) => expense.category === "FUEL")
+        .flatMap((expense) => expense.items)
+        .filter((item) => ["l", "litro", "litros"].includes(item.unit?.trim().toLowerCase() ?? ""))
+        .reduce((sum, item) => sum + Number(item.quantity), 0);
+      const distance = trip.mileageEnd === null ? 0 : Math.max(0, trip.mileageEnd - trip.mileageStart);
+      const hasEfficiencyData = fuelLiters > 0 && distance > 0;
+      return {
+        revenue: totals.revenue + Number(trip.revenue),
+        costs: totals.costs + costs,
+        distance: totals.distance + (hasEfficiencyData ? distance : 0),
+        fuelLiters: totals.fuelLiters + (hasEfficiencyData ? fuelLiters : 0),
+        missingFuelCount: totals.missingFuelCount + (fuelLiters > 0 ? 0 : 1),
+      };
+    }, { revenue: 0, costs: 0, distance: 0, fuelLiters: 0, missingFuelCount: 0 });
+    monthlyTripPerformance = {
+      count: completedTrips.length,
+      revenue: tripTotals.revenue,
+      costs: tripTotals.costs,
+      margin: tripTotals.revenue - tripTotals.costs,
+      kmPerLiter: tripTotals.fuelLiters > 0 ? tripTotals.distance / tripTotals.fuelLiters : null,
+      missingFuelCount: tripTotals.missingFuelCount,
+    };
   } else {
     recentVehicles = await loadRecentVehicles();
   }
@@ -182,6 +218,19 @@ export default async function DashboardPage() {
               <section className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm"><div className="flex items-center gap-3"><div className="flex size-10 items-center justify-center rounded-xl bg-company-50 text-company-600"><Users className="size-5" /></div><div><h2 className="font-bold text-zinc-950">Operadores activos</h2><p className="mt-1 text-xs text-zinc-500">{activeDrivers} registrados</p></div></div><div className="mt-4 border-t border-zinc-100 pt-4"><p className="text-sm text-zinc-600">Consulta el estado y asignación de las unidades en la sección de flota.</p><Link href="/fleet-management" className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-company-600">Consultar flota<ChevronRight className="size-4" /></Link></div></section>
             )}
 
+            {isAdmin && monthlyTripPerformance && <section className="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm sm:p-5">
+              <div className="flex items-start justify-between gap-3"><div><h2 className="font-bold text-zinc-950">Rentabilidad de viajes</h2><p className="mt-1 text-xs capitalize text-zinc-500">Completados en {monthLabel}</p></div><Link href="/trips?status=COMPLETED" className="shrink-0 text-xs font-semibold text-company-700 hover:text-company-800">Ver viajes</Link></div>
+              {monthlyTripPerformance.count ? <>
+                <div className="mt-4 grid grid-cols-2 gap-2">
+                  <PerformanceMetric label="Ingresos" value={money(monthlyTripPerformance.revenue)} />
+                  <PerformanceMetric label="Gastos vinculados" value={money(monthlyTripPerformance.costs)} />
+                  <PerformanceMetric label="Margen directo" value={money(monthlyTripPerformance.margin)} emphasize />
+                  <PerformanceMetric label="Rendimiento" value={monthlyTripPerformance.kmPerLiter === null ? "Sin datos" : `${monthlyTripPerformance.kmPerLiter.toFixed(2)} km/L`} />
+                </div>
+                <p className="mt-3 text-xs text-zinc-500">{monthlyTripPerformance.count} {monthlyTripPerformance.count === 1 ? "viaje completado" : "viajes completados"} · {monthlyTripPerformance.missingFuelCount ? `${monthlyTripPerformance.missingFuelCount} sin litros de combustible registrados` : "Combustible registrado en todos"}</p>
+              </> : <p className="mt-4 rounded-xl bg-zinc-50 p-3 text-sm text-zinc-500">Todavía no hay viajes completados este mes.</p>}
+            </section>}
+
             <section className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm">
               <div><h2 className="font-bold text-zinc-950">Accesos rápidos</h2><p className="mt-1 text-xs text-zinc-500">Secciones disponibles para tu cuenta</p></div>
               <div className="mt-5 space-y-2">
@@ -232,6 +281,38 @@ function getCurrentMonthRange() {
     start: new Date(Date.UTC(year, month - 1, 1)),
     end: new Date(Date.UTC(year, month, 1)),
   };
+}
+
+function getCurrentMexicoMonthRange() {
+  const parts = new Intl.DateTimeFormat("en-US", { timeZone: "America/Mexico_City", year: "numeric", month: "numeric" }).formatToParts(new Date());
+  const year = Number(parts.find((part) => part.type === "year")?.value);
+  const month = Number(parts.find((part) => part.type === "month")?.value);
+  const nextMonth = new Date(Date.UTC(year, month, 1));
+  return {
+    start: mexicoLocalDateTimeToUtc(year, month, 1),
+    end: mexicoLocalDateTimeToUtc(nextMonth.getUTCFullYear(), nextMonth.getUTCMonth() + 1, 1),
+  };
+}
+
+function mexicoLocalDateTimeToUtc(year: number, month: number, day: number) {
+  const target = Date.UTC(year, month - 1, day);
+  let instant = target;
+  const formatter = new Intl.DateTimeFormat("en-US", { timeZone: "America/Mexico_City", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23" });
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const parts = Object.fromEntries(formatter.formatToParts(new Date(instant)).map((part) => [part.type, Number(part.value)]));
+    const represented = Date.UTC(parts.year, parts.month - 1, parts.day, parts.hour, parts.minute, parts.second);
+    const adjustment = target - represented;
+    instant += adjustment;
+    if (adjustment === 0) break;
+  }
+  return new Date(instant);
+}
+
+function PerformanceMetric({ label, value, emphasize = false }: { label: string; value: string; emphasize?: boolean }) {
+  return <div className={`min-w-0 rounded-xl p-3 ${emphasize ? "bg-company-50" : "bg-zinc-50"}`}>
+    <p className="truncate text-[11px] font-medium text-zinc-500">{label}</p>
+    <p className={`mt-1 truncate text-sm font-bold ${emphasize ? "text-company-800" : "text-zinc-900"}`}>{value}</p>
+  </div>;
 }
 
 function EmptyState({ icon: Icon, title, description }: { icon: typeof Truck; title: string; description: string }) {

@@ -1,5 +1,5 @@
-import { PortalFooter } from "@/components/portal/portal-footer";
 import { PortalHeader } from "@/components/portal/portal-header";
+import { PortalFooter } from "@/components/portal/portal-footer";
 import { requireUser } from "@/lib/auth/session";
 
 export default async function PortalLayout({
@@ -10,13 +10,9 @@ export default async function PortalLayout({
     const user = await requireUser();
 
     return (
-        <div className="min-h-screen bg-zinc-50 text-zinc-900">
-            <PortalHeader user={user} />
-
-            <div className="min-h-[calc(100vh-4rem)]">
-                {children}
-            </div>
+        <PortalHeader user={user}>
+            <div className="min-h-[calc(100vh-4rem)] bg-zinc-50 text-zinc-900">{children}</div>
             <PortalFooter />
-        </div>
+        </PortalHeader>
     );
 }

@@ -13,7 +13,7 @@ type PortalUser = {
 export function PortalFooter() {
     return (
         <>
-            <section className="mt-6 overflow-hidden rounded-2xl border border-company-100 bg-company-50 mr-16 ml-16 mb-10">
+            <section className="mx-4 mb-8 mt-6 overflow-hidden rounded-2xl border border-company-100 bg-company-50 sm:mx-6 lg:mx-8">
                 <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
                     <div>
                         <p className="text-sm font-bold text-company-800">

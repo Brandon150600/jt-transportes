@@ -200,32 +200,32 @@ export default async function UsersPage({
                 </div>
 
                 {/* Stats */}
-                <section className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                <section aria-label="Resumen de operadores" className="mt-4 grid grid-cols-2 gap-2 sm:mt-6 sm:gap-4 xl:grid-cols-4">
                     {operatorStats.map((stat) => {
                         const Icon = stat.icon;
 
                         return (
                             <div
                                 key={stat.label}
-                                className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm"
+                                className="rounded-xl border border-zinc-200 bg-white p-3 shadow-sm sm:rounded-2xl sm:p-5"
                             >
-                                <div className="flex items-start justify-between">
-                                    <div>
-                                        <p className="text-sm font-medium text-zinc-500">
+                                <div className="flex items-center justify-between gap-2">
+                                    <div className="min-w-0">
+                                        <p className="truncate text-xs font-medium text-zinc-500 sm:text-sm">
                                             {stat.label}
                                         </p>
 
-                                        <p className="mt-2 text-3xl font-bold tracking-tight text-zinc-900">
+                                        <p className="mt-1 text-2xl font-bold tracking-tight text-zinc-900 sm:mt-2 sm:text-3xl">
                                             {stat.value}
                                         </p>
                                     </div>
 
-                                    <div className="flex size-11 items-center justify-center rounded-xl bg-company-50 text-company-600">
-                                        <Icon className="size-5" />
+                                    <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-company-50 text-company-600 sm:size-11 sm:rounded-xl">
+                                        <Icon className="size-4 sm:size-5" />
                                     </div>
                                 </div>
 
-                                <p className="mt-3 text-xs text-zinc-500">
+                                <p className="mt-3 hidden text-xs text-zinc-500 sm:block">
                                     {stat.description}
                                 </p>
                             </div>

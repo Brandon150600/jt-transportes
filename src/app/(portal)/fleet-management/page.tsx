@@ -146,16 +146,16 @@ export default async function FleetManagementPage({
                     {canManageFleet && <Link href="/fleet-management/new" className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-company px-4 text-sm font-bold text-white shadow-lg shadow-red-200 transition hover:bg-company-600">Nueva unidad<Plus className="size-4" /></Link>}
                 </div>
 
-                <section className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                <section aria-label="Resumen de unidades" className="mt-4 grid grid-cols-2 gap-2 sm:mt-6 sm:gap-4 xl:grid-cols-4">
                     {stats.map(({ label, value, description, icon: Icon }) => (
-                        <div key={label} className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm">
-                            <div className="flex items-start justify-between"><div><p className="text-sm font-medium text-zinc-500">{label}</p><p className="mt-2 text-3xl font-bold tracking-tight text-zinc-900">{value}</p></div><div className="flex size-11 items-center justify-center rounded-xl bg-company-50 text-company-600"><Icon className="size-5" /></div></div>
-                            <p className="mt-3 text-xs text-zinc-500">{description}</p>
+                        <div key={label} className="rounded-xl border border-zinc-200 bg-white p-3 shadow-sm sm:rounded-2xl sm:p-5">
+                            <div className="flex items-center justify-between gap-2"><div className="min-w-0"><p className="truncate text-xs font-medium text-zinc-500 sm:text-sm">{label}</p><p className="mt-1 text-2xl font-bold tracking-tight text-zinc-900 sm:mt-2 sm:text-3xl">{value}</p></div><div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-company-50 text-company-600 sm:size-11 sm:rounded-xl"><Icon className="size-4 sm:size-5" /></div></div>
+                            <p className="mt-3 hidden text-xs text-zinc-500 sm:block">{description}</p>
                         </div>
                     ))}
                 </section>
 
-                <section className="mt-6 rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm">
+                <section className="mt-3 rounded-xl border border-zinc-200 bg-white p-3 shadow-sm sm:mt-6 sm:rounded-2xl sm:p-5">
                     <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                         <div><h2 className="font-semibold text-zinc-900">Estado de la flota</h2><p className="mt-1 text-xs text-zinc-500">Distribución actual de las unidades.</p></div>
                         <div className="flex flex-wrap gap-3 text-xs">
@@ -165,7 +165,7 @@ export default async function FleetManagementPage({
                             <span className="rounded-full bg-zinc-100 px-3 py-1.5 font-medium text-zinc-700">{inactiveCount} inactivas</span>
                         </div>
                     </div>
-                    <div className="mt-5 flex h-3 overflow-hidden rounded-full bg-zinc-100" aria-label="Distribución del estado de la flota">
+                    <div className="mt-5 hidden h-3 overflow-hidden rounded-full bg-zinc-100 sm:flex" aria-label="Distribución del estado de la flota">
                         {[
                             [inRouteCount, "bg-blue-500"],
                             [availableCount, "bg-emerald-500"],

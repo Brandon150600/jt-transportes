@@ -7,6 +7,7 @@ import { prisma } from "@/lib/prisma";
 import { requireAnyRole, requireUser } from "@/lib/auth/session";
 
 export type TripFormState = { error?: string; fieldErrors?: Record<string, string> };
+const MAX_DATABASE_INT = 2_147_483_647;
 
 const tripSchema = z.object({
   clientId: z.string().min(1, "Selecciona un cliente."),
@@ -15,7 +16,7 @@ const tripSchema = z.object({
   vehicleId: z.string().min(1, "Selecciona una unidad."),
   driverId: z.string().min(1, "Selecciona un operador."),
   scheduledStartAt: z.string().min(1, "Indica la fecha y hora de salida."),
-  mileageStart: z.coerce.number().int().nonnegative().max(10000000),
+  mileageStart: z.coerce.number().int().nonnegative().max(MAX_DATABASE_INT),
   revenue: z.coerce.number().nonnegative().max(9999999999),
   notes: z.string().trim().max(3000).optional(),
 });
@@ -114,7 +115,7 @@ function formatAddress(address: { street: string; exteriorNumber: string | null;
 
 export async function transitionTrip(formData: FormData) {
   const user = await requireUser();
-  const parsed = z.object({ id: z.string().min(1), action: z.enum(["start", "complete", "cancel"]), mileageEnd: z.coerce.number().int().nonnegative().max(10000000).optional() }).safeParse({ id: formData.get("id"), action: formData.get("action"), mileageEnd: formData.get("mileageEnd") || undefined });
+  const parsed = z.object({ id: z.string().min(1), action: z.enum(["start", "complete", "cancel"]), mileageEnd: z.coerce.number().int().nonnegative().max(MAX_DATABASE_INT).optional() }).safeParse({ id: formData.get("id"), action: formData.get("action"), mileageEnd: formData.get("mileageEnd") || undefined });
   if (!parsed.success) return;
   const { id, action, mileageEnd } = parsed.data;
   if (action === "cancel" && user.role === "EMPLOYEE") return;

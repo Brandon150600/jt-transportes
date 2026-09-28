@@ -7,7 +7,7 @@ import { saveFleetExpense, type FleetExpenseFormState } from "@/app/actions/flee
 
 type VehicleOption = { id: string; economicNumber: string; brand: string; model: string };
 type SupplierOption = { id: string; name: string };
-type TripOption = { id: string; tripNumber: string; vehicleId: string; clientNameSnapshot: string };
+type TripOption = { id: string; tripNumber: string; vehicleId: string; clientNameSnapshot: string; status: string };
 type Item = { description: string; quantity: number; unitCost: number; unit?: string };
 type ExistingExpense = {
   id: string; vehicleId: string; supplierId: string | null; tripId: string | null; category: string;
@@ -31,7 +31,10 @@ export function ExpenseForm({
   const [items, setItems] = useState<Item[]>(expense?.items ?? []);
   const [labor, setLabor] = useState(Number(expense?.laborAmount) || 0);
   const [newSupplier, setNewSupplier] = useState(false);
-  const [vehicleId, setVehicleId] = useState(expense?.vehicleId ?? defaultVehicleId ?? "");
+  const initialTripId = expense?.tripId ?? defaultTripId ?? "";
+  const initialTrip = trips.find((trip) => trip.id === initialTripId);
+  const [vehicleId, setVehicleId] = useState(expense?.vehicleId ?? defaultVehicleId ?? initialTrip?.vehicleId ?? "");
+  const [tripId, setTripId] = useState(initialTripId);
   const subtotal = items.reduce((sum, item) => sum + (Number(item.quantity) || 0) * (Number(item.unitCost) || 0), 0);
   const total = subtotal + labor;
 
@@ -52,15 +55,19 @@ export function ExpenseForm({
         <p className="mt-1 text-sm text-zinc-500">Captura lo esencial ahora; puedes agregar conceptos si tienes el detalle.</p>
         <div className="mt-5 grid gap-4 sm:grid-cols-2">
           <Field label="Unidad" error={state.fieldErrors?.vehicleId}>
-            <select name="vehicleId" required value={vehicleId} onChange={(event) => setVehicleId(event.target.value)} className={inputClass}>
+            <select name="vehicleId" required value={vehicleId} onChange={(event) => {
+              const nextVehicleId = event.target.value;
+              setVehicleId(nextVehicleId);
+              if (trips.some((trip) => trip.id === tripId && trip.vehicleId !== nextVehicleId)) setTripId("");
+            }} className={inputClass}>
               <option value="" disabled>Selecciona una unidad</option>
               {vehicles.map((vehicle) => <option key={vehicle.id} value={vehicle.id}>{vehicle.economicNumber} · {vehicle.brand} {vehicle.model}</option>)}
             </select>
           </Field>
           <Field label="Viaje asociado (opcional)" error={state.fieldErrors?.tripId}>
-            <select name="tripId" defaultValue={expense?.tripId ?? defaultTripId ?? ""} className={inputClass}>
+            <select name="tripId" value={tripId} onChange={(event) => setTripId(event.target.value)} className={inputClass}>
               <option value="">Gasto general de la unidad</option>
-              {trips.filter((trip) => trip.vehicleId === vehicleId).map((trip) => <option key={trip.id} value={trip.id}>{trip.tripNumber} · {trip.clientNameSnapshot}</option>)}
+              {trips.filter((trip) => trip.vehicleId === vehicleId).map((trip) => <option key={trip.id} value={trip.id}>{trip.tripNumber} · {trip.clientNameSnapshot}{trip.status === "COMPLETED" ? " · Finalizado" : trip.status === "IN_PROGRESS" ? " · En curso" : " · Programado"}</option>)}
             </select>
           </Field>
           <Field label="Categoría" error={state.fieldErrors?.category}>

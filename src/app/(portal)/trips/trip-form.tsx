@@ -5,7 +5,7 @@ import Link from "next/link";
 import { saveTrip, type TripFormState } from "@/app/actions/trips";
 
 type ClientOption = { id: string; label: string; addresses: { id: string; name: string; address: string }[] };
-type VehicleOption = { id: string; label: string; mileage: number };
+type VehicleOption = { id: string; label: string; mileage: number; assignedDriverId: string | null };
 type DriverOption = { id: string; name: string };
 type ExistingTrip = { id: string; clientId: string; destinationAddressId: string; origin: string; vehicleId: string; driverId: string; scheduledStartAt: string; mileageStart: number; revenue: string; notes: string | null };
 const initial: TripFormState = {};
@@ -15,6 +15,11 @@ export function TripForm({ clients, vehicles, drivers, trip, defaults }: { clien
   const [clientId, setClientId] = useState(trip?.clientId ?? defaults?.clientId ?? "");
   const [vehicleId, setVehicleId] = useState(trip?.vehicleId ?? defaults?.vehicleId ?? "");
   const selectedVehicle = vehicles.find((vehicle) => vehicle.id === vehicleId);
+  const [mileageStart, setMileageStart] = useState(String(trip?.mileageStart ?? selectedVehicle?.mileage ?? 0));
+  const initialAssignedDriverId = selectedVehicle?.assignedDriverId && drivers.some((driver) => driver.id === selectedVehicle.assignedDriverId)
+    ? selectedVehicle.assignedDriverId
+    : "";
+  const [driverId, setDriverId] = useState(trip?.driverId ?? initialAssignedDriverId);
   const dateValue = trip?.scheduledStartAt ? new Intl.DateTimeFormat("en-CA", { timeZone: "America/Mexico_City", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).format(new Date(trip.scheduledStartAt)).replace(", ", "T") : "";
   return <form action={action} className="space-y-5">
     {trip && <input type="hidden" name="id" value={trip.id} />}
@@ -24,9 +29,15 @@ export function TripForm({ clients, vehicles, drivers, trip, defaults }: { clien
       <Field label="Destino del cliente" error={state.fieldErrors?.destinationAddressId}><select key={clientId} name="destinationAddressId" required defaultValue={trip?.destinationAddressId ?? ""} className={inputClass}><option value="">Selecciona destino</option>{clients.find((client) => client.id === clientId)?.addresses.map((address) => <option key={address.id} value={address.id}>{address.name} · {address.address}</option>)}</select></Field>
       <Field label="Origen" error={state.fieldErrors?.origin}><input name="origin" required defaultValue={trip?.origin} maxLength={240} placeholder="Ciudad, patio o dirección de salida" className={inputClass} /></Field>
       <Field label="Fecha y hora de salida" error={state.fieldErrors?.scheduledStartAt}><input type="datetime-local" name="scheduledStartAt" required defaultValue={dateValue} className={inputClass} /></Field>
-      <Field label="Unidad" error={state.fieldErrors?.vehicleId}><select name="vehicleId" required value={vehicleId} onChange={(e) => setVehicleId(e.target.value)} className={inputClass}><option value="">Selecciona unidad</option>{vehicles.map((vehicle) => <option key={vehicle.id} value={vehicle.id}>{vehicle.label}</option>)}</select></Field>
-      <Field label="Operador" error={state.fieldErrors?.driverId}><select name="driverId" required defaultValue={trip?.driverId ?? ""} className={inputClass}><option value="">Selecciona operador</option>{drivers.map((driver) => <option key={driver.id} value={driver.id}>{driver.name}</option>)}</select></Field>
-      <Field label="Kilometraje inicial" error={state.fieldErrors?.mileageStart}><input type="number" name="mileageStart" required min={selectedVehicle?.mileage ?? 0} defaultValue={trip?.mileageStart ?? selectedVehicle?.mileage ?? 0} className={inputClass} /><span className="mt-1 block text-xs text-zinc-500">Odómetro actual: {(selectedVehicle?.mileage ?? 0).toLocaleString("es-MX")} km</span></Field>
+      <Field label="Unidad" error={state.fieldErrors?.vehicleId}><select name="vehicleId" required value={vehicleId} onChange={(e) => {
+        const nextVehicleId = e.target.value;
+        const nextVehicle = vehicles.find((vehicle) => vehicle.id === nextVehicleId);
+        setVehicleId(nextVehicleId);
+        setDriverId(nextVehicle?.assignedDriverId && drivers.some((driver) => driver.id === nextVehicle.assignedDriverId) ? nextVehicle.assignedDriverId : "");
+        setMileageStart(String(nextVehicle?.mileage ?? 0));
+      }} className={inputClass}><option value="">Selecciona unidad</option>{vehicles.map((vehicle) => <option key={vehicle.id} value={vehicle.id}>{vehicle.label}</option>)}</select></Field>
+      <Field label="Operador" error={state.fieldErrors?.driverId}><select name="driverId" required value={driverId} onChange={(e) => setDriverId(e.target.value)} className={inputClass}><option value="">Selecciona operador</option>{drivers.map((driver) => <option key={driver.id} value={driver.id}>{driver.name}</option>)}</select><span className="mt-1 block text-xs text-zinc-500">Se sugiere el operador asignado a la unidad; puedes cambiarlo para este viaje.</span></Field>
+      <Field label="Kilometraje inicial" error={state.fieldErrors?.mileageStart}><input type="number" name="mileageStart" required min={selectedVehicle?.mileage ?? 0} max={2147483647} value={mileageStart} onChange={(e) => setMileageStart(e.target.value)} className={inputClass} /><span className="mt-1 block text-xs text-zinc-500">Odómetro actual: {(selectedVehicle?.mileage ?? 0).toLocaleString("es-MX")} km</span></Field>
       <Field label="Ingreso del viaje ($)" error={state.fieldErrors?.revenue}><input type="number" name="revenue" required min="0" step="0.01" defaultValue={trip?.revenue ?? "0.00"} className={inputClass} /></Field>
       <div className="sm:col-span-2"><Field label="Notas"><textarea name="notes" rows={3} maxLength={3000} defaultValue={trip?.notes ?? ""} className={inputClass} /></Field></div>
     </section>

@@ -94,37 +94,37 @@ export default async function DashboardPage() {
 
   return (
     <main className="bg-zinc-50">
-      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        <header className="mb-8">
+      <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
+        <header className="mb-5 sm:mb-8">
           <p className="text-sm font-medium text-company-600">JT Transportes</p>
           <h1 className="mt-1 text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl">Resumen de operación</h1>
           <p className="mt-1 text-sm text-zinc-500">Estado actual de la flota y actividad registrada.</p>
         </header>
 
-        <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <section aria-label="Indicadores de operación" className="grid grid-cols-2 gap-2 sm:grid-cols-2 sm:gap-4 xl:grid-cols-4">
           {stats.map((stat) => {
             const Icon = stat.icon;
             return (
-              <article key={stat.label} className="group rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-zinc-500">{stat.label}</p>
-                    <p className="mt-3 text-3xl font-extrabold tracking-tight text-zinc-950">{stat.value}</p>
+              <article key={stat.label} className="group rounded-xl border border-zinc-200 bg-white p-3 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md sm:rounded-2xl sm:p-5">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="min-w-0">
+                    <p className="truncate text-xs font-medium text-zinc-500 sm:text-sm">{stat.label}</p>
+                    <p className="mt-1 text-2xl font-extrabold tracking-tight text-zinc-950 sm:mt-3 sm:text-3xl">{stat.value}</p>
                   </div>
-                  <div className="flex size-11 items-center justify-center rounded-xl bg-company-50 text-company-600 transition group-hover:bg-company group-hover:text-white"><Icon className="size-5" /></div>
+                  <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-company-50 text-company-600 transition group-hover:bg-company group-hover:text-white sm:size-11 sm:rounded-xl"><Icon className="size-4 sm:size-5" /></div>
                 </div>
-                <p className="mt-3 text-xs font-medium text-zinc-400">{stat.description}</p>
+                <p className="mt-3 hidden text-xs font-medium text-zinc-400 sm:block">{stat.description}</p>
               </article>
             );
           })}
         </section>
 
-        <section className="mt-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
-          <div className="flex items-center justify-between border-b border-zinc-100 px-5 py-4 sm:px-6">
+        <section className="mt-4 overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm sm:mt-6 sm:rounded-2xl">
+          <div className="flex items-center justify-between border-b border-zinc-100 px-4 py-3 sm:px-6 sm:py-4">
             <div><h2 className="font-bold text-zinc-950">Seguimiento de viajes</h2><p className="mt-1 text-xs text-zinc-500">Viajes en curso y salidas programadas para los próximos 7 días.</p></div>
             <Link href="/trips" className="inline-flex items-center gap-1 text-sm font-semibold text-company-600 hover:text-company-700">Ver viajes<ChevronRight className="size-4" /></Link>
           </div>
-          {operationalTrips.length ? <div className="divide-y divide-zinc-100">{operationalTrips.map((trip) => <Link key={trip.id} href={`/trips/${trip.id}`} className="flex flex-col gap-2 px-5 py-4 transition hover:bg-zinc-50 sm:flex-row sm:items-center sm:justify-between sm:px-6"><div className="flex min-w-0 items-start gap-3"><span className={`mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-lg ${trip.status === "IN_PROGRESS" ? "bg-amber-50 text-amber-700" : "bg-blue-50 text-blue-700"}`}><Route className="size-4" /></span><div className="min-w-0"><p className="font-semibold text-zinc-900">{trip.tripNumber} · {trip.clientNameSnapshot}</p><p className="mt-1 truncate text-xs text-zinc-500">{trip.origin} → {trip.destinationNameSnapshot} · {trip.vehicle.economicNumber} · {trip.driver.name}</p></div></div><div className="flex items-center justify-between gap-4 pl-12 sm:justify-end sm:pl-0"><span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${trip.status === "IN_PROGRESS" ? "bg-amber-50 text-amber-700" : "bg-blue-50 text-blue-700"}`}>{trip.status === "IN_PROGRESS" ? "En curso" : "Programado"}</span><span className="text-xs text-zinc-500">{trip.scheduledStartAt.toLocaleString("es-MX", { dateStyle: "medium", timeStyle: "short", timeZone: "America/Mexico_City" })}</span></div></Link>)}</div> : <EmptyState icon={Route} title="Sin viajes próximos" description="No hay viajes en curso ni salidas programadas para los próximos 7 días." />}
+          {operationalTrips.length ? <div className="divide-y divide-zinc-100">{operationalTrips.map((trip, index) => <Link key={trip.id} href={`/trips/${trip.id}`} className={`${index > 2 ? "hidden sm:flex" : "flex"} flex-col gap-2 px-4 py-3 transition hover:bg-zinc-50 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-4`}><div className="flex min-w-0 items-start gap-3"><span className={`mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg sm:size-9 ${trip.status === "IN_PROGRESS" ? "bg-amber-50 text-amber-700" : "bg-blue-50 text-blue-700"}`}><Route className="size-4" /></span><div className="min-w-0"><p className="truncate text-sm font-semibold text-zinc-900 sm:text-base">{trip.tripNumber} · {trip.clientNameSnapshot}</p><p className="mt-1 truncate text-xs text-zinc-500">{trip.origin} → {trip.destinationNameSnapshot} · {trip.vehicle.economicNumber} · {trip.driver.name}</p></div></div><div className="flex items-center justify-between gap-4 pl-11 sm:justify-end sm:pl-0"><span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${trip.status === "IN_PROGRESS" ? "bg-amber-50 text-amber-700" : "bg-blue-50 text-blue-700"}`}>{trip.status === "IN_PROGRESS" ? "En curso" : "Programado"}</span><span className="text-xs text-zinc-500">{trip.scheduledStartAt.toLocaleString("es-MX", { dateStyle: "medium", timeStyle: "short", timeZone: "America/Mexico_City" })}</span></div></Link>)}</div> : <EmptyState icon={Route} title="Sin viajes próximos" description="No hay viajes en curso ni salidas programadas para los próximos 7 días." />}
         </section>
 
         <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
@@ -140,8 +140,8 @@ export default async function DashboardPage() {
             {isAdmin ? (
               recentExpenses.length ? (
                 <div className="divide-y divide-zinc-100">
-                  {recentExpenses.map((expense) => (
-                    <Link key={expense.id} href={`/fleet-expenses/${expense.id}`} className="group flex flex-col gap-3 px-5 py-4 transition hover:bg-zinc-50 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+                  {recentExpenses.map((expense, index) => (
+                    <Link key={expense.id} href={`/fleet-expenses/${expense.id}`} className={`group ${index > 2 ? "hidden sm:flex" : "flex"} flex-col gap-3 px-4 py-3 transition hover:bg-zinc-50 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-4`}>
                       <div className="flex min-w-0 items-center gap-3">
                         <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-zinc-100 text-zinc-600 group-hover:bg-company-50 group-hover:text-company-600"><Wallet className="size-5" /></span>
                         <div className="min-w-0"><p className="truncate font-semibold text-zinc-900">{expense.description}</p><p className="mt-1 truncate text-xs text-zinc-500">{expense.vehicle.economicNumber}{expense.supplier ? ` · ${expense.supplier.name}` : ""} · {expense.expenseDate.toLocaleDateString("es-MX", { timeZone: "UTC" })}</p></div>
@@ -154,8 +154,8 @@ export default async function DashboardPage() {
             ) : (
               recentVehicles.length ? (
                 <div className="divide-y divide-zinc-100">
-                  {recentVehicles.map((vehicle) => (
-                    <Link key={vehicle.id} href={`/fleet-management/${vehicle.id}`} className="group flex items-center justify-between gap-4 px-5 py-4 transition hover:bg-zinc-50 sm:px-6">
+                  {recentVehicles.map((vehicle, index) => (
+                    <Link key={vehicle.id} href={`/fleet-management/${vehicle.id}`} className={`group ${index > 2 ? "hidden sm:flex" : "flex"} items-center justify-between gap-4 px-4 py-3 transition hover:bg-zinc-50 sm:px-6 sm:py-4`}>
                       <div className="flex min-w-0 items-center gap-3"><span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-zinc-100 text-zinc-600 group-hover:bg-company-50 group-hover:text-company-600"><Truck className="size-5" /></span><div className="min-w-0"><p className="font-semibold text-zinc-900">{vehicle.economicNumber}</p><p className="mt-1 truncate text-xs text-zinc-500">{vehicle.brand} {vehicle.model} · Actualizada {vehicle.updatedAt.toLocaleDateString("es-MX")}</p></div></div>
                       <span className="shrink-0 rounded-full bg-zinc-100 px-2.5 py-1 text-xs font-semibold text-zinc-600">{vehicleStatusLabels[vehicle.status]}</span>
                     </Link>

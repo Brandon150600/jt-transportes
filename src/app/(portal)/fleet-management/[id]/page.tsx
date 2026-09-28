@@ -120,7 +120,7 @@ export default async function FleetVehiclePage({
 
                     <ChevronRight className="size-4" />
 
-                    <span className="font-medium text-zinc-900">{vehicle.id}</span>
+                    <span className="font-medium text-zinc-900">{vehicle.economicNumber}</span>
                 </div>
 
                 {/* Header */}
@@ -144,7 +144,7 @@ export default async function FleetVehiclePage({
                                     className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-bold ring-1 ${statusStyles.badge}`}
                                 >
                                     <CircleDot className={`size-3 ${statusStyles.icon}`} />
-                                    {vehicle.status}
+                                    {statusLabel}
                                 </span>
                             </div>
 

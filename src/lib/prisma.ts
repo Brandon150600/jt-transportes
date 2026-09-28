@@ -15,9 +15,23 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
-export const prisma =
-  globalForPrisma.prisma ??
-  new PrismaClient({
+type CurrentModelDelegates = PrismaClient & {
+  fleetExpense?: unknown;
+  supplier?: unknown;
+  expenseItem?: unknown;
+  client?: unknown;
+  clientAddress?: unknown;
+};
+
+const cachedPrisma = globalForPrisma.prisma as CurrentModelDelegates | undefined;
+const hasCurrentSchema = Boolean(
+  cachedPrisma?.fleetExpense && cachedPrisma.supplier && cachedPrisma.expenseItem &&
+  cachedPrisma.client && cachedPrisma.clientAddress,
+);
+
+export const prisma: PrismaClient = hasCurrentSchema && cachedPrisma
+  ? cachedPrisma
+  : new PrismaClient({
     adapter,
   });
 

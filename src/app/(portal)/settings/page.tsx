@@ -9,14 +9,18 @@ import {
 } from "lucide-react";
 
 import { requireUser } from "@/lib/auth/session";
+import { ChangePasswordForm } from "./change-password-form";
 
 export const metadata = {
     title: "Configuración | JT Transportes",
     description: "Configuración de tu cuenta en JT Transportes.",
 };
 
-export default async function SettingsPage() {
+export default async function SettingsPage({ searchParams }: {
+    searchParams: Promise<{ passwordChanged?: string }>;
+}) {
     const user = await requireUser();
+    const params = await searchParams;
 
     const roleLabel =
         user.role === "SUPER_ADMIN"
@@ -49,6 +53,11 @@ export default async function SettingsPage() {
                 </div>
 
                 <div className="mt-6 space-y-6">
+                    {params.passwordChanged === "1" && (
+                        <div role="status" className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-medium text-emerald-800">
+                            Tu contraseña se actualizó correctamente.
+                        </div>
+                    )}
 
                     {/* Account */}
                     <section className="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
@@ -161,10 +170,8 @@ export default async function SettingsPage() {
 
                         <div className="divide-y divide-zinc-100">
 
-                            <button
-                                type="button"
-                                className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition hover:bg-zinc-50"
-                            >
+                            <details className="group">
+                                <summary className="flex w-full cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-left transition hover:bg-zinc-50">
                                 <div className="flex items-center gap-3">
                                     <div className="flex size-9 items-center justify-center rounded-lg bg-zinc-100 text-zinc-600">
                                         <KeyRound className="size-4" />
@@ -181,8 +188,10 @@ export default async function SettingsPage() {
                                     </div>
                                 </div>
 
-                                <ChevronRight className="size-4 shrink-0 text-zinc-400" />
-                            </button>
+                                    <ChevronRight className="size-4 shrink-0 text-zinc-400 transition group-open:rotate-90" />
+                                </summary>
+                                <ChangePasswordForm />
+                            </details>
 
                             <button
                                 type="button"

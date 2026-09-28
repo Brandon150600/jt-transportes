@@ -13,6 +13,7 @@ import {
     Settings,
     Truck,
     Users,
+    Wallet,
     X,
 } from "lucide-react";
 import { useState } from "react";
@@ -52,6 +53,18 @@ const navigation: NavItem[] = [
         label: "Flota",
         href: "/fleet-management",
         icon: Truck,
+    },
+    {
+        label: "Gastos",
+        href: "/fleet-expenses",
+        icon: Wallet,
+        roles: ["ADMIN", "SUPER_ADMIN"],
+    },
+    {
+        label: "Proveedores",
+        href: "/suppliers",
+        icon: Package,
+        roles: ["ADMIN", "SUPER_ADMIN"],
     },
     {
         label: "Clientes",

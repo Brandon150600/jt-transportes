@@ -215,6 +215,8 @@ export type UserWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   sessions?: Prisma.SessionListRelationFilter
+  createdFleetExpenses?: Prisma.FleetExpenseListRelationFilter
+  paidFleetExpenses?: Prisma.FleetExpenseListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -228,6 +230,8 @@ export type UserOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   sessions?: Prisma.SessionOrderByRelationAggregateInput
+  createdFleetExpenses?: Prisma.FleetExpenseOrderByRelationAggregateInput
+  paidFleetExpenses?: Prisma.FleetExpenseOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -244,6 +248,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   sessions?: Prisma.SessionListRelationFilter
+  createdFleetExpenses?: Prisma.FleetExpenseListRelationFilter
+  paidFleetExpenses?: Prisma.FleetExpenseListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -287,6 +293,8 @@ export type UserCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  createdFleetExpenses?: Prisma.FleetExpenseCreateNestedManyWithoutCreatedByInput
+  paidFleetExpenses?: Prisma.FleetExpenseCreateNestedManyWithoutPaidByInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -300,6 +308,8 @@ export type UserUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  createdFleetExpenses?: Prisma.FleetExpenseUncheckedCreateNestedManyWithoutCreatedByInput
+  paidFleetExpenses?: Prisma.FleetExpenseUncheckedCreateNestedManyWithoutPaidByInput
 }
 
 export type UserUpdateInput = {
@@ -313,6 +323,8 @@ export type UserUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  createdFleetExpenses?: Prisma.FleetExpenseUpdateManyWithoutCreatedByNestedInput
+  paidFleetExpenses?: Prisma.FleetExpenseUpdateManyWithoutPaidByNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -326,6 +338,8 @@ export type UserUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  createdFleetExpenses?: Prisma.FleetExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
+  paidFleetExpenses?: Prisma.FleetExpenseUncheckedUpdateManyWithoutPaidByNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -405,6 +419,11 @@ export type UserScalarRelationFilter = {
   isNot?: Prisma.UserWhereInput
 }
 
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
+}
+
 export type StringFieldUpdateOperationsInput = {
   set?: string
 }
@@ -443,6 +462,36 @@ export type UserUpdateOneRequiredWithoutSessionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSessionsInput, Prisma.UserUpdateWithoutSessionsInput>, Prisma.UserUncheckedUpdateWithoutSessionsInput>
 }
 
+export type UserCreateNestedOneWithoutCreatedFleetExpensesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedFleetExpensesInput, Prisma.UserUncheckedCreateWithoutCreatedFleetExpensesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedFleetExpensesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutPaidFleetExpensesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPaidFleetExpensesInput, Prisma.UserUncheckedCreateWithoutPaidFleetExpensesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPaidFleetExpensesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutCreatedFleetExpensesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedFleetExpensesInput, Prisma.UserUncheckedCreateWithoutCreatedFleetExpensesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedFleetExpensesInput
+  upsert?: Prisma.UserUpsertWithoutCreatedFleetExpensesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCreatedFleetExpensesInput, Prisma.UserUpdateWithoutCreatedFleetExpensesInput>, Prisma.UserUncheckedUpdateWithoutCreatedFleetExpensesInput>
+}
+
+export type UserUpdateOneWithoutPaidFleetExpensesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPaidFleetExpensesInput, Prisma.UserUncheckedCreateWithoutPaidFleetExpensesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPaidFleetExpensesInput
+  upsert?: Prisma.UserUpsertWithoutPaidFleetExpensesInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPaidFleetExpensesInput, Prisma.UserUpdateWithoutPaidFleetExpensesInput>, Prisma.UserUncheckedUpdateWithoutPaidFleetExpensesInput>
+}
+
 export type UserCreateWithoutSessionsInput = {
   id?: string
   email: string
@@ -453,6 +502,8 @@ export type UserCreateWithoutSessionsInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdFleetExpenses?: Prisma.FleetExpenseCreateNestedManyWithoutCreatedByInput
+  paidFleetExpenses?: Prisma.FleetExpenseCreateNestedManyWithoutPaidByInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -465,6 +516,8 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   lastLoginAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdFleetExpenses?: Prisma.FleetExpenseUncheckedCreateNestedManyWithoutCreatedByInput
+  paidFleetExpenses?: Prisma.FleetExpenseUncheckedCreateNestedManyWithoutPaidByInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -493,6 +546,8 @@ export type UserUpdateWithoutSessionsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdFleetExpenses?: Prisma.FleetExpenseUpdateManyWithoutCreatedByNestedInput
+  paidFleetExpenses?: Prisma.FleetExpenseUpdateManyWithoutPaidByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -505,6 +560,152 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdFleetExpenses?: Prisma.FleetExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
+  paidFleetExpenses?: Prisma.FleetExpenseUncheckedUpdateManyWithoutPaidByNestedInput
+}
+
+export type UserCreateWithoutCreatedFleetExpensesInput = {
+  id?: string
+  email: string
+  name?: string | null
+  passwordHash: string
+  role?: $Enums.Role
+  isActive?: boolean
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  paidFleetExpenses?: Prisma.FleetExpenseCreateNestedManyWithoutPaidByInput
+}
+
+export type UserUncheckedCreateWithoutCreatedFleetExpensesInput = {
+  id?: string
+  email: string
+  name?: string | null
+  passwordHash: string
+  role?: $Enums.Role
+  isActive?: boolean
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  paidFleetExpenses?: Prisma.FleetExpenseUncheckedCreateNestedManyWithoutPaidByInput
+}
+
+export type UserCreateOrConnectWithoutCreatedFleetExpensesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedFleetExpensesInput, Prisma.UserUncheckedCreateWithoutCreatedFleetExpensesInput>
+}
+
+export type UserCreateWithoutPaidFleetExpensesInput = {
+  id?: string
+  email: string
+  name?: string | null
+  passwordHash: string
+  role?: $Enums.Role
+  isActive?: boolean
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  createdFleetExpenses?: Prisma.FleetExpenseCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserUncheckedCreateWithoutPaidFleetExpensesInput = {
+  id?: string
+  email: string
+  name?: string | null
+  passwordHash: string
+  role?: $Enums.Role
+  isActive?: boolean
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  createdFleetExpenses?: Prisma.FleetExpenseUncheckedCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserCreateOrConnectWithoutPaidFleetExpensesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPaidFleetExpensesInput, Prisma.UserUncheckedCreateWithoutPaidFleetExpensesInput>
+}
+
+export type UserUpsertWithoutCreatedFleetExpensesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCreatedFleetExpensesInput, Prisma.UserUncheckedUpdateWithoutCreatedFleetExpensesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCreatedFleetExpensesInput, Prisma.UserUncheckedCreateWithoutCreatedFleetExpensesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCreatedFleetExpensesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCreatedFleetExpensesInput, Prisma.UserUncheckedUpdateWithoutCreatedFleetExpensesInput>
+}
+
+export type UserUpdateWithoutCreatedFleetExpensesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  paidFleetExpenses?: Prisma.FleetExpenseUpdateManyWithoutPaidByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCreatedFleetExpensesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  paidFleetExpenses?: Prisma.FleetExpenseUncheckedUpdateManyWithoutPaidByNestedInput
+}
+
+export type UserUpsertWithoutPaidFleetExpensesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPaidFleetExpensesInput, Prisma.UserUncheckedUpdateWithoutPaidFleetExpensesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPaidFleetExpensesInput, Prisma.UserUncheckedCreateWithoutPaidFleetExpensesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutPaidFleetExpensesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPaidFleetExpensesInput, Prisma.UserUncheckedUpdateWithoutPaidFleetExpensesInput>
+}
+
+export type UserUpdateWithoutPaidFleetExpensesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  createdFleetExpenses?: Prisma.FleetExpenseUpdateManyWithoutCreatedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPaidFleetExpensesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  createdFleetExpenses?: Prisma.FleetExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 
@@ -514,10 +715,14 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
 
 export type UserCountOutputType = {
   sessions: number
+  createdFleetExpenses: number
+  paidFleetExpenses: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | UserCountOutputTypeCountSessionsArgs
+  createdFleetExpenses?: boolean | UserCountOutputTypeCountCreatedFleetExpensesArgs
+  paidFleetExpenses?: boolean | UserCountOutputTypeCountPaidFleetExpensesArgs
 }
 
 /**
@@ -537,6 +742,20 @@ export type UserCountOutputTypeCountSessionsArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.SessionWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCreatedFleetExpensesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FleetExpenseWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountPaidFleetExpensesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FleetExpenseWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -549,6 +768,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   createdAt?: boolean
   updatedAt?: boolean
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
+  createdFleetExpenses?: boolean | Prisma.User$createdFleetExpensesArgs<ExtArgs>
+  paidFleetExpenses?: boolean | Prisma.User$paidFleetExpensesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -591,6 +812,8 @@ export type UserSelectScalar = {
 export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "passwordHash" | "role" | "isActive" | "lastLoginAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
+  createdFleetExpenses?: boolean | Prisma.User$createdFleetExpensesArgs<ExtArgs>
+  paidFleetExpenses?: boolean | Prisma.User$paidFleetExpensesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -600,6 +823,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "User"
   objects: {
     sessions: Prisma.$SessionPayload<ExtArgs>[]
+    createdFleetExpenses: Prisma.$FleetExpensePayload<ExtArgs>[]
+    paidFleetExpenses: Prisma.$FleetExpensePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1006,6 +1231,8 @@ readonly fields: UserFieldRefs;
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  createdFleetExpenses<T extends Prisma.User$createdFleetExpensesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdFleetExpensesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FleetExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  paidFleetExpenses<T extends Prisma.User$paidFleetExpensesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$paidFleetExpensesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FleetExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1458,6 +1685,54 @@ export type User$sessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.SessionScalarFieldEnum | Prisma.SessionScalarFieldEnum[]
+}
+
+/**
+ * User.createdFleetExpenses
+ */
+export type User$createdFleetExpensesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FleetExpense
+   */
+  select?: Prisma.FleetExpenseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FleetExpense
+   */
+  omit?: Prisma.FleetExpenseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FleetExpenseInclude<ExtArgs> | null
+  where?: Prisma.FleetExpenseWhereInput
+  orderBy?: Prisma.FleetExpenseOrderByWithRelationInput | Prisma.FleetExpenseOrderByWithRelationInput[]
+  cursor?: Prisma.FleetExpenseWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FleetExpenseScalarFieldEnum | Prisma.FleetExpenseScalarFieldEnum[]
+}
+
+/**
+ * User.paidFleetExpenses
+ */
+export type User$paidFleetExpensesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FleetExpense
+   */
+  select?: Prisma.FleetExpenseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FleetExpense
+   */
+  omit?: Prisma.FleetExpenseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FleetExpenseInclude<ExtArgs> | null
+  where?: Prisma.FleetExpenseWhereInput
+  orderBy?: Prisma.FleetExpenseOrderByWithRelationInput | Prisma.FleetExpenseOrderByWithRelationInput[]
+  cursor?: Prisma.FleetExpenseWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FleetExpenseScalarFieldEnum | Prisma.FleetExpenseScalarFieldEnum[]
 }
 
 /**

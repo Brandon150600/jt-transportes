@@ -47,3 +47,41 @@ export const DriverStatus = {
 } as const
 
 export type DriverStatus = (typeof DriverStatus)[keyof typeof DriverStatus]
+
+
+export const ExpenseCategory = {
+  PARTS: 'PARTS',
+  MAINTENANCE: 'MAINTENANCE',
+  WASH: 'WASH',
+  TIRES: 'TIRES',
+  OTHER: 'OTHER'
+} as const
+
+export type ExpenseCategory = (typeof ExpenseCategory)[keyof typeof ExpenseCategory]
+
+
+export const FleetExpenseStatus = {
+  DRAFT: 'DRAFT',
+  CONFIRMED: 'CONFIRMED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type FleetExpenseStatus = (typeof FleetExpenseStatus)[keyof typeof FleetExpenseStatus]
+
+
+export const ExpenseSource = {
+  MANUAL: 'MANUAL',
+  WHATSAPP: 'WHATSAPP',
+  IMPORT: 'IMPORT',
+  API: 'API'
+} as const
+
+export type ExpenseSource = (typeof ExpenseSource)[keyof typeof ExpenseSource]
+
+
+export const PaymentStatus = {
+  PENDING: 'PENDING',
+  PAID: 'PAID'
+} as const
+
+export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]

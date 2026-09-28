@@ -1,420 +1,56 @@
-import {
-    Building2,
-    ChevronRight,
-    Mail,
-    MapPin,
-    Phone,
-    Plus,
-    Search,
-    Users,
-} from "lucide-react";
+import Link from "next/link";
+import { Building2, Mail, MapPin, Phone, Plus, Search, Users } from "lucide-react";
+import { requireAnyRole } from "@/lib/auth/session";
+import { prisma } from "@/lib/prisma";
 
-const clientStats = [
-    {
-        label: "Clientes registrados",
-        value: "24",
-        description: "Total en el sistema",
-        icon: Users,
-    },
-    {
-        label: "Clientes activos",
-        value: "21",
-        description: "Con operaciones vigentes",
-        icon: Building2,
-    },
-    {
-        label: "Nuevos este mes",
-        value: "4",
-        description: "Clientes incorporados",
-        icon: Plus,
-    },
-    {
-        label: "Con operaciones",
-        value: "16",
-        description: "Con viajes activos",
-        icon: MapPin,
-    },
-];
+export default async function ClientsPage({ searchParams }: {
+  searchParams: Promise<{ q?: string; status?: string }>;
+}) {
+  await requireAnyRole("ADMIN", "SUPER_ADMIN");
+  const params = await searchParams;
+  const query = params.q?.trim() ?? "";
+  const activeFilter = params.status === "active" ? true : params.status === "inactive" ? false : undefined;
+  const where = {
+    ...(activeFilter === undefined ? {} : { active: activeFilter }),
+    ...(query ? { OR: [
+      { businessName: { contains: query, mode: "insensitive" as const } },
+      { commercialName: { contains: query, mode: "insensitive" as const } },
+      { taxId: { contains: query, mode: "insensitive" as const } },
+      { contactName: { contains: query, mode: "insensitive" as const } },
+      { email: { contains: query, mode: "insensitive" as const } },
+      { phone: { contains: query, mode: "insensitive" as const } },
+    ] } : {}),
+  };
+  const monthStart = new Date();
+  monthStart.setDate(1);
+  monthStart.setHours(0, 0, 0, 0);
+  const [clients, matchingCount, allCount, activeCount, createdThisMonth, withAddressesCount] = await Promise.all([
+    prisma.client.findMany({
+      where,
+      orderBy: [{ active: "desc" }, { businessName: "asc" }],
+      include: { addresses: { where: { active: true }, select: { id: true } } },
+    }),
+    prisma.client.count({ where }),
+    prisma.client.count(),
+    prisma.client.count({ where: { active: true } }),
+    prisma.client.count({ where: { createdAt: { gte: monthStart } } }),
+    prisma.client.count({ where: { addresses: { some: { active: true } } } }),
+  ]);
 
-const clients = [
-    {
-        id: "CLI-001",
-        name: "Cliente ABC",
-        company: "ABC Industrial, S.A. de C.V.",
-        contact: "Roberto Sánchez",
-        email: "roberto@abcindustrial.com",
-        phone: "81 1234 5678",
-        location: "Monterrey, NL",
-        operations: 8,
-        status: "Activo",
-    },
-    {
-        id: "CLI-002",
-        name: "Industria XYZ",
-        company: "Industria XYZ México",
-        contact: "Mariana López",
-        email: "mariana@xyz.com",
-        phone: "844 234 5678",
-        location: "Saltillo, COAH",
-        operations: 5,
-        status: "Activo",
-    },
-    {
-        id: "CLI-003",
-        name: "Constructora Norte",
-        company: "Constructora Norte, S.A.",
-        contact: "Alejandro Torres",
-        email: "alejandro@constructoranorte.com",
-        phone: "81 3456 7890",
-        location: "Monterrey, NL",
-        operations: 3,
-        status: "Activo",
-    },
-    {
-        id: "CLI-004",
-        name: "Comercial del Norte",
-        company: "Comercial del Norte, S.A. de C.V.",
-        contact: "Laura Hernández",
-        email: "laura@comercialnorte.com",
-        phone: "81 4567 8901",
-        location: "Apodaca, NL",
-        operations: 0,
-        status: "Inactivo",
-    },
-    {
-        id: "CLI-005",
-        name: "Logística Integral",
-        company: "Logística Integral MX",
-        contact: "Daniel Ramírez",
-        email: "daniel@logisticaintegral.com",
-        phone: "81 5678 9012",
-        location: "Santa Catarina, NL",
-        operations: 6,
-        status: "Activo",
-    },
-];
+  const stats = [
+    { label: "Clientes registrados", value: String(allCount), description: "Total en el catálogo", icon: Users },
+    { label: "Clientes activos", value: String(activeCount), description: "Disponibles para nuevos viajes", icon: Building2 },
+    { label: "Nuevos este mes", value: String(createdThisMonth), description: "Altas del mes actual", icon: Plus },
+    { label: "Con ubicaciones", value: String(withAddressesCount), description: "Clientes con direcciones activas", icon: MapPin },
+  ];
 
-function statusStyles(status: string) {
-    if (status === "Activo") {
-        return "bg-emerald-50 text-emerald-700 ring-emerald-600/10";
-    }
-
-    return "bg-zinc-100 text-zinc-600 ring-zinc-500/10";
-}
-
-export default function ClientsPage() {
-    return (
-        <main className="bg-zinc-50">
-            <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-
-                {/* Header */}
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-                    <div>
-                        <div className="flex items-center gap-2 text-sm text-zinc-500">
-                            <span>Portal</span>
-                            <ChevronRight className="size-4" />
-                            <span className="font-medium text-zinc-900">
-                                Clientes
-                            </span>
-                        </div>
-
-                        <h1 className="mt-3 text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl">
-                            Clientes
-                        </h1>
-
-                        <p className="mt-1 max-w-2xl text-sm text-zinc-500">
-                            Consulta y administra la información de los clientes de
-                            JT Transportes.
-                        </p>
-                    </div>
-
-                    <button
-                        type="button"
-                        className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-company px-4 text-sm font-bold text-white shadow-lg shadow-red-200 transition hover:bg-company-600"
-                    >
-                        <Plus className="size-4" />
-                        Nuevo cliente
-                    </button>
-                </div>
-
-                {/* Stats */}
-                <section className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-                    {clientStats.map((stat) => {
-                        const Icon = stat.icon;
-
-                        return (
-                            <div
-                                key={stat.label}
-                                className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm"
-                            >
-                                <div className="flex items-start justify-between">
-                                    <div>
-                                        <p className="text-sm font-medium text-zinc-500">
-                                            {stat.label}
-                                        </p>
-
-                                        <p className="mt-2 text-3xl font-bold tracking-tight text-zinc-900">
-                                            {stat.value}
-                                        </p>
-                                    </div>
-
-                                    <div className="flex size-11 items-center justify-center rounded-xl bg-company-50 text-company-600">
-                                        <Icon className="size-5" />
-                                    </div>
-                                </div>
-
-                                <p className="mt-3 text-xs text-zinc-500">
-                                    {stat.description}
-                                </p>
-                            </div>
-                        );
-                    })}
-                </section>
-
-                {/* Client list */}
-                <section className="mt-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
-
-                    {/* Toolbar */}
-                    <div className="border-b border-zinc-100 p-5">
-                        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-                            <div>
-                                <h2 className="font-semibold text-zinc-900">
-                                    Directorio de clientes
-                                </h2>
-
-                                <p className="mt-1 text-xs text-zinc-500">
-                                    Clientes registrados en JT Transportes.
-                                </p>
-                            </div>
-
-                            <div className="flex flex-col gap-2 sm:flex-row">
-                                <div className="relative">
-                                    <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-zinc-400" />
-
-                                    <input
-                                        type="search"
-                                        placeholder="Buscar cliente..."
-                                        className="h-10 w-full rounded-xl border border-zinc-200 bg-zinc-50 pl-9 pr-4 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-company focus:ring-4 focus:ring-company-100 sm:w-64"
-                                    />
-                                </div>
-
-                                <button
-                                    type="button"
-                                    className="h-10 rounded-xl border border-zinc-200 bg-white px-4 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50"
-                                >
-                                    Todos
-                                </button>
-
-                                <button
-                                    type="button"
-                                    className="h-10 rounded-xl border border-zinc-200 bg-white px-4 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50"
-                                >
-                                    Activos
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Desktop */}
-                    <div className="hidden overflow-x-auto md:block">
-                        <table className="w-full text-left">
-                            <thead className="bg-zinc-50 text-xs font-semibold uppercase tracking-wide text-zinc-500">
-                                <tr>
-                                    <th className="px-5 py-3">Cliente</th>
-                                    <th className="px-5 py-3">Contacto</th>
-                                    <th className="px-5 py-3">Ubicación</th>
-                                    <th className="px-5 py-3">Operaciones</th>
-                                    <th className="px-5 py-3">Estado</th>
-                                    <th className="px-5 py-3 text-right">Acciones</th>
-                                </tr>
-                            </thead>
-
-                            <tbody className="divide-y divide-zinc-100">
-                                {clients.map((client) => (
-                                    <tr
-                                        key={client.id}
-                                        className="transition hover:bg-zinc-50"
-                                    >
-                                        <td className="px-5 py-4">
-                                            <div className="flex items-center gap-3">
-                                                <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-company-50 text-company-600">
-                                                    <Building2 className="size-5" />
-                                                </div>
-
-                                                <div>
-                                                    <p className="text-sm font-semibold text-zinc-900">
-                                                        {client.name}
-                                                    </p>
-
-                                                    <p className="mt-0.5 text-xs text-zinc-500">
-                                                        {client.company}
-                                                    </p>
-
-                                                    <p className="mt-0.5 text-xs text-zinc-400">
-                                                        {client.id}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </td>
-
-                                        <td className="px-5 py-4">
-                                            <p className="text-sm font-medium text-zinc-700">
-                                                {client.contact}
-                                            </p>
-
-                                            <div className="mt-1 flex items-center gap-1.5 text-xs text-zinc-400">
-                                                <Mail className="size-3.5" />
-                                                {client.email}
-                                            </div>
-
-                                            <div className="mt-1 flex items-center gap-1.5 text-xs text-zinc-400">
-                                                <Phone className="size-3.5" />
-                                                {client.phone}
-                                            </div>
-                                        </td>
-
-                                        <td className="px-5 py-4">
-                                            <div className="flex items-center gap-2 text-sm text-zinc-600">
-                                                <MapPin className="size-4 text-zinc-400" />
-                                                {client.location}
-                                            </div>
-                                        </td>
-
-                                        <td className="px-5 py-4">
-                                            <p className="text-sm font-semibold text-zinc-900">
-                                                {client.operations}
-                                            </p>
-
-                                            <p className="text-xs text-zinc-400">
-                                                viajes registrados
-                                            </p>
-                                        </td>
-
-                                        <td className="px-5 py-4">
-                                            <span
-                                                className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-inset ${statusStyles(
-                                                    client.status,
-                                                )}`}
-                                            >
-                                                {client.status}
-                                            </span>
-                                        </td>
-
-                                        <td className="px-5 py-4 text-right">
-                                            <button
-                                                type="button"
-                                                className="text-sm font-semibold text-company-600 hover:text-company-700"
-                                            >
-                                                Ver cliente
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-
-                    {/* Mobile */}
-                    <div className="divide-y divide-zinc-100 md:hidden">
-                        {clients.map((client) => (
-                            <div key={client.id} className="p-4">
-                                <div className="flex items-start justify-between gap-3">
-                                    <div className="flex min-w-0 items-center gap-3">
-                                        <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-company-50 text-company-600">
-                                            <Building2 className="size-5" />
-                                        </div>
-
-                                        <div className="min-w-0">
-                                            <p className="truncate text-sm font-bold text-zinc-900">
-                                                {client.name}
-                                            </p>
-
-                                            <p className="truncate text-xs text-zinc-500">
-                                                {client.company}
-                                            </p>
-
-                                            <p className="text-xs text-zinc-400">
-                                                {client.id}
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <span
-                                        className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-inset ${statusStyles(
-                                            client.status,
-                                        )}`}
-                                    >
-                                        {client.status}
-                                    </span>
-                                </div>
-
-                                <div className="mt-4 space-y-2">
-                                    <div className="flex items-center gap-2 text-sm text-zinc-600">
-                                        <Users className="size-4 text-zinc-400" />
-                                        {client.contact}
-                                    </div>
-
-                                    <div className="flex items-center gap-2 text-sm text-zinc-600">
-                                        <Mail className="size-4 text-zinc-400" />
-                                        <span className="truncate">{client.email}</span>
-                                    </div>
-
-                                    <div className="flex items-center gap-2 text-sm text-zinc-600">
-                                        <Phone className="size-4 text-zinc-400" />
-                                        {client.phone}
-                                    </div>
-
-                                    <div className="flex items-center gap-2 text-sm text-zinc-600">
-                                        <MapPin className="size-4 text-zinc-400" />
-                                        {client.location}
-                                    </div>
-                                </div>
-
-                                <div className="mt-4 flex items-center justify-between border-t border-zinc-100 pt-4">
-                                    <div>
-                                        <p className="text-xs text-zinc-400">
-                                            Operaciones
-                                        </p>
-
-                                        <p className="mt-1 text-sm font-semibold text-zinc-800">
-                                            {client.operations} viajes
-                                        </p>
-                                    </div>
-
-                                    <button
-                                        type="button"
-                                        className="rounded-xl border border-zinc-200 px-4 py-2 text-sm font-semibold text-company-600 transition hover:bg-company-50"
-                                    >
-                                        Ver cliente
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Footer */}
-                    <div className="flex flex-col gap-3 border-t border-zinc-100 px-5 py-4 text-xs text-zinc-500 sm:flex-row sm:items-center sm:justify-between">
-                        <span>Mostrando 5 de 24 clientes</span>
-
-                        <div className="flex items-center gap-2">
-                            <button
-                                type="button"
-                                disabled
-                                className="rounded-lg border border-zinc-200 px-3 py-2 disabled:cursor-not-allowed disabled:opacity-40"
-                            >
-                                Anterior
-                            </button>
-
-                            <button
-                                type="button"
-                                className="rounded-lg border border-zinc-200 px-3 py-2 hover:bg-zinc-50"
-                            >
-                                Siguiente
-                            </button>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </main>
-    );
+  return <main className="min-h-screen bg-zinc-50"><div className="mx-auto max-w-7xl px-4 py-7 sm:px-6 lg:px-8">
+    <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"><div><p className="text-sm font-semibold text-company-600">Administración comercial</p><h1 className="mt-1 text-3xl font-black tracking-tight text-zinc-900">Clientes</h1><p className="mt-2 max-w-2xl text-sm text-zinc-500">Empresas y ubicaciones de origen y destino para la operación de JT Transportes.</p></div><Link href="/clients/new" className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-company px-4 text-sm font-bold text-white shadow-lg shadow-red-200"><Plus className="size-4" /> Nuevo cliente</Link></header>
+    <section className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">{stats.map(({ label, value, description, icon: Icon }) => <article key={label} className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm"><div className="flex items-start justify-between"><div><p className="text-sm font-medium text-zinc-500">{label}</p><p className="mt-2 text-3xl font-bold tracking-tight text-zinc-900">{value}</p></div><span className="flex size-11 items-center justify-center rounded-xl bg-company-50 text-company-600"><Icon className="size-5" /></span></div><p className="mt-3 text-xs text-zinc-500">{description}</p></article>)}</section>
+    <section className="mt-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
+      <div className="border-b border-zinc-100 p-5"><div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"><div><h2 className="font-semibold text-zinc-900">Directorio de clientes</h2><p className="mt-1 text-xs text-zinc-500">Busca por empresa, RFC, contacto o datos de contacto.</p></div><form className="flex flex-col gap-2 sm:flex-row"><div className="relative"><Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-zinc-400" /><input type="search" name="q" defaultValue={query} placeholder="Buscar cliente…" className="h-10 w-full rounded-xl border border-zinc-200 bg-zinc-50 pl-9 pr-4 text-sm outline-none focus:border-company focus:ring-4 focus:ring-company-100 sm:w-64" /></div><select name="status" defaultValue={params.status ?? "all"} className="h-10 rounded-xl border border-zinc-200 bg-white px-3 text-sm"><option value="all">Todos</option><option value="active">Activos</option><option value="inactive">Inactivos</option></select><button className="h-10 rounded-xl border border-zinc-200 bg-white px-4 text-sm font-medium text-zinc-700 hover:bg-zinc-50">Buscar</button></form></div></div>
+      {clients.length ? <div className="divide-y divide-zinc-100">{clients.map((client) => <Link key={client.id} href={`/clients/${client.id}`} className="flex flex-col gap-4 p-5 transition hover:bg-zinc-50 sm:flex-row sm:items-center sm:justify-between"><div className="flex min-w-0 items-start gap-3"><span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-company-50 text-company-600"><Building2 className="size-5" /></span><div className="min-w-0"><p className="truncate font-bold text-zinc-900">{client.commercialName || client.businessName}</p>{client.commercialName && <p className="mt-0.5 truncate text-sm text-zinc-500">{client.businessName}</p>}<div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-zinc-500">{client.taxId && <span>RFC: {client.taxId}</span>}{client.contactName && <span>{client.contactName}</span>}{client.email && <span className="inline-flex items-center gap-1"><Mail className="size-3.5" />{client.email}</span>}{client.phone && <span className="inline-flex items-center gap-1"><Phone className="size-3.5" />{client.phone}</span>}</div></div></div><div className="flex items-center justify-between gap-4 sm:justify-end"><span className="inline-flex items-center gap-1.5 text-sm text-zinc-500"><MapPin className="size-4" />{client.addresses.length} {client.addresses.length === 1 ? "dirección" : "direcciones"}</span><span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${client.active ? "bg-emerald-50 text-emerald-700" : "bg-zinc-100 text-zinc-500"}`}>{client.active ? "Activo" : "Inactivo"}</span><span className="text-sm font-semibold text-company-700">Ver cliente</span></div></Link>)}</div> : <div className="p-12 text-center"><Building2 className="mx-auto size-9 text-zinc-300" /><p className="mt-3 font-semibold text-zinc-800">{query ? "No encontramos clientes" : "Aún no hay clientes registrados"}</p><p className="mt-1 text-sm text-zinc-500">{query ? "Prueba con otro término o cambia el filtro." : "Crea el primer cliente para registrar sus ubicaciones."}</p></div>}
+      <div className="border-t border-zinc-100 px-5 py-4 text-xs text-zinc-500">Mostrando {matchingCount} {matchingCount === 1 ? "cliente" : "clientes"}</div>
+    </section>
+  </div></main>;
 }

@@ -345,6 +345,7 @@ export type VehicleWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Vehicle"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Vehicle"> | Date | string
   driver?: Prisma.XOR<Prisma.DriverNullableScalarRelationFilter, Prisma.DriverWhereInput> | null
+  fleetExpenses?: Prisma.FleetExpenseListRelationFilter
 }
 
 export type VehicleOrderByWithRelationInput = {
@@ -369,6 +370,7 @@ export type VehicleOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   driver?: Prisma.DriverOrderByWithRelationInput
+  fleetExpenses?: Prisma.FleetExpenseOrderByRelationAggregateInput
 }
 
 export type VehicleWhereUniqueInput = Prisma.AtLeast<{
@@ -396,6 +398,7 @@ export type VehicleWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Vehicle"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Vehicle"> | Date | string
   driver?: Prisma.XOR<Prisma.DriverNullableScalarRelationFilter, Prisma.DriverWhereInput> | null
+  fleetExpenses?: Prisma.FleetExpenseListRelationFilter
 }, "id" | "economicNumber" | "plate" | "vin">
 
 export type VehicleOrderByWithAggregationInput = {
@@ -473,6 +476,7 @@ export type VehicleCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   driver?: Prisma.DriverCreateNestedOneWithoutVehiclesInput
+  fleetExpenses?: Prisma.FleetExpenseCreateNestedManyWithoutVehicleInput
 }
 
 export type VehicleUncheckedCreateInput = {
@@ -496,6 +500,7 @@ export type VehicleUncheckedCreateInput = {
   registrationStatus?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  fleetExpenses?: Prisma.FleetExpenseUncheckedCreateNestedManyWithoutVehicleInput
 }
 
 export type VehicleUpdateInput = {
@@ -519,6 +524,7 @@ export type VehicleUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   driver?: Prisma.DriverUpdateOneWithoutVehiclesNestedInput
+  fleetExpenses?: Prisma.FleetExpenseUpdateManyWithoutVehicleNestedInput
 }
 
 export type VehicleUncheckedUpdateInput = {
@@ -542,6 +548,7 @@ export type VehicleUncheckedUpdateInput = {
   registrationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fleetExpenses?: Prisma.FleetExpenseUncheckedUpdateManyWithoutVehicleNestedInput
 }
 
 export type VehicleCreateManyInput = {
@@ -703,6 +710,11 @@ export type VehicleSumOrderByAggregateInput = {
   fuelLevel?: Prisma.SortOrder
 }
 
+export type VehicleScalarRelationFilter = {
+  is?: Prisma.VehicleWhereInput
+  isNot?: Prisma.VehicleWhereInput
+}
+
 export type VehicleCreateNestedManyWithoutDriverInput = {
   create?: Prisma.XOR<Prisma.VehicleCreateWithoutDriverInput, Prisma.VehicleUncheckedCreateWithoutDriverInput> | Prisma.VehicleCreateWithoutDriverInput[] | Prisma.VehicleUncheckedCreateWithoutDriverInput[]
   connectOrCreate?: Prisma.VehicleCreateOrConnectWithoutDriverInput | Prisma.VehicleCreateOrConnectWithoutDriverInput[]
@@ -761,6 +773,20 @@ export type EnumVehicleStatusFieldUpdateOperationsInput = {
   set?: $Enums.VehicleStatus
 }
 
+export type VehicleCreateNestedOneWithoutFleetExpensesInput = {
+  create?: Prisma.XOR<Prisma.VehicleCreateWithoutFleetExpensesInput, Prisma.VehicleUncheckedCreateWithoutFleetExpensesInput>
+  connectOrCreate?: Prisma.VehicleCreateOrConnectWithoutFleetExpensesInput
+  connect?: Prisma.VehicleWhereUniqueInput
+}
+
+export type VehicleUpdateOneRequiredWithoutFleetExpensesNestedInput = {
+  create?: Prisma.XOR<Prisma.VehicleCreateWithoutFleetExpensesInput, Prisma.VehicleUncheckedCreateWithoutFleetExpensesInput>
+  connectOrCreate?: Prisma.VehicleCreateOrConnectWithoutFleetExpensesInput
+  upsert?: Prisma.VehicleUpsertWithoutFleetExpensesInput
+  connect?: Prisma.VehicleWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.VehicleUpdateToOneWithWhereWithoutFleetExpensesInput, Prisma.VehicleUpdateWithoutFleetExpensesInput>, Prisma.VehicleUncheckedUpdateWithoutFleetExpensesInput>
+}
+
 export type VehicleCreateWithoutDriverInput = {
   id?: string
   economicNumber: string
@@ -781,6 +807,7 @@ export type VehicleCreateWithoutDriverInput = {
   registrationStatus?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  fleetExpenses?: Prisma.FleetExpenseCreateNestedManyWithoutVehicleInput
 }
 
 export type VehicleUncheckedCreateWithoutDriverInput = {
@@ -803,6 +830,7 @@ export type VehicleUncheckedCreateWithoutDriverInput = {
   registrationStatus?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  fleetExpenses?: Prisma.FleetExpenseUncheckedCreateNestedManyWithoutVehicleInput
 }
 
 export type VehicleCreateOrConnectWithoutDriverInput = {
@@ -857,6 +885,114 @@ export type VehicleScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Vehicle"> | Date | string
 }
 
+export type VehicleCreateWithoutFleetExpensesInput = {
+  id?: string
+  economicNumber: string
+  type: $Enums.VehicleType
+  brand: string
+  model: string
+  year: number
+  color?: string | null
+  plate?: string | null
+  vin?: string | null
+  status?: $Enums.VehicleStatus
+  location?: string | null
+  mileage?: number
+  fuelLevel?: number
+  lastServiceAt?: Date | string | null
+  nextServiceAt?: Date | string | null
+  insuranceStatus?: string | null
+  registrationStatus?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  driver?: Prisma.DriverCreateNestedOneWithoutVehiclesInput
+}
+
+export type VehicleUncheckedCreateWithoutFleetExpensesInput = {
+  id?: string
+  economicNumber: string
+  type: $Enums.VehicleType
+  brand: string
+  model: string
+  year: number
+  color?: string | null
+  plate?: string | null
+  vin?: string | null
+  status?: $Enums.VehicleStatus
+  location?: string | null
+  mileage?: number
+  fuelLevel?: number
+  driverId?: string | null
+  lastServiceAt?: Date | string | null
+  nextServiceAt?: Date | string | null
+  insuranceStatus?: string | null
+  registrationStatus?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type VehicleCreateOrConnectWithoutFleetExpensesInput = {
+  where: Prisma.VehicleWhereUniqueInput
+  create: Prisma.XOR<Prisma.VehicleCreateWithoutFleetExpensesInput, Prisma.VehicleUncheckedCreateWithoutFleetExpensesInput>
+}
+
+export type VehicleUpsertWithoutFleetExpensesInput = {
+  update: Prisma.XOR<Prisma.VehicleUpdateWithoutFleetExpensesInput, Prisma.VehicleUncheckedUpdateWithoutFleetExpensesInput>
+  create: Prisma.XOR<Prisma.VehicleCreateWithoutFleetExpensesInput, Prisma.VehicleUncheckedCreateWithoutFleetExpensesInput>
+  where?: Prisma.VehicleWhereInput
+}
+
+export type VehicleUpdateToOneWithWhereWithoutFleetExpensesInput = {
+  where?: Prisma.VehicleWhereInput
+  data: Prisma.XOR<Prisma.VehicleUpdateWithoutFleetExpensesInput, Prisma.VehicleUncheckedUpdateWithoutFleetExpensesInput>
+}
+
+export type VehicleUpdateWithoutFleetExpensesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  economicNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumVehicleTypeFieldUpdateOperationsInput | $Enums.VehicleType
+  brand?: Prisma.StringFieldUpdateOperationsInput | string
+  model?: Prisma.StringFieldUpdateOperationsInput | string
+  year?: Prisma.IntFieldUpdateOperationsInput | number
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumVehicleStatusFieldUpdateOperationsInput | $Enums.VehicleStatus
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mileage?: Prisma.IntFieldUpdateOperationsInput | number
+  fuelLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  lastServiceAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextServiceAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  insuranceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  driver?: Prisma.DriverUpdateOneWithoutVehiclesNestedInput
+}
+
+export type VehicleUncheckedUpdateWithoutFleetExpensesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  economicNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumVehicleTypeFieldUpdateOperationsInput | $Enums.VehicleType
+  brand?: Prisma.StringFieldUpdateOperationsInput | string
+  model?: Prisma.StringFieldUpdateOperationsInput | string
+  year?: Prisma.IntFieldUpdateOperationsInput | number
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumVehicleStatusFieldUpdateOperationsInput | $Enums.VehicleStatus
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mileage?: Prisma.IntFieldUpdateOperationsInput | number
+  fuelLevel?: Prisma.IntFieldUpdateOperationsInput | number
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastServiceAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  nextServiceAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  insuranceStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registrationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type VehicleCreateManyDriverInput = {
   id?: string
   economicNumber: string
@@ -899,6 +1035,7 @@ export type VehicleUpdateWithoutDriverInput = {
   registrationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fleetExpenses?: Prisma.FleetExpenseUpdateManyWithoutVehicleNestedInput
 }
 
 export type VehicleUncheckedUpdateWithoutDriverInput = {
@@ -921,6 +1058,7 @@ export type VehicleUncheckedUpdateWithoutDriverInput = {
   registrationStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fleetExpenses?: Prisma.FleetExpenseUncheckedUpdateManyWithoutVehicleNestedInput
 }
 
 export type VehicleUncheckedUpdateManyWithoutDriverInput = {
@@ -946,6 +1084,35 @@ export type VehicleUncheckedUpdateManyWithoutDriverInput = {
 }
 
 
+/**
+ * Count Type VehicleCountOutputType
+ */
+
+export type VehicleCountOutputType = {
+  fleetExpenses: number
+}
+
+export type VehicleCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  fleetExpenses?: boolean | VehicleCountOutputTypeCountFleetExpensesArgs
+}
+
+/**
+ * VehicleCountOutputType without action
+ */
+export type VehicleCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the VehicleCountOutputType
+   */
+  select?: Prisma.VehicleCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * VehicleCountOutputType without action
+ */
+export type VehicleCountOutputTypeCountFleetExpensesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FleetExpenseWhereInput
+}
+
 
 export type VehicleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -969,6 +1136,8 @@ export type VehicleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   createdAt?: boolean
   updatedAt?: boolean
   driver?: boolean | Prisma.Vehicle$driverArgs<ExtArgs>
+  fleetExpenses?: boolean | Prisma.Vehicle$fleetExpensesArgs<ExtArgs>
+  _count?: boolean | Prisma.VehicleCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["vehicle"]>
 
 export type VehicleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1045,6 +1214,8 @@ export type VehicleSelectScalar = {
 export type VehicleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "economicNumber" | "type" | "brand" | "model" | "year" | "color" | "plate" | "vin" | "status" | "location" | "mileage" | "fuelLevel" | "driverId" | "lastServiceAt" | "nextServiceAt" | "insuranceStatus" | "registrationStatus" | "createdAt" | "updatedAt", ExtArgs["result"]["vehicle"]>
 export type VehicleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   driver?: boolean | Prisma.Vehicle$driverArgs<ExtArgs>
+  fleetExpenses?: boolean | Prisma.Vehicle$fleetExpensesArgs<ExtArgs>
+  _count?: boolean | Prisma.VehicleCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type VehicleIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   driver?: boolean | Prisma.Vehicle$driverArgs<ExtArgs>
@@ -1057,6 +1228,7 @@ export type $VehiclePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   name: "Vehicle"
   objects: {
     driver: Prisma.$DriverPayload<ExtArgs> | null
+    fleetExpenses: Prisma.$FleetExpensePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1474,6 +1646,7 @@ readonly fields: VehicleFieldRefs;
 export interface Prisma__VehicleClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   driver<T extends Prisma.Vehicle$driverArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Vehicle$driverArgs<ExtArgs>>): Prisma.Prisma__DriverClient<runtime.Types.Result.GetResult<Prisma.$DriverPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  fleetExpenses<T extends Prisma.Vehicle$fleetExpensesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Vehicle$fleetExpensesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FleetExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1940,6 +2113,30 @@ export type Vehicle$driverArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   include?: Prisma.DriverInclude<ExtArgs> | null
   where?: Prisma.DriverWhereInput
+}
+
+/**
+ * Vehicle.fleetExpenses
+ */
+export type Vehicle$fleetExpensesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FleetExpense
+   */
+  select?: Prisma.FleetExpenseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FleetExpense
+   */
+  omit?: Prisma.FleetExpenseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FleetExpenseInclude<ExtArgs> | null
+  where?: Prisma.FleetExpenseWhereInput
+  orderBy?: Prisma.FleetExpenseOrderByWithRelationInput | Prisma.FleetExpenseOrderByWithRelationInput[]
+  cursor?: Prisma.FleetExpenseWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FleetExpenseScalarFieldEnum | Prisma.FleetExpenseScalarFieldEnum[]
 }
 
 /**

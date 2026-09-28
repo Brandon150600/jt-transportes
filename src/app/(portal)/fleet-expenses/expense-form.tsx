@@ -7,34 +7,37 @@ import { saveFleetExpense, type FleetExpenseFormState } from "@/app/actions/flee
 
 type VehicleOption = { id: string; economicNumber: string; brand: string; model: string };
 type SupplierOption = { id: string; name: string };
-type Item = { description: string; quantity: number; unitCost: number };
+type TripOption = { id: string; tripNumber: string; vehicleId: string; clientNameSnapshot: string };
+type Item = { description: string; quantity: number; unitCost: number; unit?: string };
 type ExistingExpense = {
-  id: string; vehicleId: string; supplierId: string | null; category: string;
+  id: string; vehicleId: string; supplierId: string | null; tripId: string | null; category: string;
   expenseDate: string; description: string; total: string; laborAmount: string;
   mileage: number | null; receiptNumber: string | null; notes: string | null;
   items: Item[];
 };
 
 const categories = [
+  ["FUEL", "Combustible"], ["TOLLS", "Casetas"], ["PER_DIEM", "Viáticos"],
   ["PARTS", "Refacciones"], ["MAINTENANCE", "Mantenimiento"],
   ["WASH", "Lavado"], ["TIRES", "Llantas"], ["OTHER", "Otro"],
 ];
 const initialState: FleetExpenseFormState = {};
 
 export function ExpenseForm({
-  vehicles, suppliers, expense,
-}: { vehicles: VehicleOption[]; suppliers: SupplierOption[]; expense?: ExistingExpense }) {
+  vehicles, suppliers, trips, expense, defaultTripId, defaultVehicleId,
+}: { vehicles: VehicleOption[]; suppliers: SupplierOption[]; trips: TripOption[]; expense?: ExistingExpense; defaultTripId?: string; defaultVehicleId?: string }) {
   const [state, action, pending] = useActionState(saveFleetExpense, initialState);
   const [detailed, setDetailed] = useState(Boolean(expense?.items.length));
   const [items, setItems] = useState<Item[]>(expense?.items ?? []);
   const [labor, setLabor] = useState(Number(expense?.laborAmount) || 0);
   const [newSupplier, setNewSupplier] = useState(false);
+  const [vehicleId, setVehicleId] = useState(expense?.vehicleId ?? defaultVehicleId ?? "");
   const subtotal = items.reduce((sum, item) => sum + (Number(item.quantity) || 0) * (Number(item.unitCost) || 0), 0);
   const total = subtotal + labor;
 
   function updateItem(index: number, key: keyof Item, value: string) {
     setItems((current) => current.map((item, itemIndex) => itemIndex === index
-      ? { ...item, [key]: key === "description" ? value : Number(value) }
+      ? { ...item, [key]: key === "description" || key === "unit" ? value : Number(value) }
       : item));
   }
 
@@ -49,9 +52,15 @@ export function ExpenseForm({
         <p className="mt-1 text-sm text-zinc-500">Captura lo esencial ahora; puedes agregar conceptos si tienes el detalle.</p>
         <div className="mt-5 grid gap-4 sm:grid-cols-2">
           <Field label="Unidad" error={state.fieldErrors?.vehicleId}>
-            <select name="vehicleId" required defaultValue={expense?.vehicleId ?? ""} className={inputClass}>
+            <select name="vehicleId" required value={vehicleId} onChange={(event) => setVehicleId(event.target.value)} className={inputClass}>
               <option value="" disabled>Selecciona una unidad</option>
               {vehicles.map((vehicle) => <option key={vehicle.id} value={vehicle.id}>{vehicle.economicNumber} · {vehicle.brand} {vehicle.model}</option>)}
+            </select>
+          </Field>
+          <Field label="Viaje asociado (opcional)" error={state.fieldErrors?.tripId}>
+            <select name="tripId" defaultValue={expense?.tripId ?? defaultTripId ?? ""} className={inputClass}>
+              <option value="">Gasto general de la unidad</option>
+              {trips.filter((trip) => trip.vehicleId === vehicleId).map((trip) => <option key={trip.id} value={trip.id}>{trip.tripNumber} · {trip.clientNameSnapshot}</option>)}
             </select>
           </Field>
           <Field label="Categoría" error={state.fieldErrors?.category}>
@@ -92,11 +101,12 @@ export function ExpenseForm({
       </section>
 
       {detailed && <section className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm sm:p-6">
-        <div className="flex items-center justify-between"><div><h2 className="text-lg font-bold text-zinc-900">Conceptos</h2><p className="mt-1 text-sm text-zinc-500">Agrega productos o servicios de la nota.</p></div><button type="button" onClick={() => setItems((current) => [...current, { description: "", quantity: 1, unitCost: 0 }])} className="inline-flex items-center gap-1 rounded-xl border border-zinc-200 px-3 py-2 text-sm font-semibold"><Plus className="size-4" /> Agregar</button></div>
+        <div className="flex items-center justify-between"><div><h2 className="text-lg font-bold text-zinc-900">Conceptos</h2><p className="mt-1 text-sm text-zinc-500">Agrega productos o servicios de la nota.</p>{state.fieldErrors?.items && <p className="mt-1 text-xs text-red-600">{state.fieldErrors.items}</p>}</div><button type="button" onClick={() => setItems((current) => [...current, { description: "", quantity: 1, unitCost: 0, unit: "" }])} className="inline-flex items-center gap-1 rounded-xl border border-zinc-200 px-3 py-2 text-sm font-semibold"><Plus className="size-4" /> Agregar</button></div>
         <div className="mt-4 space-y-3">
-          {items.map((item, index) => <div key={index} className="grid gap-2 rounded-xl bg-zinc-50 p-3 sm:grid-cols-[minmax(0,1fr)_100px_140px_100px_40px] sm:items-end">
+          {items.map((item, index) => <div key={index} className="grid gap-2 rounded-xl bg-zinc-50 p-3 sm:grid-cols-[minmax(0,1fr)_85px_70px_125px_100px_40px] sm:items-end">
             <label className="text-xs font-medium text-zinc-600">Concepto<input value={item.description} onChange={(event) => updateItem(index, "description", event.target.value)} className={`${inputClass} mt-1`} placeholder="Filtro de aceite" /></label>
             <label className="text-xs font-medium text-zinc-600">Cantidad<input type="number" min="0.001" step="0.001" value={item.quantity} onChange={(event) => updateItem(index, "quantity", event.target.value)} className={`${inputClass} mt-1`} /></label>
+            <label className="text-xs font-medium text-zinc-600">Unidad<input value={item.unit ?? ""} onChange={(event) => updateItem(index, "unit", event.target.value)} className={`${inputClass} mt-1`} placeholder="L, pieza" /></label>
             <label className="text-xs font-medium text-zinc-600">Costo unitario<input type="number" min="0" step="0.01" value={item.unitCost} onChange={(event) => updateItem(index, "unitCost", event.target.value)} className={`${inputClass} mt-1`} /></label>
             <p className="pb-3 text-sm font-semibold text-zinc-800">${((Number(item.quantity) || 0) * (Number(item.unitCost) || 0)).toFixed(2)}</p>
             <button type="button" aria-label="Eliminar concepto" onClick={() => setItems((current) => current.filter((_, i) => i !== index))} className="mb-2 flex size-9 items-center justify-center rounded-lg text-zinc-400 hover:bg-red-50 hover:text-red-600"><Trash2 className="size-4" /></button>

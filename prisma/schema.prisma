@@ -49,6 +49,8 @@ model User {
   sessions             Session[]
   createdFleetExpenses FleetExpense[] @relation("FleetExpenseCreatedBy")
   paidFleetExpenses    FleetExpense[] @relation("FleetExpensePaidBy")
+  createdTrips         Trip[]         @relation("TripCreatedBy")
+  updatedTrips         Trip[]         @relation("TripUpdatedBy")
 }
 
 model Session {
@@ -65,54 +67,56 @@ model Session {
 }
 
 model Driver {
-  id            String       @id @default(cuid())
+  id String @id @default(cuid())
 
-  name          String
-  phone         String?
-  licenseNumber String?
-  licenseType   String?
+  name             String
+  phone            String?
+  licenseNumber    String?
+  licenseType      String?
   licenseExpiresAt DateTime?
-  status        DriverStatus @default(ACTIVE)
+  status           DriverStatus @default(ACTIVE)
 
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  vehicles      Vehicle[]
+  vehicles Vehicle[]
+  trips    Trip[]
 
   @@index([status])
 }
 
 model Vehicle {
-  id                 String        @id @default(cuid())
+  id String @id @default(cuid())
 
-  economicNumber     String        @unique
+  economicNumber String @unique
 
-  type               VehicleType
-  brand              String
-  model              String
-  year               Int
-  color              String?
+  type  VehicleType
+  brand String
+  model String
+  year  Int
+  color String?
 
-  plate              String?       @unique
-  vin                String?       @unique
+  plate String? @unique
+  vin   String? @unique
 
-  status             VehicleStatus @default(AVAILABLE)
-  location           String?
-  mileage            Int           @default(0)
-  fuelLevel          Int           @default(0)
+  status    VehicleStatus @default(AVAILABLE)
+  location  String?
+  mileage   Int           @default(0)
+  fuelLevel Int           @default(0)
 
-  driverId           String?
-  driver             Driver?       @relation(fields: [driverId], references: [id], onDelete: SetNull)
+  driverId String?
+  driver   Driver? @relation(fields: [driverId], references: [id], onDelete: SetNull)
 
-  lastServiceAt      DateTime?
-  nextServiceAt      DateTime?
+  lastServiceAt DateTime?
+  nextServiceAt DateTime?
 
   insuranceStatus    String?
   registrationStatus String?
 
-  createdAt          DateTime      @default(now())
-  updatedAt          DateTime      @updatedAt
-  fleetExpenses      FleetExpense[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  fleetExpenses FleetExpense[]
+  trips         Trip[]
 
   @@index([status])
   @@index([driverId])
@@ -120,6 +124,9 @@ model Vehicle {
 }
 
 enum ExpenseCategory {
+  FUEL
+  TOLLS
+  PER_DIEM
   PARTS
   MAINTENANCE
   WASH
@@ -168,6 +175,7 @@ model FleetExpense {
   vehicleId        String
   createdById      String
   supplierId       String?
+  tripId           String?
   expenseDate      DateTime           @default(now()) @db.Date
   category         ExpenseCategory
   description      String
@@ -191,6 +199,7 @@ model FleetExpense {
   vehicle   Vehicle       @relation(fields: [vehicleId], references: [id], onDelete: Restrict)
   createdBy User          @relation("FleetExpenseCreatedBy", fields: [createdById], references: [id], onDelete: Restrict)
   supplier  Supplier?     @relation(fields: [supplierId], references: [id], onDelete: SetNull)
+  trip      Trip?         @relation(fields: [tripId], references: [id], onDelete: Restrict)
   paidBy    User?         @relation("FleetExpensePaidBy", fields: [paidByUserId], references: [id], onDelete: Restrict)
   items     ExpenseItem[]
 
@@ -201,12 +210,14 @@ model FleetExpense {
   @@index([paymentStatus, expenseDate])
   @@index([createdById, expenseDate])
   @@index([paidByUserId])
+  @@index([tripId, expenseDate])
 }
 
 model ExpenseItem {
   id             String   @id @default(cuid())
   fleetExpenseId String
   description    String
+  unit           String?
   quantity       Decimal  @db.Decimal(10, 3)
   unitCost       Decimal  @db.Decimal(12, 2)
   subtotal       Decimal  @db.Decimal(12, 2)
@@ -232,31 +243,80 @@ model Client {
   updatedAt      DateTime @updatedAt
 
   addresses ClientAddress[]
+  trips     Trip[]
 
   @@index([active, businessName])
   @@index([commercialName])
 }
 
 model ClientAddress {
-  id              String   @id @default(cuid())
-  clientId        String
-  name            String
-  street          String
-  exteriorNumber  String?
-  interiorNumber  String?
-  neighborhood    String?
-  city            String
-  state           String
-  postalCode      String?
-  country         String   @default("México")
-  reference       String?
-  notes           String?
-  active          Boolean  @default(true)
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id             String   @id @default(cuid())
+  clientId       String
+  name           String
+  street         String
+  exteriorNumber String?
+  interiorNumber String?
+  neighborhood   String?
+  city           String
+  state          String
+  postalCode     String?
+  country        String   @default("México")
+  reference      String?
+  notes          String?
+  active         Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
   client Client @relation(fields: [clientId], references: [id], onDelete: Restrict)
+  trips  Trip[]
 
   @@unique([clientId, name])
   @@index([clientId, active])
+}
+
+enum TripStatus {
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+model Trip {
+  id                      String     @id @default(cuid())
+  tripNumber              String     @unique
+  status                  TripStatus @default(SCHEDULED)
+  clientId                String
+  destinationAddressId    String
+  clientNameSnapshot      String
+  destinationNameSnapshot String
+  destinationSnapshot     String
+  origin                  String
+  vehicleId               String
+  driverId                String
+  scheduledStartAt        DateTime
+  startedAt               DateTime?
+  completedAt             DateTime?
+  cancelledAt             DateTime?
+  mileageStart            Int
+  mileageEnd              Int?
+  revenue                 Decimal    @db.Decimal(12, 2)
+  notes                   String?
+  createdById             String
+  updatedById             String
+  createdAt               DateTime   @default(now())
+  updatedAt               DateTime   @updatedAt
+
+  client      Client         @relation(fields: [clientId], references: [id], onDelete: Restrict)
+  destination ClientAddress  @relation(fields: [destinationAddressId], references: [id], onDelete: Restrict)
+  vehicle     Vehicle        @relation(fields: [vehicleId], references: [id], onDelete: Restrict)
+  driver      Driver         @relation(fields: [driverId], references: [id], onDelete: Restrict)
+  createdBy   User           @relation("TripCreatedBy", fields: [createdById], references: [id], onDelete: Restrict)
+  updatedBy   User           @relation("TripUpdatedBy", fields: [updatedById], references: [id], onDelete: Restrict)
+  expenses    FleetExpense[]
+
+  @@index([clientId, scheduledStartAt])
+  @@index([destinationAddressId])
+  @@index([vehicleId, scheduledStartAt])
+  @@index([driverId, scheduledStartAt])
+  @@index([status, scheduledStartAt])
 }

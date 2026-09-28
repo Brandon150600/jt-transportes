@@ -59,7 +59,8 @@ export const ModelName = {
   FleetExpense: 'FleetExpense',
   ExpenseItem: 'ExpenseItem',
   Client: 'Client',
-  ClientAddress: 'ClientAddress'
+  ClientAddress: 'ClientAddress',
+  Trip: 'Trip'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -166,6 +167,7 @@ export const FleetExpenseScalarFieldEnum = {
   vehicleId: 'vehicleId',
   createdById: 'createdById',
   supplierId: 'supplierId',
+  tripId: 'tripId',
   expenseDate: 'expenseDate',
   category: 'category',
   description: 'description',
@@ -194,6 +196,7 @@ export const ExpenseItemScalarFieldEnum = {
   id: 'id',
   fleetExpenseId: 'fleetExpenseId',
   description: 'description',
+  unit: 'unit',
   quantity: 'quantity',
   unitCost: 'unitCost',
   subtotal: 'subtotal',
@@ -241,6 +244,35 @@ export const ClientAddressScalarFieldEnum = {
 } as const
 
 export type ClientAddressScalarFieldEnum = (typeof ClientAddressScalarFieldEnum)[keyof typeof ClientAddressScalarFieldEnum]
+
+
+export const TripScalarFieldEnum = {
+  id: 'id',
+  tripNumber: 'tripNumber',
+  status: 'status',
+  clientId: 'clientId',
+  destinationAddressId: 'destinationAddressId',
+  clientNameSnapshot: 'clientNameSnapshot',
+  destinationNameSnapshot: 'destinationNameSnapshot',
+  destinationSnapshot: 'destinationSnapshot',
+  origin: 'origin',
+  vehicleId: 'vehicleId',
+  driverId: 'driverId',
+  scheduledStartAt: 'scheduledStartAt',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt',
+  cancelledAt: 'cancelledAt',
+  mileageStart: 'mileageStart',
+  mileageEnd: 'mileageEnd',
+  revenue: 'revenue',
+  notes: 'notes',
+  createdById: 'createdById',
+  updatedById: 'updatedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TripScalarFieldEnum = (typeof TripScalarFieldEnum)[keyof typeof TripScalarFieldEnum]
 
 
 export const SortOrder = {

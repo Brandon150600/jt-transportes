@@ -151,6 +151,7 @@ export function DriverForm({ driver }: DriverFormProps) {
                             >
                                 <option value="ACTIVE">Activo</option>
                                 <option value="INACTIVE">Inactivo</option>
+                                <option value="SUSPENDED">Suspendido</option>
                             </select>
                         </div>
 
@@ -255,7 +256,11 @@ export function DriverForm({ driver }: DriverFormProps) {
                                 type="date"
                                 defaultValue={
                                     driver?.licenseExpiresAt
-                                        ? driver.licenseExpiresAt.toISOString().split("T")[0]
+                                        ? new Date(Date.UTC(
+                                              driver.licenseExpiresAt.getUTCFullYear(),
+                                              driver.licenseExpiresAt.getUTCMonth(),
+                                              driver.licenseExpiresAt.getUTCDate(),
+                                          )).toISOString().slice(0, 10)
                                         : ""
                                 }
                                 className="h-11 w-full rounded-xl border border-zinc-200 bg-zinc-50 pl-10 pr-4 text-sm text-zinc-900 outline-none transition focus:border-company focus:bg-white focus:ring-4 focus:ring-company-100"

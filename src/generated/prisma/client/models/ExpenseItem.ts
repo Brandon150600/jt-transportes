@@ -42,6 +42,7 @@ export type ExpenseItemMinAggregateOutputType = {
   id: string | null
   fleetExpenseId: string | null
   description: string | null
+  unit: string | null
   quantity: runtime.Decimal | null
   unitCost: runtime.Decimal | null
   subtotal: runtime.Decimal | null
@@ -53,6 +54,7 @@ export type ExpenseItemMaxAggregateOutputType = {
   id: string | null
   fleetExpenseId: string | null
   description: string | null
+  unit: string | null
   quantity: runtime.Decimal | null
   unitCost: runtime.Decimal | null
   subtotal: runtime.Decimal | null
@@ -64,6 +66,7 @@ export type ExpenseItemCountAggregateOutputType = {
   id: number
   fleetExpenseId: number
   description: number
+  unit: number
   quantity: number
   unitCost: number
   subtotal: number
@@ -89,6 +92,7 @@ export type ExpenseItemMinAggregateInputType = {
   id?: true
   fleetExpenseId?: true
   description?: true
+  unit?: true
   quantity?: true
   unitCost?: true
   subtotal?: true
@@ -100,6 +104,7 @@ export type ExpenseItemMaxAggregateInputType = {
   id?: true
   fleetExpenseId?: true
   description?: true
+  unit?: true
   quantity?: true
   unitCost?: true
   subtotal?: true
@@ -111,6 +116,7 @@ export type ExpenseItemCountAggregateInputType = {
   id?: true
   fleetExpenseId?: true
   description?: true
+  unit?: true
   quantity?: true
   unitCost?: true
   subtotal?: true
@@ -209,6 +215,7 @@ export type ExpenseItemGroupByOutputType = {
   id: string
   fleetExpenseId: string
   description: string
+  unit: string | null
   quantity: runtime.Decimal
   unitCost: runtime.Decimal
   subtotal: runtime.Decimal
@@ -243,6 +250,7 @@ export type ExpenseItemWhereInput = {
   id?: Prisma.StringFilter<"ExpenseItem"> | string
   fleetExpenseId?: Prisma.StringFilter<"ExpenseItem"> | string
   description?: Prisma.StringFilter<"ExpenseItem"> | string
+  unit?: Prisma.StringNullableFilter<"ExpenseItem"> | string | null
   quantity?: Prisma.DecimalFilter<"ExpenseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalFilter<"ExpenseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFilter<"ExpenseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -255,6 +263,7 @@ export type ExpenseItemOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   fleetExpenseId?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  unit?: Prisma.SortOrderInput | Prisma.SortOrder
   quantity?: Prisma.SortOrder
   unitCost?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
@@ -270,6 +279,7 @@ export type ExpenseItemWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ExpenseItemWhereInput | Prisma.ExpenseItemWhereInput[]
   fleetExpenseId?: Prisma.StringFilter<"ExpenseItem"> | string
   description?: Prisma.StringFilter<"ExpenseItem"> | string
+  unit?: Prisma.StringNullableFilter<"ExpenseItem"> | string | null
   quantity?: Prisma.DecimalFilter<"ExpenseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalFilter<"ExpenseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFilter<"ExpenseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -282,6 +292,7 @@ export type ExpenseItemOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   fleetExpenseId?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  unit?: Prisma.SortOrderInput | Prisma.SortOrder
   quantity?: Prisma.SortOrder
   unitCost?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
@@ -301,6 +312,7 @@ export type ExpenseItemScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"ExpenseItem"> | string
   fleetExpenseId?: Prisma.StringWithAggregatesFilter<"ExpenseItem"> | string
   description?: Prisma.StringWithAggregatesFilter<"ExpenseItem"> | string
+  unit?: Prisma.StringNullableWithAggregatesFilter<"ExpenseItem"> | string | null
   quantity?: Prisma.DecimalWithAggregatesFilter<"ExpenseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalWithAggregatesFilter<"ExpenseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalWithAggregatesFilter<"ExpenseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -311,6 +323,7 @@ export type ExpenseItemScalarWhereWithAggregatesInput = {
 export type ExpenseItemCreateInput = {
   id?: string
   description: string
+  unit?: string | null
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -323,6 +336,7 @@ export type ExpenseItemUncheckedCreateInput = {
   id?: string
   fleetExpenseId: string
   description: string
+  unit?: string | null
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -333,6 +347,7 @@ export type ExpenseItemUncheckedCreateInput = {
 export type ExpenseItemUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -345,6 +360,7 @@ export type ExpenseItemUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fleetExpenseId?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -356,6 +372,7 @@ export type ExpenseItemCreateManyInput = {
   id?: string
   fleetExpenseId: string
   description: string
+  unit?: string | null
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -366,6 +383,7 @@ export type ExpenseItemCreateManyInput = {
 export type ExpenseItemUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -377,6 +395,7 @@ export type ExpenseItemUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fleetExpenseId?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -398,6 +417,7 @@ export type ExpenseItemCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   fleetExpenseId?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  unit?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   unitCost?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
@@ -415,6 +435,7 @@ export type ExpenseItemMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   fleetExpenseId?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  unit?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   unitCost?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
@@ -426,6 +447,7 @@ export type ExpenseItemMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   fleetExpenseId?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  unit?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
   unitCost?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
@@ -484,6 +506,7 @@ export type ExpenseItemUncheckedUpdateManyWithoutFleetExpenseNestedInput = {
 export type ExpenseItemCreateWithoutFleetExpenseInput = {
   id?: string
   description: string
+  unit?: string | null
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -494,6 +517,7 @@ export type ExpenseItemCreateWithoutFleetExpenseInput = {
 export type ExpenseItemUncheckedCreateWithoutFleetExpenseInput = {
   id?: string
   description: string
+  unit?: string | null
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -534,6 +558,7 @@ export type ExpenseItemScalarWhereInput = {
   id?: Prisma.StringFilter<"ExpenseItem"> | string
   fleetExpenseId?: Prisma.StringFilter<"ExpenseItem"> | string
   description?: Prisma.StringFilter<"ExpenseItem"> | string
+  unit?: Prisma.StringNullableFilter<"ExpenseItem"> | string | null
   quantity?: Prisma.DecimalFilter<"ExpenseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalFilter<"ExpenseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFilter<"ExpenseItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -544,6 +569,7 @@ export type ExpenseItemScalarWhereInput = {
 export type ExpenseItemCreateManyFleetExpenseInput = {
   id?: string
   description: string
+  unit?: string | null
   quantity: runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost: runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -554,6 +580,7 @@ export type ExpenseItemCreateManyFleetExpenseInput = {
 export type ExpenseItemUpdateWithoutFleetExpenseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -564,6 +591,7 @@ export type ExpenseItemUpdateWithoutFleetExpenseInput = {
 export type ExpenseItemUncheckedUpdateWithoutFleetExpenseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -574,6 +602,7 @@ export type ExpenseItemUncheckedUpdateWithoutFleetExpenseInput = {
 export type ExpenseItemUncheckedUpdateManyWithoutFleetExpenseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  unit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   quantity?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -587,6 +616,7 @@ export type ExpenseItemSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   id?: boolean
   fleetExpenseId?: boolean
   description?: boolean
+  unit?: boolean
   quantity?: boolean
   unitCost?: boolean
   subtotal?: boolean
@@ -599,6 +629,7 @@ export type ExpenseItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   id?: boolean
   fleetExpenseId?: boolean
   description?: boolean
+  unit?: boolean
   quantity?: boolean
   unitCost?: boolean
   subtotal?: boolean
@@ -611,6 +642,7 @@ export type ExpenseItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   id?: boolean
   fleetExpenseId?: boolean
   description?: boolean
+  unit?: boolean
   quantity?: boolean
   unitCost?: boolean
   subtotal?: boolean
@@ -623,6 +655,7 @@ export type ExpenseItemSelectScalar = {
   id?: boolean
   fleetExpenseId?: boolean
   description?: boolean
+  unit?: boolean
   quantity?: boolean
   unitCost?: boolean
   subtotal?: boolean
@@ -630,7 +663,7 @@ export type ExpenseItemSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ExpenseItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fleetExpenseId" | "description" | "quantity" | "unitCost" | "subtotal" | "createdAt" | "updatedAt", ExtArgs["result"]["expenseItem"]>
+export type ExpenseItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fleetExpenseId" | "description" | "unit" | "quantity" | "unitCost" | "subtotal" | "createdAt" | "updatedAt", ExtArgs["result"]["expenseItem"]>
 export type ExpenseItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   fleetExpense?: boolean | Prisma.FleetExpenseDefaultArgs<ExtArgs>
 }
@@ -650,6 +683,7 @@ export type $ExpenseItemPayload<ExtArgs extends runtime.Types.Extensions.Interna
     id: string
     fleetExpenseId: string
     description: string
+    unit: string | null
     quantity: runtime.Decimal
     unitCost: runtime.Decimal
     subtotal: runtime.Decimal
@@ -1082,6 +1116,7 @@ export interface ExpenseItemFieldRefs {
   readonly id: Prisma.FieldRef<"ExpenseItem", 'String'>
   readonly fleetExpenseId: Prisma.FieldRef<"ExpenseItem", 'String'>
   readonly description: Prisma.FieldRef<"ExpenseItem", 'String'>
+  readonly unit: Prisma.FieldRef<"ExpenseItem", 'String'>
   readonly quantity: Prisma.FieldRef<"ExpenseItem", 'Decimal'>
   readonly unitCost: Prisma.FieldRef<"ExpenseItem", 'Decimal'>
   readonly subtotal: Prisma.FieldRef<"ExpenseItem", 'Decimal'>

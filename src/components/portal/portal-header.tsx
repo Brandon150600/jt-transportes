@@ -55,6 +55,11 @@ const navigation: NavItem[] = [
         icon: Truck,
     },
     {
+        label: "Viajes",
+        href: "/trips",
+        icon: Truck,
+    },
+    {
         label: "Gastos",
         href: "/fleet-expenses",
         icon: Wallet,
@@ -239,7 +244,7 @@ export function PortalHeader({ user }: { user: PortalUser }) {
                                         Configuración
                                     </Link>
 
-                                    <form action={logout} method="POST">
+                                    <form action={logout}>
                                         <button
                                             type="submit"
                                             className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-zinc-700 transition hover:bg-red-50 hover:text-company-700"

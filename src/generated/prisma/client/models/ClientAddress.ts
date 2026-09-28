@@ -271,6 +271,7 @@ export type ClientAddressWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"ClientAddress"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ClientAddress"> | Date | string
   client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
+  trips?: Prisma.TripListRelationFilter
 }
 
 export type ClientAddressOrderByWithRelationInput = {
@@ -291,6 +292,7 @@ export type ClientAddressOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   client?: Prisma.ClientOrderByWithRelationInput
+  trips?: Prisma.TripOrderByRelationAggregateInput
 }
 
 export type ClientAddressWhereUniqueInput = Prisma.AtLeast<{
@@ -315,6 +317,7 @@ export type ClientAddressWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"ClientAddress"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ClientAddress"> | Date | string
   client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
+  trips?: Prisma.TripListRelationFilter
 }, "id" | "clientId_name">
 
 export type ClientAddressOrderByWithAggregationInput = {
@@ -378,6 +381,7 @@ export type ClientAddressCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   client: Prisma.ClientCreateNestedOneWithoutAddressesInput
+  trips?: Prisma.TripCreateNestedManyWithoutDestinationInput
 }
 
 export type ClientAddressUncheckedCreateInput = {
@@ -397,6 +401,7 @@ export type ClientAddressUncheckedCreateInput = {
   active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  trips?: Prisma.TripUncheckedCreateNestedManyWithoutDestinationInput
 }
 
 export type ClientAddressUpdateInput = {
@@ -416,6 +421,7 @@ export type ClientAddressUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.ClientUpdateOneRequiredWithoutAddressesNestedInput
+  trips?: Prisma.TripUpdateManyWithoutDestinationNestedInput
 }
 
 export type ClientAddressUncheckedUpdateInput = {
@@ -435,6 +441,7 @@ export type ClientAddressUncheckedUpdateInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  trips?: Prisma.TripUncheckedUpdateManyWithoutDestinationNestedInput
 }
 
 export type ClientAddressCreateManyInput = {
@@ -565,6 +572,11 @@ export type ClientAddressMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
+export type ClientAddressScalarRelationFilter = {
+  is?: Prisma.ClientAddressWhereInput
+  isNot?: Prisma.ClientAddressWhereInput
+}
+
 export type ClientAddressCreateNestedManyWithoutClientInput = {
   create?: Prisma.XOR<Prisma.ClientAddressCreateWithoutClientInput, Prisma.ClientAddressUncheckedCreateWithoutClientInput> | Prisma.ClientAddressCreateWithoutClientInput[] | Prisma.ClientAddressUncheckedCreateWithoutClientInput[]
   connectOrCreate?: Prisma.ClientAddressCreateOrConnectWithoutClientInput | Prisma.ClientAddressCreateOrConnectWithoutClientInput[]
@@ -607,6 +619,20 @@ export type ClientAddressUncheckedUpdateManyWithoutClientNestedInput = {
   deleteMany?: Prisma.ClientAddressScalarWhereInput | Prisma.ClientAddressScalarWhereInput[]
 }
 
+export type ClientAddressCreateNestedOneWithoutTripsInput = {
+  create?: Prisma.XOR<Prisma.ClientAddressCreateWithoutTripsInput, Prisma.ClientAddressUncheckedCreateWithoutTripsInput>
+  connectOrCreate?: Prisma.ClientAddressCreateOrConnectWithoutTripsInput
+  connect?: Prisma.ClientAddressWhereUniqueInput
+}
+
+export type ClientAddressUpdateOneRequiredWithoutTripsNestedInput = {
+  create?: Prisma.XOR<Prisma.ClientAddressCreateWithoutTripsInput, Prisma.ClientAddressUncheckedCreateWithoutTripsInput>
+  connectOrCreate?: Prisma.ClientAddressCreateOrConnectWithoutTripsInput
+  upsert?: Prisma.ClientAddressUpsertWithoutTripsInput
+  connect?: Prisma.ClientAddressWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ClientAddressUpdateToOneWithWhereWithoutTripsInput, Prisma.ClientAddressUpdateWithoutTripsInput>, Prisma.ClientAddressUncheckedUpdateWithoutTripsInput>
+}
+
 export type ClientAddressCreateWithoutClientInput = {
   id?: string
   name: string
@@ -623,6 +649,7 @@ export type ClientAddressCreateWithoutClientInput = {
   active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  trips?: Prisma.TripCreateNestedManyWithoutDestinationInput
 }
 
 export type ClientAddressUncheckedCreateWithoutClientInput = {
@@ -641,6 +668,7 @@ export type ClientAddressUncheckedCreateWithoutClientInput = {
   active?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  trips?: Prisma.TripUncheckedCreateNestedManyWithoutDestinationInput
 }
 
 export type ClientAddressCreateOrConnectWithoutClientInput = {
@@ -691,6 +719,98 @@ export type ClientAddressScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"ClientAddress"> | Date | string
 }
 
+export type ClientAddressCreateWithoutTripsInput = {
+  id?: string
+  name: string
+  street: string
+  exteriorNumber?: string | null
+  interiorNumber?: string | null
+  neighborhood?: string | null
+  city: string
+  state: string
+  postalCode?: string | null
+  country?: string
+  reference?: string | null
+  notes?: string | null
+  active?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  client: Prisma.ClientCreateNestedOneWithoutAddressesInput
+}
+
+export type ClientAddressUncheckedCreateWithoutTripsInput = {
+  id?: string
+  clientId: string
+  name: string
+  street: string
+  exteriorNumber?: string | null
+  interiorNumber?: string | null
+  neighborhood?: string | null
+  city: string
+  state: string
+  postalCode?: string | null
+  country?: string
+  reference?: string | null
+  notes?: string | null
+  active?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ClientAddressCreateOrConnectWithoutTripsInput = {
+  where: Prisma.ClientAddressWhereUniqueInput
+  create: Prisma.XOR<Prisma.ClientAddressCreateWithoutTripsInput, Prisma.ClientAddressUncheckedCreateWithoutTripsInput>
+}
+
+export type ClientAddressUpsertWithoutTripsInput = {
+  update: Prisma.XOR<Prisma.ClientAddressUpdateWithoutTripsInput, Prisma.ClientAddressUncheckedUpdateWithoutTripsInput>
+  create: Prisma.XOR<Prisma.ClientAddressCreateWithoutTripsInput, Prisma.ClientAddressUncheckedCreateWithoutTripsInput>
+  where?: Prisma.ClientAddressWhereInput
+}
+
+export type ClientAddressUpdateToOneWithWhereWithoutTripsInput = {
+  where?: Prisma.ClientAddressWhereInput
+  data: Prisma.XOR<Prisma.ClientAddressUpdateWithoutTripsInput, Prisma.ClientAddressUncheckedUpdateWithoutTripsInput>
+}
+
+export type ClientAddressUpdateWithoutTripsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  street?: Prisma.StringFieldUpdateOperationsInput | string
+  exteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interiorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  client?: Prisma.ClientUpdateOneRequiredWithoutAddressesNestedInput
+}
+
+export type ClientAddressUncheckedUpdateWithoutTripsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  street?: Prisma.StringFieldUpdateOperationsInput | string
+  exteriorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interiorNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  neighborhood?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type ClientAddressCreateManyClientInput = {
   id?: string
   name: string
@@ -725,6 +845,7 @@ export type ClientAddressUpdateWithoutClientInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  trips?: Prisma.TripUpdateManyWithoutDestinationNestedInput
 }
 
 export type ClientAddressUncheckedUpdateWithoutClientInput = {
@@ -743,6 +864,7 @@ export type ClientAddressUncheckedUpdateWithoutClientInput = {
   active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  trips?: Prisma.TripUncheckedUpdateManyWithoutDestinationNestedInput
 }
 
 export type ClientAddressUncheckedUpdateManyWithoutClientInput = {
@@ -764,6 +886,35 @@ export type ClientAddressUncheckedUpdateManyWithoutClientInput = {
 }
 
 
+/**
+ * Count Type ClientAddressCountOutputType
+ */
+
+export type ClientAddressCountOutputType = {
+  trips: number
+}
+
+export type ClientAddressCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  trips?: boolean | ClientAddressCountOutputTypeCountTripsArgs
+}
+
+/**
+ * ClientAddressCountOutputType without action
+ */
+export type ClientAddressCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ClientAddressCountOutputType
+   */
+  select?: Prisma.ClientAddressCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ClientAddressCountOutputType without action
+ */
+export type ClientAddressCountOutputTypeCountTripsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TripWhereInput
+}
+
 
 export type ClientAddressSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -783,6 +934,8 @@ export type ClientAddressSelect<ExtArgs extends runtime.Types.Extensions.Interna
   createdAt?: boolean
   updatedAt?: boolean
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
+  trips?: boolean | Prisma.ClientAddress$tripsArgs<ExtArgs>
+  _count?: boolean | Prisma.ClientAddressCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["clientAddress"]>
 
 export type ClientAddressSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -847,6 +1000,8 @@ export type ClientAddressSelectScalar = {
 export type ClientAddressOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clientId" | "name" | "street" | "exteriorNumber" | "interiorNumber" | "neighborhood" | "city" | "state" | "postalCode" | "country" | "reference" | "notes" | "active" | "createdAt" | "updatedAt", ExtArgs["result"]["clientAddress"]>
 export type ClientAddressInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
+  trips?: boolean | Prisma.ClientAddress$tripsArgs<ExtArgs>
+  _count?: boolean | Prisma.ClientAddressCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ClientAddressIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
@@ -859,6 +1014,7 @@ export type $ClientAddressPayload<ExtArgs extends runtime.Types.Extensions.Inter
   name: "ClientAddress"
   objects: {
     client: Prisma.$ClientPayload<ExtArgs>
+    trips: Prisma.$TripPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1272,6 +1428,7 @@ readonly fields: ClientAddressFieldRefs;
 export interface Prisma__ClientAddressClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   client<T extends Prisma.ClientDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClientDefaultArgs<ExtArgs>>): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  trips<T extends Prisma.ClientAddress$tripsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClientAddress$tripsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TripPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1715,6 +1872,30 @@ export type ClientAddressDeleteManyArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many ClientAddresses to delete.
    */
   limit?: number
+}
+
+/**
+ * ClientAddress.trips
+ */
+export type ClientAddress$tripsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Trip
+   */
+  select?: Prisma.TripSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Trip
+   */
+  omit?: Prisma.TripOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TripInclude<ExtArgs> | null
+  where?: Prisma.TripWhereInput
+  orderBy?: Prisma.TripOrderByWithRelationInput | Prisma.TripOrderByWithRelationInput[]
+  cursor?: Prisma.TripWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TripScalarFieldEnum | Prisma.TripScalarFieldEnum[]
 }
 
 /**

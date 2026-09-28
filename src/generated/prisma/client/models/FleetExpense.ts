@@ -45,6 +45,7 @@ export type FleetExpenseMinAggregateOutputType = {
   vehicleId: string | null
   createdById: string | null
   supplierId: string | null
+  tripId: string | null
   expenseDate: Date | null
   category: $Enums.ExpenseCategory | null
   description: string | null
@@ -71,6 +72,7 @@ export type FleetExpenseMaxAggregateOutputType = {
   vehicleId: string | null
   createdById: string | null
   supplierId: string | null
+  tripId: string | null
   expenseDate: Date | null
   category: $Enums.ExpenseCategory | null
   description: string | null
@@ -97,6 +99,7 @@ export type FleetExpenseCountAggregateOutputType = {
   vehicleId: number
   createdById: number
   supplierId: number
+  tripId: number
   expenseDate: number
   category: number
   description: number
@@ -139,6 +142,7 @@ export type FleetExpenseMinAggregateInputType = {
   vehicleId?: true
   createdById?: true
   supplierId?: true
+  tripId?: true
   expenseDate?: true
   category?: true
   description?: true
@@ -165,6 +169,7 @@ export type FleetExpenseMaxAggregateInputType = {
   vehicleId?: true
   createdById?: true
   supplierId?: true
+  tripId?: true
   expenseDate?: true
   category?: true
   description?: true
@@ -191,6 +196,7 @@ export type FleetExpenseCountAggregateInputType = {
   vehicleId?: true
   createdById?: true
   supplierId?: true
+  tripId?: true
   expenseDate?: true
   category?: true
   description?: true
@@ -304,6 +310,7 @@ export type FleetExpenseGroupByOutputType = {
   vehicleId: string
   createdById: string
   supplierId: string | null
+  tripId: string | null
   expenseDate: Date
   category: $Enums.ExpenseCategory
   description: string
@@ -353,6 +360,7 @@ export type FleetExpenseWhereInput = {
   vehicleId?: Prisma.StringFilter<"FleetExpense"> | string
   createdById?: Prisma.StringFilter<"FleetExpense"> | string
   supplierId?: Prisma.StringNullableFilter<"FleetExpense"> | string | null
+  tripId?: Prisma.StringNullableFilter<"FleetExpense"> | string | null
   expenseDate?: Prisma.DateTimeFilter<"FleetExpense"> | Date | string
   category?: Prisma.EnumExpenseCategoryFilter<"FleetExpense"> | $Enums.ExpenseCategory
   description?: Prisma.StringFilter<"FleetExpense"> | string
@@ -375,6 +383,7 @@ export type FleetExpenseWhereInput = {
   vehicle?: Prisma.XOR<Prisma.VehicleScalarRelationFilter, Prisma.VehicleWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   supplier?: Prisma.XOR<Prisma.SupplierNullableScalarRelationFilter, Prisma.SupplierWhereInput> | null
+  trip?: Prisma.XOR<Prisma.TripNullableScalarRelationFilter, Prisma.TripWhereInput> | null
   paidBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   items?: Prisma.ExpenseItemListRelationFilter
 }
@@ -384,6 +393,7 @@ export type FleetExpenseOrderByWithRelationInput = {
   vehicleId?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   supplierId?: Prisma.SortOrderInput | Prisma.SortOrder
+  tripId?: Prisma.SortOrderInput | Prisma.SortOrder
   expenseDate?: Prisma.SortOrder
   category?: Prisma.SortOrder
   description?: Prisma.SortOrder
@@ -406,6 +416,7 @@ export type FleetExpenseOrderByWithRelationInput = {
   vehicle?: Prisma.VehicleOrderByWithRelationInput
   createdBy?: Prisma.UserOrderByWithRelationInput
   supplier?: Prisma.SupplierOrderByWithRelationInput
+  trip?: Prisma.TripOrderByWithRelationInput
   paidBy?: Prisma.UserOrderByWithRelationInput
   items?: Prisma.ExpenseItemOrderByRelationAggregateInput
 }
@@ -418,6 +429,7 @@ export type FleetExpenseWhereUniqueInput = Prisma.AtLeast<{
   vehicleId?: Prisma.StringFilter<"FleetExpense"> | string
   createdById?: Prisma.StringFilter<"FleetExpense"> | string
   supplierId?: Prisma.StringNullableFilter<"FleetExpense"> | string | null
+  tripId?: Prisma.StringNullableFilter<"FleetExpense"> | string | null
   expenseDate?: Prisma.DateTimeFilter<"FleetExpense"> | Date | string
   category?: Prisma.EnumExpenseCategoryFilter<"FleetExpense"> | $Enums.ExpenseCategory
   description?: Prisma.StringFilter<"FleetExpense"> | string
@@ -440,6 +452,7 @@ export type FleetExpenseWhereUniqueInput = Prisma.AtLeast<{
   vehicle?: Prisma.XOR<Prisma.VehicleScalarRelationFilter, Prisma.VehicleWhereInput>
   createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   supplier?: Prisma.XOR<Prisma.SupplierNullableScalarRelationFilter, Prisma.SupplierWhereInput> | null
+  trip?: Prisma.XOR<Prisma.TripNullableScalarRelationFilter, Prisma.TripWhereInput> | null
   paidBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   items?: Prisma.ExpenseItemListRelationFilter
 }, "id">
@@ -449,6 +462,7 @@ export type FleetExpenseOrderByWithAggregationInput = {
   vehicleId?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   supplierId?: Prisma.SortOrderInput | Prisma.SortOrder
+  tripId?: Prisma.SortOrderInput | Prisma.SortOrder
   expenseDate?: Prisma.SortOrder
   category?: Prisma.SortOrder
   description?: Prisma.SortOrder
@@ -483,6 +497,7 @@ export type FleetExpenseScalarWhereWithAggregatesInput = {
   vehicleId?: Prisma.StringWithAggregatesFilter<"FleetExpense"> | string
   createdById?: Prisma.StringWithAggregatesFilter<"FleetExpense"> | string
   supplierId?: Prisma.StringNullableWithAggregatesFilter<"FleetExpense"> | string | null
+  tripId?: Prisma.StringNullableWithAggregatesFilter<"FleetExpense"> | string | null
   expenseDate?: Prisma.DateTimeWithAggregatesFilter<"FleetExpense"> | Date | string
   category?: Prisma.EnumExpenseCategoryWithAggregatesFilter<"FleetExpense"> | $Enums.ExpenseCategory
   description?: Prisma.StringWithAggregatesFilter<"FleetExpense"> | string
@@ -527,6 +542,7 @@ export type FleetExpenseCreateInput = {
   vehicle: Prisma.VehicleCreateNestedOneWithoutFleetExpensesInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedFleetExpensesInput
   supplier?: Prisma.SupplierCreateNestedOneWithoutFleetExpensesInput
+  trip?: Prisma.TripCreateNestedOneWithoutExpensesInput
   paidBy?: Prisma.UserCreateNestedOneWithoutPaidFleetExpensesInput
   items?: Prisma.ExpenseItemCreateNestedManyWithoutFleetExpenseInput
 }
@@ -536,6 +552,7 @@ export type FleetExpenseUncheckedCreateInput = {
   vehicleId: string
   createdById: string
   supplierId?: string | null
+  tripId?: string | null
   expenseDate?: Date | string
   category: $Enums.ExpenseCategory
   description: string
@@ -581,6 +598,7 @@ export type FleetExpenseUpdateInput = {
   vehicle?: Prisma.VehicleUpdateOneRequiredWithoutFleetExpensesNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedFleetExpensesNestedInput
   supplier?: Prisma.SupplierUpdateOneWithoutFleetExpensesNestedInput
+  trip?: Prisma.TripUpdateOneWithoutExpensesNestedInput
   paidBy?: Prisma.UserUpdateOneWithoutPaidFleetExpensesNestedInput
   items?: Prisma.ExpenseItemUpdateManyWithoutFleetExpenseNestedInput
 }
@@ -590,6 +608,7 @@ export type FleetExpenseUncheckedUpdateInput = {
   vehicleId?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   supplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tripId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expenseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.EnumExpenseCategoryFieldUpdateOperationsInput | $Enums.ExpenseCategory
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -617,6 +636,7 @@ export type FleetExpenseCreateManyInput = {
   vehicleId: string
   createdById: string
   supplierId?: string | null
+  tripId?: string | null
   expenseDate?: Date | string
   category: $Enums.ExpenseCategory
   description: string
@@ -665,6 +685,7 @@ export type FleetExpenseUncheckedUpdateManyInput = {
   vehicleId?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   supplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tripId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expenseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.EnumExpenseCategoryFieldUpdateOperationsInput | $Enums.ExpenseCategory
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -701,6 +722,7 @@ export type FleetExpenseCountOrderByAggregateInput = {
   vehicleId?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   supplierId?: Prisma.SortOrder
+  tripId?: Prisma.SortOrder
   expenseDate?: Prisma.SortOrder
   category?: Prisma.SortOrder
   description?: Prisma.SortOrder
@@ -734,6 +756,7 @@ export type FleetExpenseMaxOrderByAggregateInput = {
   vehicleId?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   supplierId?: Prisma.SortOrder
+  tripId?: Prisma.SortOrder
   expenseDate?: Prisma.SortOrder
   category?: Prisma.SortOrder
   description?: Prisma.SortOrder
@@ -760,6 +783,7 @@ export type FleetExpenseMinOrderByAggregateInput = {
   vehicleId?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   supplierId?: Prisma.SortOrder
+  tripId?: Prisma.SortOrder
   expenseDate?: Prisma.SortOrder
   category?: Prisma.SortOrder
   description?: Prisma.SortOrder
@@ -1007,6 +1031,48 @@ export type FleetExpenseUpdateOneRequiredWithoutItemsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.FleetExpenseUpdateToOneWithWhereWithoutItemsInput, Prisma.FleetExpenseUpdateWithoutItemsInput>, Prisma.FleetExpenseUncheckedUpdateWithoutItemsInput>
 }
 
+export type FleetExpenseCreateNestedManyWithoutTripInput = {
+  create?: Prisma.XOR<Prisma.FleetExpenseCreateWithoutTripInput, Prisma.FleetExpenseUncheckedCreateWithoutTripInput> | Prisma.FleetExpenseCreateWithoutTripInput[] | Prisma.FleetExpenseUncheckedCreateWithoutTripInput[]
+  connectOrCreate?: Prisma.FleetExpenseCreateOrConnectWithoutTripInput | Prisma.FleetExpenseCreateOrConnectWithoutTripInput[]
+  createMany?: Prisma.FleetExpenseCreateManyTripInputEnvelope
+  connect?: Prisma.FleetExpenseWhereUniqueInput | Prisma.FleetExpenseWhereUniqueInput[]
+}
+
+export type FleetExpenseUncheckedCreateNestedManyWithoutTripInput = {
+  create?: Prisma.XOR<Prisma.FleetExpenseCreateWithoutTripInput, Prisma.FleetExpenseUncheckedCreateWithoutTripInput> | Prisma.FleetExpenseCreateWithoutTripInput[] | Prisma.FleetExpenseUncheckedCreateWithoutTripInput[]
+  connectOrCreate?: Prisma.FleetExpenseCreateOrConnectWithoutTripInput | Prisma.FleetExpenseCreateOrConnectWithoutTripInput[]
+  createMany?: Prisma.FleetExpenseCreateManyTripInputEnvelope
+  connect?: Prisma.FleetExpenseWhereUniqueInput | Prisma.FleetExpenseWhereUniqueInput[]
+}
+
+export type FleetExpenseUpdateManyWithoutTripNestedInput = {
+  create?: Prisma.XOR<Prisma.FleetExpenseCreateWithoutTripInput, Prisma.FleetExpenseUncheckedCreateWithoutTripInput> | Prisma.FleetExpenseCreateWithoutTripInput[] | Prisma.FleetExpenseUncheckedCreateWithoutTripInput[]
+  connectOrCreate?: Prisma.FleetExpenseCreateOrConnectWithoutTripInput | Prisma.FleetExpenseCreateOrConnectWithoutTripInput[]
+  upsert?: Prisma.FleetExpenseUpsertWithWhereUniqueWithoutTripInput | Prisma.FleetExpenseUpsertWithWhereUniqueWithoutTripInput[]
+  createMany?: Prisma.FleetExpenseCreateManyTripInputEnvelope
+  set?: Prisma.FleetExpenseWhereUniqueInput | Prisma.FleetExpenseWhereUniqueInput[]
+  disconnect?: Prisma.FleetExpenseWhereUniqueInput | Prisma.FleetExpenseWhereUniqueInput[]
+  delete?: Prisma.FleetExpenseWhereUniqueInput | Prisma.FleetExpenseWhereUniqueInput[]
+  connect?: Prisma.FleetExpenseWhereUniqueInput | Prisma.FleetExpenseWhereUniqueInput[]
+  update?: Prisma.FleetExpenseUpdateWithWhereUniqueWithoutTripInput | Prisma.FleetExpenseUpdateWithWhereUniqueWithoutTripInput[]
+  updateMany?: Prisma.FleetExpenseUpdateManyWithWhereWithoutTripInput | Prisma.FleetExpenseUpdateManyWithWhereWithoutTripInput[]
+  deleteMany?: Prisma.FleetExpenseScalarWhereInput | Prisma.FleetExpenseScalarWhereInput[]
+}
+
+export type FleetExpenseUncheckedUpdateManyWithoutTripNestedInput = {
+  create?: Prisma.XOR<Prisma.FleetExpenseCreateWithoutTripInput, Prisma.FleetExpenseUncheckedCreateWithoutTripInput> | Prisma.FleetExpenseCreateWithoutTripInput[] | Prisma.FleetExpenseUncheckedCreateWithoutTripInput[]
+  connectOrCreate?: Prisma.FleetExpenseCreateOrConnectWithoutTripInput | Prisma.FleetExpenseCreateOrConnectWithoutTripInput[]
+  upsert?: Prisma.FleetExpenseUpsertWithWhereUniqueWithoutTripInput | Prisma.FleetExpenseUpsertWithWhereUniqueWithoutTripInput[]
+  createMany?: Prisma.FleetExpenseCreateManyTripInputEnvelope
+  set?: Prisma.FleetExpenseWhereUniqueInput | Prisma.FleetExpenseWhereUniqueInput[]
+  disconnect?: Prisma.FleetExpenseWhereUniqueInput | Prisma.FleetExpenseWhereUniqueInput[]
+  delete?: Prisma.FleetExpenseWhereUniqueInput | Prisma.FleetExpenseWhereUniqueInput[]
+  connect?: Prisma.FleetExpenseWhereUniqueInput | Prisma.FleetExpenseWhereUniqueInput[]
+  update?: Prisma.FleetExpenseUpdateWithWhereUniqueWithoutTripInput | Prisma.FleetExpenseUpdateWithWhereUniqueWithoutTripInput[]
+  updateMany?: Prisma.FleetExpenseUpdateManyWithWhereWithoutTripInput | Prisma.FleetExpenseUpdateManyWithWhereWithoutTripInput[]
+  deleteMany?: Prisma.FleetExpenseScalarWhereInput | Prisma.FleetExpenseScalarWhereInput[]
+}
+
 export type FleetExpenseCreateWithoutCreatedByInput = {
   id?: string
   expenseDate?: Date | string
@@ -1029,6 +1095,7 @@ export type FleetExpenseCreateWithoutCreatedByInput = {
   updatedAt?: Date | string
   vehicle: Prisma.VehicleCreateNestedOneWithoutFleetExpensesInput
   supplier?: Prisma.SupplierCreateNestedOneWithoutFleetExpensesInput
+  trip?: Prisma.TripCreateNestedOneWithoutExpensesInput
   paidBy?: Prisma.UserCreateNestedOneWithoutPaidFleetExpensesInput
   items?: Prisma.ExpenseItemCreateNestedManyWithoutFleetExpenseInput
 }
@@ -1037,6 +1104,7 @@ export type FleetExpenseUncheckedCreateWithoutCreatedByInput = {
   id?: string
   vehicleId: string
   supplierId?: string | null
+  tripId?: string | null
   expenseDate?: Date | string
   category: $Enums.ExpenseCategory
   description: string
@@ -1092,6 +1160,7 @@ export type FleetExpenseCreateWithoutPaidByInput = {
   vehicle: Prisma.VehicleCreateNestedOneWithoutFleetExpensesInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedFleetExpensesInput
   supplier?: Prisma.SupplierCreateNestedOneWithoutFleetExpensesInput
+  trip?: Prisma.TripCreateNestedOneWithoutExpensesInput
   items?: Prisma.ExpenseItemCreateNestedManyWithoutFleetExpenseInput
 }
 
@@ -1100,6 +1169,7 @@ export type FleetExpenseUncheckedCreateWithoutPaidByInput = {
   vehicleId: string
   createdById: string
   supplierId?: string | null
+  tripId?: string | null
   expenseDate?: Date | string
   category: $Enums.ExpenseCategory
   description: string
@@ -1155,6 +1225,7 @@ export type FleetExpenseScalarWhereInput = {
   vehicleId?: Prisma.StringFilter<"FleetExpense"> | string
   createdById?: Prisma.StringFilter<"FleetExpense"> | string
   supplierId?: Prisma.StringNullableFilter<"FleetExpense"> | string | null
+  tripId?: Prisma.StringNullableFilter<"FleetExpense"> | string | null
   expenseDate?: Prisma.DateTimeFilter<"FleetExpense"> | Date | string
   category?: Prisma.EnumExpenseCategoryFilter<"FleetExpense"> | $Enums.ExpenseCategory
   description?: Prisma.StringFilter<"FleetExpense"> | string
@@ -1214,6 +1285,7 @@ export type FleetExpenseCreateWithoutVehicleInput = {
   updatedAt?: Date | string
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedFleetExpensesInput
   supplier?: Prisma.SupplierCreateNestedOneWithoutFleetExpensesInput
+  trip?: Prisma.TripCreateNestedOneWithoutExpensesInput
   paidBy?: Prisma.UserCreateNestedOneWithoutPaidFleetExpensesInput
   items?: Prisma.ExpenseItemCreateNestedManyWithoutFleetExpenseInput
 }
@@ -1222,6 +1294,7 @@ export type FleetExpenseUncheckedCreateWithoutVehicleInput = {
   id?: string
   createdById: string
   supplierId?: string | null
+  tripId?: string | null
   expenseDate?: Date | string
   category: $Enums.ExpenseCategory
   description: string
@@ -1292,6 +1365,7 @@ export type FleetExpenseCreateWithoutSupplierInput = {
   updatedAt?: Date | string
   vehicle: Prisma.VehicleCreateNestedOneWithoutFleetExpensesInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedFleetExpensesInput
+  trip?: Prisma.TripCreateNestedOneWithoutExpensesInput
   paidBy?: Prisma.UserCreateNestedOneWithoutPaidFleetExpensesInput
   items?: Prisma.ExpenseItemCreateNestedManyWithoutFleetExpenseInput
 }
@@ -1300,6 +1374,7 @@ export type FleetExpenseUncheckedCreateWithoutSupplierInput = {
   id?: string
   vehicleId: string
   createdById: string
+  tripId?: string | null
   expenseDate?: Date | string
   category: $Enums.ExpenseCategory
   description: string
@@ -1371,6 +1446,7 @@ export type FleetExpenseCreateWithoutItemsInput = {
   vehicle: Prisma.VehicleCreateNestedOneWithoutFleetExpensesInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedFleetExpensesInput
   supplier?: Prisma.SupplierCreateNestedOneWithoutFleetExpensesInput
+  trip?: Prisma.TripCreateNestedOneWithoutExpensesInput
   paidBy?: Prisma.UserCreateNestedOneWithoutPaidFleetExpensesInput
 }
 
@@ -1379,6 +1455,7 @@ export type FleetExpenseUncheckedCreateWithoutItemsInput = {
   vehicleId: string
   createdById: string
   supplierId?: string | null
+  tripId?: string | null
   expenseDate?: Date | string
   category: $Enums.ExpenseCategory
   description: string
@@ -1439,6 +1516,7 @@ export type FleetExpenseUpdateWithoutItemsInput = {
   vehicle?: Prisma.VehicleUpdateOneRequiredWithoutFleetExpensesNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedFleetExpensesNestedInput
   supplier?: Prisma.SupplierUpdateOneWithoutFleetExpensesNestedInput
+  trip?: Prisma.TripUpdateOneWithoutExpensesNestedInput
   paidBy?: Prisma.UserUpdateOneWithoutPaidFleetExpensesNestedInput
 }
 
@@ -1447,6 +1525,7 @@ export type FleetExpenseUncheckedUpdateWithoutItemsInput = {
   vehicleId?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   supplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tripId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expenseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.EnumExpenseCategoryFieldUpdateOperationsInput | $Enums.ExpenseCategory
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1468,10 +1547,91 @@ export type FleetExpenseUncheckedUpdateWithoutItemsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+export type FleetExpenseCreateWithoutTripInput = {
+  id?: string
+  expenseDate?: Date | string
+  category: $Enums.ExpenseCategory
+  description: string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  laborAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  mileage?: number | null
+  receiptNumber?: string | null
+  notes?: string | null
+  status?: $Enums.FleetExpenseStatus
+  source?: $Enums.ExpenseSource
+  paymentStatus?: $Enums.PaymentStatus
+  paidAt?: Date | string | null
+  paymentMethod?: string | null
+  paymentReference?: string | null
+  paymentNotes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  vehicle: Prisma.VehicleCreateNestedOneWithoutFleetExpensesInput
+  createdBy: Prisma.UserCreateNestedOneWithoutCreatedFleetExpensesInput
+  supplier?: Prisma.SupplierCreateNestedOneWithoutFleetExpensesInput
+  paidBy?: Prisma.UserCreateNestedOneWithoutPaidFleetExpensesInput
+  items?: Prisma.ExpenseItemCreateNestedManyWithoutFleetExpenseInput
+}
+
+export type FleetExpenseUncheckedCreateWithoutTripInput = {
+  id?: string
+  vehicleId: string
+  createdById: string
+  supplierId?: string | null
+  expenseDate?: Date | string
+  category: $Enums.ExpenseCategory
+  description: string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  laborAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  mileage?: number | null
+  receiptNumber?: string | null
+  notes?: string | null
+  status?: $Enums.FleetExpenseStatus
+  source?: $Enums.ExpenseSource
+  paymentStatus?: $Enums.PaymentStatus
+  paidAt?: Date | string | null
+  paidByUserId?: string | null
+  paymentMethod?: string | null
+  paymentReference?: string | null
+  paymentNotes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  items?: Prisma.ExpenseItemUncheckedCreateNestedManyWithoutFleetExpenseInput
+}
+
+export type FleetExpenseCreateOrConnectWithoutTripInput = {
+  where: Prisma.FleetExpenseWhereUniqueInput
+  create: Prisma.XOR<Prisma.FleetExpenseCreateWithoutTripInput, Prisma.FleetExpenseUncheckedCreateWithoutTripInput>
+}
+
+export type FleetExpenseCreateManyTripInputEnvelope = {
+  data: Prisma.FleetExpenseCreateManyTripInput | Prisma.FleetExpenseCreateManyTripInput[]
+  skipDuplicates?: boolean
+}
+
+export type FleetExpenseUpsertWithWhereUniqueWithoutTripInput = {
+  where: Prisma.FleetExpenseWhereUniqueInput
+  update: Prisma.XOR<Prisma.FleetExpenseUpdateWithoutTripInput, Prisma.FleetExpenseUncheckedUpdateWithoutTripInput>
+  create: Prisma.XOR<Prisma.FleetExpenseCreateWithoutTripInput, Prisma.FleetExpenseUncheckedCreateWithoutTripInput>
+}
+
+export type FleetExpenseUpdateWithWhereUniqueWithoutTripInput = {
+  where: Prisma.FleetExpenseWhereUniqueInput
+  data: Prisma.XOR<Prisma.FleetExpenseUpdateWithoutTripInput, Prisma.FleetExpenseUncheckedUpdateWithoutTripInput>
+}
+
+export type FleetExpenseUpdateManyWithWhereWithoutTripInput = {
+  where: Prisma.FleetExpenseScalarWhereInput
+  data: Prisma.XOR<Prisma.FleetExpenseUpdateManyMutationInput, Prisma.FleetExpenseUncheckedUpdateManyWithoutTripInput>
+}
+
 export type FleetExpenseCreateManyCreatedByInput = {
   id?: string
   vehicleId: string
   supplierId?: string | null
+  tripId?: string | null
   expenseDate?: Date | string
   category: $Enums.ExpenseCategory
   description: string
@@ -1498,6 +1658,7 @@ export type FleetExpenseCreateManyPaidByInput = {
   vehicleId: string
   createdById: string
   supplierId?: string | null
+  tripId?: string | null
   expenseDate?: Date | string
   category: $Enums.ExpenseCategory
   description: string
@@ -1540,6 +1701,7 @@ export type FleetExpenseUpdateWithoutCreatedByInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vehicle?: Prisma.VehicleUpdateOneRequiredWithoutFleetExpensesNestedInput
   supplier?: Prisma.SupplierUpdateOneWithoutFleetExpensesNestedInput
+  trip?: Prisma.TripUpdateOneWithoutExpensesNestedInput
   paidBy?: Prisma.UserUpdateOneWithoutPaidFleetExpensesNestedInput
   items?: Prisma.ExpenseItemUpdateManyWithoutFleetExpenseNestedInput
 }
@@ -1548,6 +1710,7 @@ export type FleetExpenseUncheckedUpdateWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   vehicleId?: Prisma.StringFieldUpdateOperationsInput | string
   supplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tripId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expenseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.EnumExpenseCategoryFieldUpdateOperationsInput | $Enums.ExpenseCategory
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1574,6 +1737,7 @@ export type FleetExpenseUncheckedUpdateManyWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   vehicleId?: Prisma.StringFieldUpdateOperationsInput | string
   supplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tripId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expenseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.EnumExpenseCategoryFieldUpdateOperationsInput | $Enums.ExpenseCategory
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1618,6 +1782,7 @@ export type FleetExpenseUpdateWithoutPaidByInput = {
   vehicle?: Prisma.VehicleUpdateOneRequiredWithoutFleetExpensesNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedFleetExpensesNestedInput
   supplier?: Prisma.SupplierUpdateOneWithoutFleetExpensesNestedInput
+  trip?: Prisma.TripUpdateOneWithoutExpensesNestedInput
   items?: Prisma.ExpenseItemUpdateManyWithoutFleetExpenseNestedInput
 }
 
@@ -1626,6 +1791,7 @@ export type FleetExpenseUncheckedUpdateWithoutPaidByInput = {
   vehicleId?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   supplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tripId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expenseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.EnumExpenseCategoryFieldUpdateOperationsInput | $Enums.ExpenseCategory
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1652,6 +1818,7 @@ export type FleetExpenseUncheckedUpdateManyWithoutPaidByInput = {
   vehicleId?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   supplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tripId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expenseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.EnumExpenseCategoryFieldUpdateOperationsInput | $Enums.ExpenseCategory
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1676,6 +1843,7 @@ export type FleetExpenseCreateManyVehicleInput = {
   id?: string
   createdById: string
   supplierId?: string | null
+  tripId?: string | null
   expenseDate?: Date | string
   category: $Enums.ExpenseCategory
   description: string
@@ -1719,6 +1887,7 @@ export type FleetExpenseUpdateWithoutVehicleInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedFleetExpensesNestedInput
   supplier?: Prisma.SupplierUpdateOneWithoutFleetExpensesNestedInput
+  trip?: Prisma.TripUpdateOneWithoutExpensesNestedInput
   paidBy?: Prisma.UserUpdateOneWithoutPaidFleetExpensesNestedInput
   items?: Prisma.ExpenseItemUpdateManyWithoutFleetExpenseNestedInput
 }
@@ -1727,6 +1896,7 @@ export type FleetExpenseUncheckedUpdateWithoutVehicleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   supplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tripId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expenseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.EnumExpenseCategoryFieldUpdateOperationsInput | $Enums.ExpenseCategory
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1753,6 +1923,7 @@ export type FleetExpenseUncheckedUpdateManyWithoutVehicleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   supplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tripId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expenseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.EnumExpenseCategoryFieldUpdateOperationsInput | $Enums.ExpenseCategory
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1778,6 +1949,7 @@ export type FleetExpenseCreateManySupplierInput = {
   id?: string
   vehicleId: string
   createdById: string
+  tripId?: string | null
   expenseDate?: Date | string
   category: $Enums.ExpenseCategory
   description: string
@@ -1821,6 +1993,7 @@ export type FleetExpenseUpdateWithoutSupplierInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   vehicle?: Prisma.VehicleUpdateOneRequiredWithoutFleetExpensesNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedFleetExpensesNestedInput
+  trip?: Prisma.TripUpdateOneWithoutExpensesNestedInput
   paidBy?: Prisma.UserUpdateOneWithoutPaidFleetExpensesNestedInput
   items?: Prisma.ExpenseItemUpdateManyWithoutFleetExpenseNestedInput
 }
@@ -1829,6 +2002,7 @@ export type FleetExpenseUncheckedUpdateWithoutSupplierInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   vehicleId?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  tripId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expenseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.EnumExpenseCategoryFieldUpdateOperationsInput | $Enums.ExpenseCategory
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1855,6 +2029,113 @@ export type FleetExpenseUncheckedUpdateManyWithoutSupplierInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   vehicleId?: Prisma.StringFieldUpdateOperationsInput | string
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  tripId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expenseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  category?: Prisma.EnumExpenseCategoryFieldUpdateOperationsInput | $Enums.ExpenseCategory
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  laborAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  mileage?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  receiptNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumFleetExpenseStatusFieldUpdateOperationsInput | $Enums.FleetExpenseStatus
+  source?: Prisma.EnumExpenseSourceFieldUpdateOperationsInput | $Enums.ExpenseSource
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type FleetExpenseCreateManyTripInput = {
+  id?: string
+  vehicleId: string
+  createdById: string
+  supplierId?: string | null
+  expenseDate?: Date | string
+  category: $Enums.ExpenseCategory
+  description: string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  laborAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total: runtime.Decimal | runtime.DecimalJsLike | number | string
+  mileage?: number | null
+  receiptNumber?: string | null
+  notes?: string | null
+  status?: $Enums.FleetExpenseStatus
+  source?: $Enums.ExpenseSource
+  paymentStatus?: $Enums.PaymentStatus
+  paidAt?: Date | string | null
+  paidByUserId?: string | null
+  paymentMethod?: string | null
+  paymentReference?: string | null
+  paymentNotes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type FleetExpenseUpdateWithoutTripInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  expenseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  category?: Prisma.EnumExpenseCategoryFieldUpdateOperationsInput | $Enums.ExpenseCategory
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  laborAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  mileage?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  receiptNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumFleetExpenseStatusFieldUpdateOperationsInput | $Enums.FleetExpenseStatus
+  source?: Prisma.EnumExpenseSourceFieldUpdateOperationsInput | $Enums.ExpenseSource
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  vehicle?: Prisma.VehicleUpdateOneRequiredWithoutFleetExpensesNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedFleetExpensesNestedInput
+  supplier?: Prisma.SupplierUpdateOneWithoutFleetExpensesNestedInput
+  paidBy?: Prisma.UserUpdateOneWithoutPaidFleetExpensesNestedInput
+  items?: Prisma.ExpenseItemUpdateManyWithoutFleetExpenseNestedInput
+}
+
+export type FleetExpenseUncheckedUpdateWithoutTripInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expenseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  category?: Prisma.EnumExpenseCategoryFieldUpdateOperationsInput | $Enums.ExpenseCategory
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  laborAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  mileage?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  receiptNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumFleetExpenseStatusFieldUpdateOperationsInput | $Enums.FleetExpenseStatus
+  source?: Prisma.EnumExpenseSourceFieldUpdateOperationsInput | $Enums.ExpenseSource
+  paymentStatus?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  paidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paymentNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  items?: Prisma.ExpenseItemUncheckedUpdateManyWithoutFleetExpenseNestedInput
+}
+
+export type FleetExpenseUncheckedUpdateManyWithoutTripInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   expenseDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.EnumExpenseCategoryFieldUpdateOperationsInput | $Enums.ExpenseCategory
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1912,6 +2193,7 @@ export type FleetExpenseSelect<ExtArgs extends runtime.Types.Extensions.Internal
   vehicleId?: boolean
   createdById?: boolean
   supplierId?: boolean
+  tripId?: boolean
   expenseDate?: boolean
   category?: boolean
   description?: boolean
@@ -1934,6 +2216,7 @@ export type FleetExpenseSelect<ExtArgs extends runtime.Types.Extensions.Internal
   vehicle?: boolean | Prisma.VehicleDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   supplier?: boolean | Prisma.FleetExpense$supplierArgs<ExtArgs>
+  trip?: boolean | Prisma.FleetExpense$tripArgs<ExtArgs>
   paidBy?: boolean | Prisma.FleetExpense$paidByArgs<ExtArgs>
   items?: boolean | Prisma.FleetExpense$itemsArgs<ExtArgs>
   _count?: boolean | Prisma.FleetExpenseCountOutputTypeDefaultArgs<ExtArgs>
@@ -1944,6 +2227,7 @@ export type FleetExpenseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   vehicleId?: boolean
   createdById?: boolean
   supplierId?: boolean
+  tripId?: boolean
   expenseDate?: boolean
   category?: boolean
   description?: boolean
@@ -1966,6 +2250,7 @@ export type FleetExpenseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   vehicle?: boolean | Prisma.VehicleDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   supplier?: boolean | Prisma.FleetExpense$supplierArgs<ExtArgs>
+  trip?: boolean | Prisma.FleetExpense$tripArgs<ExtArgs>
   paidBy?: boolean | Prisma.FleetExpense$paidByArgs<ExtArgs>
 }, ExtArgs["result"]["fleetExpense"]>
 
@@ -1974,6 +2259,7 @@ export type FleetExpenseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   vehicleId?: boolean
   createdById?: boolean
   supplierId?: boolean
+  tripId?: boolean
   expenseDate?: boolean
   category?: boolean
   description?: boolean
@@ -1996,6 +2282,7 @@ export type FleetExpenseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   vehicle?: boolean | Prisma.VehicleDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   supplier?: boolean | Prisma.FleetExpense$supplierArgs<ExtArgs>
+  trip?: boolean | Prisma.FleetExpense$tripArgs<ExtArgs>
   paidBy?: boolean | Prisma.FleetExpense$paidByArgs<ExtArgs>
 }, ExtArgs["result"]["fleetExpense"]>
 
@@ -2004,6 +2291,7 @@ export type FleetExpenseSelectScalar = {
   vehicleId?: boolean
   createdById?: boolean
   supplierId?: boolean
+  tripId?: boolean
   expenseDate?: boolean
   category?: boolean
   description?: boolean
@@ -2025,11 +2313,12 @@ export type FleetExpenseSelectScalar = {
   updatedAt?: boolean
 }
 
-export type FleetExpenseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "vehicleId" | "createdById" | "supplierId" | "expenseDate" | "category" | "description" | "subtotal" | "laborAmount" | "total" | "mileage" | "receiptNumber" | "notes" | "status" | "source" | "paymentStatus" | "paidAt" | "paidByUserId" | "paymentMethod" | "paymentReference" | "paymentNotes" | "createdAt" | "updatedAt", ExtArgs["result"]["fleetExpense"]>
+export type FleetExpenseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "vehicleId" | "createdById" | "supplierId" | "tripId" | "expenseDate" | "category" | "description" | "subtotal" | "laborAmount" | "total" | "mileage" | "receiptNumber" | "notes" | "status" | "source" | "paymentStatus" | "paidAt" | "paidByUserId" | "paymentMethod" | "paymentReference" | "paymentNotes" | "createdAt" | "updatedAt", ExtArgs["result"]["fleetExpense"]>
 export type FleetExpenseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   vehicle?: boolean | Prisma.VehicleDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   supplier?: boolean | Prisma.FleetExpense$supplierArgs<ExtArgs>
+  trip?: boolean | Prisma.FleetExpense$tripArgs<ExtArgs>
   paidBy?: boolean | Prisma.FleetExpense$paidByArgs<ExtArgs>
   items?: boolean | Prisma.FleetExpense$itemsArgs<ExtArgs>
   _count?: boolean | Prisma.FleetExpenseCountOutputTypeDefaultArgs<ExtArgs>
@@ -2038,12 +2327,14 @@ export type FleetExpenseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types
   vehicle?: boolean | Prisma.VehicleDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   supplier?: boolean | Prisma.FleetExpense$supplierArgs<ExtArgs>
+  trip?: boolean | Prisma.FleetExpense$tripArgs<ExtArgs>
   paidBy?: boolean | Prisma.FleetExpense$paidByArgs<ExtArgs>
 }
 export type FleetExpenseIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   vehicle?: boolean | Prisma.VehicleDefaultArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   supplier?: boolean | Prisma.FleetExpense$supplierArgs<ExtArgs>
+  trip?: boolean | Prisma.FleetExpense$tripArgs<ExtArgs>
   paidBy?: boolean | Prisma.FleetExpense$paidByArgs<ExtArgs>
 }
 
@@ -2053,6 +2344,7 @@ export type $FleetExpensePayload<ExtArgs extends runtime.Types.Extensions.Intern
     vehicle: Prisma.$VehiclePayload<ExtArgs>
     createdBy: Prisma.$UserPayload<ExtArgs>
     supplier: Prisma.$SupplierPayload<ExtArgs> | null
+    trip: Prisma.$TripPayload<ExtArgs> | null
     paidBy: Prisma.$UserPayload<ExtArgs> | null
     items: Prisma.$ExpenseItemPayload<ExtArgs>[]
   }
@@ -2061,6 +2353,7 @@ export type $FleetExpensePayload<ExtArgs extends runtime.Types.Extensions.Intern
     vehicleId: string
     createdById: string
     supplierId: string | null
+    tripId: string | null
     expenseDate: Date
     category: $Enums.ExpenseCategory
     description: string
@@ -2477,6 +2770,7 @@ export interface Prisma__FleetExpenseClient<T, Null = never, ExtArgs extends run
   vehicle<T extends Prisma.VehicleDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VehicleDefaultArgs<ExtArgs>>): Prisma.Prisma__VehicleClient<runtime.Types.Result.GetResult<Prisma.$VehiclePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   createdBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   supplier<T extends Prisma.FleetExpense$supplierArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FleetExpense$supplierArgs<ExtArgs>>): Prisma.Prisma__SupplierClient<runtime.Types.Result.GetResult<Prisma.$SupplierPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  trip<T extends Prisma.FleetExpense$tripArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FleetExpense$tripArgs<ExtArgs>>): Prisma.Prisma__TripClient<runtime.Types.Result.GetResult<Prisma.$TripPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   paidBy<T extends Prisma.FleetExpense$paidByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FleetExpense$paidByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   items<T extends Prisma.FleetExpense$itemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FleetExpense$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExpenseItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -2512,6 +2806,7 @@ export interface FleetExpenseFieldRefs {
   readonly vehicleId: Prisma.FieldRef<"FleetExpense", 'String'>
   readonly createdById: Prisma.FieldRef<"FleetExpense", 'String'>
   readonly supplierId: Prisma.FieldRef<"FleetExpense", 'String'>
+  readonly tripId: Prisma.FieldRef<"FleetExpense", 'String'>
   readonly expenseDate: Prisma.FieldRef<"FleetExpense", 'DateTime'>
   readonly category: Prisma.FieldRef<"FleetExpense", 'ExpenseCategory'>
   readonly description: Prisma.FieldRef<"FleetExpense", 'String'>
@@ -2948,6 +3243,25 @@ export type FleetExpense$supplierArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   include?: Prisma.SupplierInclude<ExtArgs> | null
   where?: Prisma.SupplierWhereInput
+}
+
+/**
+ * FleetExpense.trip
+ */
+export type FleetExpense$tripArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Trip
+   */
+  select?: Prisma.TripSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Trip
+   */
+  omit?: Prisma.TripOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TripInclude<ExtArgs> | null
+  where?: Prisma.TripWhereInput
 }
 
 /**

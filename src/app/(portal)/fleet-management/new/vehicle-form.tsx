@@ -24,6 +24,7 @@ type DriverOption = {
     id: string;
     name: string;
     licenseNumber: string | null;
+    status?: string;
 };
 
 type VehicleFormVehicle = {
@@ -40,6 +41,11 @@ type VehicleFormVehicle = {
     mileage: number;
     fuelLevel: number;
     driverId: string | null;
+    location: string | null;
+    lastServiceAt: Date | null;
+    nextServiceAt: Date | null;
+    insuranceStatus: string | null;
+    registrationStatus: string | null;
 };
 
 const initialState: VehicleFormState = {};
@@ -368,13 +374,17 @@ export function VehicleForm({
                 </div>
 
                 <div className="grid gap-5 p-5 sm:grid-cols-2">
+                    <div className="sm:col-span-2">
+                        <label htmlFor="location" className="mb-2 block text-sm font-medium text-zinc-700">Ubicación actual</label>
+                        <input id="location" name="location" type="text" defaultValue={vehicle?.location ?? ""} placeholder="Monterrey, N.L." className="h-11 w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 text-sm text-zinc-900" />
+                    </div>
                     {/* Estado */}
                     <div>
                         <label
                             htmlFor="status"
                             className="mb-2 block text-sm font-medium text-zinc-700"
                         >
-                            Estado inicial
+                            {vehicle ? "Estado de la unidad" : "Estado inicial"}
                         </label>
 
                         <div className="relative">
@@ -459,8 +469,34 @@ export function VehicleForm({
                 </div>
             </section>
 
+            {/* Mantenimiento */}
+            <section id="maintenance" className="rounded-2xl border border-zinc-200 bg-white shadow-sm">
+                <div className="border-b border-zinc-100 px-5 py-4"><h2 className="font-semibold text-zinc-900">Mantenimiento</h2><p className="mt-1 text-xs text-zinc-500">Registra las fechas del último servicio y del próximo mantenimiento programado.</p></div>
+                <div className="grid gap-5 p-5 sm:grid-cols-2">
+                    <div><label htmlFor="lastServiceAt" className="mb-2 block text-sm font-medium text-zinc-700">Último servicio</label><input id="lastServiceAt" name="lastServiceAt" type="date" defaultValue={vehicle?.lastServiceAt ? vehicle.lastServiceAt.toISOString().slice(0, 10) : ""} className="h-11 w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 text-sm" />{state.fieldErrors?.lastServiceAt && <p className="mt-1 text-xs text-red-600">{state.fieldErrors.lastServiceAt}</p>}</div>
+                    <div><label htmlFor="nextServiceAt" className="mb-2 block text-sm font-medium text-zinc-700">Próximo servicio</label><input id="nextServiceAt" name="nextServiceAt" type="date" defaultValue={vehicle?.nextServiceAt ? vehicle.nextServiceAt.toISOString().slice(0, 10) : ""} className="h-11 w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 text-sm" />{state.fieldErrors?.nextServiceAt && <p className="mt-1 text-xs text-red-600">{state.fieldErrors.nextServiceAt}</p>}</div>
+                </div>
+            </section>
+
+            {/* Documentación */}
+            <section id="documents" className="rounded-2xl border border-zinc-200 bg-white shadow-sm">
+                <div className="border-b border-zinc-100 px-5 py-4"><h2 className="font-semibold text-zinc-900">Documentación</h2><p className="mt-1 text-xs text-zinc-500">Registra el estado de vigencia. La carga de archivos requiere almacenamiento documental, aún no configurado.</p></div>
+                <div className="grid gap-5 p-5 sm:grid-cols-2">
+                    {[{ name: "insuranceStatus", label: "Póliza de seguro", value: vehicle?.insuranceStatus }, { name: "registrationStatus", label: "Tarjeta de circulación", value: vehicle?.registrationStatus }].map((document) => (
+                        <div key={document.name}>
+                            <label htmlFor={document.name} className="mb-2 block text-sm font-medium text-zinc-700">{document.label}</label>
+                            <select id={document.name} name={document.name} defaultValue={document.value ?? ""} className="h-11 w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 text-sm">
+                                <option value="">Sin registrar</option>
+                                {document.value && !["VALID", "EXPIRING", "EXPIRED"].includes(document.value) && <option value={document.value}>{document.value}</option>}
+                                <option value="VALID">Vigente</option><option value="EXPIRING">Por vencer</option><option value="EXPIRED">Vencido</option>
+                            </select>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
             {/* Operador */}
-            <section className="rounded-2xl border border-zinc-200 bg-white shadow-sm">
+            <section id="driver" className="rounded-2xl border border-zinc-200 bg-white shadow-sm">
                 <div className="border-b border-zinc-100 px-5 py-4">
                     <h2 className="font-semibold text-zinc-900">
                         Operador asignado
@@ -489,13 +525,15 @@ export function VehicleForm({
 
                         {drivers.map((driver) => (
                             <option key={driver.id} value={driver.id}>
-                                {driver.name}
+                                {driver.name}{driver.status && driver.status !== "ACTIVE" ? ` · ${driver.status === "SUSPENDED" ? "Suspendido" : "Inactivo"}` : ""}
                                 {driver.licenseNumber
                                     ? ` · Lic. ${driver.licenseNumber}`
                                     : ""}
                             </option>
                         ))}
                     </select>
+
+                    {state.fieldErrors?.driverId && <p className="mt-1.5 text-xs text-red-600">{state.fieldErrors.driverId}</p>}
 
                     {drivers.length === 0 && (
                         <p className="mt-2 text-xs text-zinc-400">

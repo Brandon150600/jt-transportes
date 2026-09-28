@@ -6,6 +6,7 @@ import {
   Clock3,
   CreditCard,
   MapPin,
+  Route,
   Truck,
   Users,
   Wallet,
@@ -28,14 +29,21 @@ const vehicleStatusLabels: Record<string, string> = {
 export default async function DashboardPage() {
   const user = await requireUser();
   const isAdmin = user.role === "ADMIN" || user.role === "SUPER_ADMIN";
-  const [vehicleCounts, totalVehicles, activeDrivers] = await Promise.all([
+  const now = new Date();
+  const nextWeek = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+  const [vehicleCounts, totalVehicles, activeDrivers, tripCounts, upcomingTripsCount, operationalTrips] = await Promise.all([
     prisma.vehicle.groupBy({ by: ["status"], _count: { _all: true } }),
     prisma.vehicle.count(),
     prisma.driver.count({ where: { status: "ACTIVE" } }),
+    prisma.trip.groupBy({ by: ["status"], _count: { _all: true } }),
+    prisma.trip.count({ where: { status: "SCHEDULED", scheduledStartAt: { gte: now, lt: nextWeek } } }),
+    prisma.trip.findMany({ where: { OR: [{ status: "IN_PROGRESS" }, { status: "SCHEDULED", scheduledStartAt: { gte: now, lt: nextWeek } }] }, orderBy: [{ status: "asc" }, { scheduledStartAt: "asc" }], take: 5, include: { vehicle: { select: { economicNumber: true } }, driver: { select: { name: true } } } }),
   ]);
 
   const vehicleCount = (status: string) =>
     vehicleCounts.find((item) => item.status === status)?._count._all ?? 0;
+  const tripCount = (status: string) => tripCounts.find((item) => item.status === status)?._count._all ?? 0;
+  operationalTrips.sort((a, b) => Number(a.status === "SCHEDULED") - Number(b.status === "SCHEDULED") || a.scheduledStartAt.getTime() - b.scheduledStartAt.getTime());
 
   const monthRange = getCurrentMonthRange();
   const monthLabel = new Intl.DateTimeFormat("es-MX", {
@@ -45,10 +53,10 @@ export default async function DashboardPage() {
   }).format(new Date());
 
   let stats = [
-    { label: "Unidades en ruta", value: String(vehicleCount("IN_ROUTE")), description: `De ${totalVehicles} unidades`, icon: Truck },
-    { label: "Disponibles", value: String(vehicleCount("AVAILABLE")), description: "Listas para asignar", icon: MapPin },
+    { label: "Viajes en curso", value: String(tripCount("IN_PROGRESS")), description: "Operaciones iniciadas", icon: Route },
+    { label: "Próximos 7 días", value: String(upcomingTripsCount), description: "Viajes programados", icon: CalendarDays },
     { label: "En mantenimiento", value: String(vehicleCount("MAINTENANCE")), description: "Unidades en taller", icon: Wrench },
-    { label: "Operadores activos", value: String(activeDrivers), description: "Registrados en el catálogo", icon: Users },
+    { label: "Unidades disponibles", value: String(vehicleCount("AVAILABLE")), description: "Listas para asignar", icon: MapPin },
   ];
 
   let monthlyExpenses: { total: number; count: number } | null = null;
@@ -57,8 +65,7 @@ export default async function DashboardPage() {
   let recentVehicles: Awaited<ReturnType<typeof loadRecentVehicles>> = [];
 
   if (isAdmin) {
-    const [activeClients, monthAggregate, pendingAggregate, expenses] = await Promise.all([
-      prisma.client.count({ where: { active: true } }),
+    const [monthAggregate, pendingAggregate, expenses] = await Promise.all([
       prisma.fleetExpense.aggregate({
         where: { status: "CONFIRMED", expenseDate: { gte: monthRange.start, lt: monthRange.end } },
         _sum: { total: true },
@@ -73,9 +80,9 @@ export default async function DashboardPage() {
     ]);
 
     stats = [
-      { label: "Unidades en ruta", value: String(vehicleCount("IN_ROUTE")), description: `De ${totalVehicles} unidades`, icon: Truck },
-      { label: "Disponibles", value: String(vehicleCount("AVAILABLE")), description: "Listas para asignar", icon: MapPin },
-      { label: "Clientes activos", value: String(activeClients), description: "Disponibles para nuevos viajes", icon: Building2 },
+      { label: "Viajes en curso", value: String(tripCount("IN_PROGRESS")), description: `${vehicleCount("IN_ROUTE")} unidades en ruta`, icon: Route },
+      { label: "Próximos 7 días", value: String(upcomingTripsCount), description: "Viajes programados", icon: CalendarDays },
+      { label: "Unidades disponibles", value: String(vehicleCount("AVAILABLE")), description: `${totalVehicles} unidades en flota`, icon: Truck },
       { label: "Pagos pendientes", value: String(pendingAggregate._count._all), description: money(pendingAggregate._sum.total ?? 0), icon: CreditCard },
     ];
     monthlyExpenses = { total: Number(monthAggregate._sum.total ?? 0), count: monthAggregate._count._all };
@@ -110,6 +117,14 @@ export default async function DashboardPage() {
               </article>
             );
           })}
+        </section>
+
+        <section className="mt-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
+          <div className="flex items-center justify-between border-b border-zinc-100 px-5 py-4 sm:px-6">
+            <div><h2 className="font-bold text-zinc-950">Seguimiento de viajes</h2><p className="mt-1 text-xs text-zinc-500">Viajes en curso y salidas programadas para los próximos 7 días.</p></div>
+            <Link href="/trips" className="inline-flex items-center gap-1 text-sm font-semibold text-company-600 hover:text-company-700">Ver viajes<ChevronRight className="size-4" /></Link>
+          </div>
+          {operationalTrips.length ? <div className="divide-y divide-zinc-100">{operationalTrips.map((trip) => <Link key={trip.id} href={`/trips/${trip.id}`} className="flex flex-col gap-2 px-5 py-4 transition hover:bg-zinc-50 sm:flex-row sm:items-center sm:justify-between sm:px-6"><div className="flex min-w-0 items-start gap-3"><span className={`mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-lg ${trip.status === "IN_PROGRESS" ? "bg-amber-50 text-amber-700" : "bg-blue-50 text-blue-700"}`}><Route className="size-4" /></span><div className="min-w-0"><p className="font-semibold text-zinc-900">{trip.tripNumber} · {trip.clientNameSnapshot}</p><p className="mt-1 truncate text-xs text-zinc-500">{trip.origin} → {trip.destinationNameSnapshot} · {trip.vehicle.economicNumber} · {trip.driver.name}</p></div></div><div className="flex items-center justify-between gap-4 pl-12 sm:justify-end sm:pl-0"><span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${trip.status === "IN_PROGRESS" ? "bg-amber-50 text-amber-700" : "bg-blue-50 text-blue-700"}`}>{trip.status === "IN_PROGRESS" ? "En curso" : "Programado"}</span><span className="text-xs text-zinc-500">{trip.scheduledStartAt.toLocaleString("es-MX", { dateStyle: "medium", timeStyle: "short", timeZone: "America/Mexico_City" })}</span></div></Link>)}</div> : <EmptyState icon={Route} title="Sin viajes próximos" description="No hay viajes en curso ni salidas programadas para los próximos 7 días." />}
         </section>
 
         <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
@@ -171,6 +186,8 @@ export default async function DashboardPage() {
               <div><h2 className="font-bold text-zinc-950">Accesos rápidos</h2><p className="mt-1 text-xs text-zinc-500">Secciones disponibles para tu cuenta</p></div>
               <div className="mt-5 space-y-2">
                 {isAdmin && <QuickAction icon={Wallet} title="Registrar gasto" description="Añadir un gasto de flota" href="/fleet-expenses/new" />}
+                {isAdmin && <QuickAction icon={Route} title="Programar viaje" description="Asignar cliente, unidad y operador" href="/trips/new" />}
+                <QuickAction icon={CalendarDays} title="Consultar viajes" description="Seguimiento de rutas y servicios" href="/trips" />
                 <QuickAction icon={MapPin} title="Consultar flota" description="Ver unidades" href="/fleet-management" />
                 {isAdmin && <QuickAction icon={Building2} title="Consultar clientes" description="Ver empresas y ubicaciones" href="/clients" />}
                 {isAdmin && <QuickAction icon={Users} title="Consultar proveedores" description="Ver el catálogo" href="/suppliers" />}

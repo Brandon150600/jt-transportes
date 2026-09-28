@@ -11,11 +11,13 @@ const itemSchema = z.object({
   description: z.string().trim().min(1).max(200),
   quantity: z.coerce.number().positive().max(100000),
   unitCost: z.coerce.number().nonnegative().max(100000000),
+  unit: z.string().trim().max(30).optional(),
 });
 
 const expenseSchema = z.object({
   id: z.string().optional(),
   vehicleId: z.string().min(1, "Selecciona una unidad."),
+  tripId: z.string().optional(),
   category: z.nativeEnum(ExpenseCategory),
   expenseDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "La fecha no es válida."),
   supplierId: z.string().optional(),
@@ -35,6 +37,12 @@ const expenseSchema = z.object({
   if (data.newSupplierName && data.supplierId) {
     context.addIssue({ code: "custom", path: ["supplierId"], message: "Elige un proveedor existente o captura uno nuevo." });
   }
+  if (data.category === "FUEL" && (!data.items.length || data.items.some((item) => !item.unit || !["l", "litro", "litros"].includes(item.unit.toLowerCase())))) {
+    context.addIssue({ code: "custom", path: ["items"], message: "El combustible requiere conceptos con cantidad en litros." });
+  }
+  if (data.category === "FUEL" && data.items.some((item) => item.unitCost <= 0)) {
+    context.addIssue({ code: "custom", path: ["items"], message: "El combustible requiere un precio por litro mayor que cero." });
+  }
 });
 
 export type FleetExpenseFormState = {
@@ -53,6 +61,7 @@ function readFormData(formData: FormData) {
   return {
     id: formData.get("id") || undefined,
     vehicleId: formData.get("vehicleId"),
+    tripId: formData.get("tripId") || undefined,
     category: formData.get("category"),
     expenseDate: formData.get("expenseDate"),
     supplierId: formData.get("supplierId") || undefined,
@@ -98,6 +107,10 @@ export async function saveFleetExpense(
   try {
     const expense = await prisma.$transaction(async (tx) => {
       let supplierId = data.supplierId || null;
+      if (data.tripId) {
+        const trip = await tx.trip.findUnique({ where: { id: data.tripId }, select: { vehicleId: true, status: true } });
+        if (!trip || trip.vehicleId !== data.vehicleId || trip.status === "CANCELLED") throw new Error("INVALID_TRIP");
+      }
       if (data.newSupplierName) {
         const supplier = await tx.supplier.create({
           data: {
@@ -111,6 +124,7 @@ export async function saveFleetExpense(
 
       const values = {
         vehicleId: data.vehicleId,
+        tripId: data.tripId || null,
         supplierId,
         expenseDate: new Date(`${data.expenseDate}T12:00:00.000Z`),
         category: data.category,
@@ -130,7 +144,7 @@ export async function saveFleetExpense(
           data: {
             ...values,
             items: data.items.length
-              ? { create: data.items.map((item, index) => ({ ...item, subtotal: itemSubtotals[index] })) }
+              ? { create: data.items.map((item, index) => ({ ...item, unit: item.unit || null, subtotal: itemSubtotals[index] })) }
               : undefined,
           },
           select: { id: true },
@@ -143,7 +157,7 @@ export async function saveFleetExpense(
           createdById: user.id,
           source: "MANUAL",
           items: data.items.length
-            ? { create: data.items.map((item, index) => ({ ...item, subtotal: itemSubtotals[index] })) }
+            ? { create: data.items.map((item, index) => ({ ...item, unit: item.unit || null, subtotal: itemSubtotals[index] })) }
             : undefined,
         },
         select: { id: true },

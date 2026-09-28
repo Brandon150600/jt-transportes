@@ -14,6 +14,18 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import { requireAnyRole } from "@/lib/auth/session";
+
+const PAGE_SIZE = 10;
+type UserSearchParams = Promise<{
+    q?: string | string[];
+    status?: string | string[];
+    page?: string | string[];
+}>;
+
+function firstParam(value: string | string[] | undefined) {
+    return Array.isArray(value) ? value[0] : value;
+}
 
 function statusStyles(status: string) {
     switch (status) {
@@ -22,6 +34,9 @@ function statusStyles(status: string) {
 
         case "Disponible":
             return "bg-emerald-50 text-emerald-700 ring-emerald-600/10";
+
+        case "Suspendido":
+            return "bg-amber-50 text-amber-700 ring-amber-600/10";
 
         case "Documentación":
             return "bg-amber-50 text-amber-700 ring-amber-600/10";
@@ -32,8 +47,24 @@ function statusStyles(status: string) {
 }
 
 
-export default async function UsersPage() {
-    const operators = await prisma.driver.findMany({
+export default async function UsersPage({
+    searchParams,
+}: {
+    searchParams: UserSearchParams;
+}) {
+    await requireAnyRole("ADMIN", "SUPER_ADMIN");
+
+    const params = await searchParams;
+    const query = firstParam(params.q)?.trim() ?? "";
+    const requestedStatus = firstParam(params.status);
+    const validStatuses = ["ACTIVE", "INACTIVE", "SUSPENDED"] as const;
+    const status = validStatuses.includes(requestedStatus as (typeof validStatuses)[number])
+        ? requestedStatus as (typeof validStatuses)[number]
+        : "ALL";
+    const parsedPage = Number.parseInt(firstParam(params.page) ?? "1", 10);
+    const requestedPage = Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1;
+
+    const allOperators = await prisma.driver.findMany({
         orderBy: {
             name: "asc",
         },
@@ -46,47 +77,65 @@ export default async function UsersPage() {
             },
         },
     });
-    const totalOperators = operators.length;
+    const totalOperators = allOperators.length;
 
-    const activeOperators = operators.filter(
+    const activeOperators = allOperators.filter(
         (operator) => operator.status === "ACTIVE",
     ).length;
 
-    const operatorsInRoute = operators.filter((operator) =>
+    const operatorsInRoute = allOperators.filter((operator) =>
         operator.vehicles.some((vehicle) => vehicle.status === "IN_ROUTE"),
     ).length;
 
     const today = new Date();
-
-    const thirtyDaysFromNow = new Date();
-    thirtyDaysFromNow.setDate(today.getDate() + 30);
-
-    const operatorsToRenew = operators.filter((operator) => {
-        if (!operator.licenseExpiresAt) return false;
-
-        return (
-            operator.licenseExpiresAt >= today &&
-            operator.licenseExpiresAt <= thirtyDaysFromNow
-        );
+    const todayUtc = Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
+    const thirtyDaysFromNowUtc = todayUtc + 30 * 24 * 60 * 60 * 1000;
+    const expiredLicenses = allOperators.filter((operator) =>
+        operator.licenseExpiresAt && operator.licenseExpiresAt.getTime() < todayUtc,
+    ).length;
+    const operatorsToRenew = allOperators.filter((operator) => {
+        const expiration = operator.licenseExpiresAt?.getTime();
+        return expiration !== undefined && expiration >= todayUtc && expiration <= thirtyDaysFromNowUtc;
     }).length;
+    const licensesWithoutExpiration = allOperators.filter((operator) => !operator.licenseExpiresAt).length;
 
 
-    function getOperatorStatus(
-        operator: (typeof operators)[number],
-    ) {
+    function getOperatorStatus(operator: (typeof allOperators)[number]) {
+        if (operator.status === "SUSPENDED") return "Suspendido";
+        if (operator.status === "INACTIVE") return "Inactivo";
         if (
-            operator.status === "ACTIVE" &&
             operator.vehicles.some((vehicle) => vehicle.status === "IN_ROUTE")
         ) {
             return "En ruta";
         }
 
-        if (operator.status === "ACTIVE") {
-            return "Disponible";
-        }
-
-        return "Inactivo";
+        return "Disponible";
     }
+
+    const normalizedQuery = query.toLocaleLowerCase("es-MX");
+    const filteredOperators = allOperators.filter((operator) => {
+        const matchesStatus = status === "ALL" || operator.status === status;
+        const matchesQuery = !normalizedQuery || [
+            operator.name,
+            operator.phone ?? "",
+            operator.licenseNumber ?? "",
+            operator.licenseType ?? "",
+            ...operator.vehicles.map((vehicle) => vehicle.economicNumber),
+        ].some((value) => value.toLocaleLowerCase("es-MX").includes(normalizedQuery));
+        return matchesStatus && matchesQuery;
+    });
+    const pageCount = Math.max(1, Math.ceil(filteredOperators.length / PAGE_SIZE));
+    const currentPage = Math.min(requestedPage, pageCount);
+    const operators = filteredOperators.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+    const rangeStart = filteredOperators.length === 0 ? 0 : (currentPage - 1) * PAGE_SIZE + 1;
+    const rangeEnd = Math.min(currentPage * PAGE_SIZE, filteredOperators.length);
+    const pageHref = (page: number) => {
+        const params = new URLSearchParams();
+        if (query) params.set("q", query);
+        if (status !== "ALL") params.set("status", status);
+        params.set("page", String(page));
+        return `/users?${params.toString()}`;
+    };
 
 
     const operatorStats = [
@@ -109,9 +158,9 @@ export default async function UsersPage() {
             icon: MapPin,
         },
         {
-            label: "Por renovar",
-            value: operatorsToRenew.toString(),
-            description: "Documentación próxima a vencer",
+            label: "Licencias por revisar",
+            value: (expiredLicenses + operatorsToRenew).toString(),
+            description: `${expiredLicenses} vencidas · ${operatorsToRenew} próximas a vencer`,
             icon: FileText,
         },
     ];
@@ -200,31 +249,27 @@ export default async function UsersPage() {
                                 </p>
                             </div>
 
-                            <div className="flex flex-col gap-2 sm:flex-row">
+                            <form action="/users" method="get" className="flex flex-col gap-2 sm:flex-row">
                                 <div className="relative">
                                     <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-zinc-400" />
 
                                     <input
                                         type="search"
+                                        name="q"
+                                        defaultValue={query}
                                         placeholder="Buscar operador..."
                                         className="h-10 w-full rounded-xl border border-zinc-200 bg-zinc-50 pl-9 pr-4 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-company focus:ring-4 focus:ring-company-100 sm:w-64"
                                     />
                                 </div>
 
-                                <button
-                                    type="button"
-                                    className="h-10 rounded-xl border border-zinc-200 bg-white px-4 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50"
-                                >
-                                    Todos
-                                </button>
-
-                                <button
-                                    type="button"
-                                    className="h-10 rounded-xl border border-zinc-200 bg-white px-4 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50"
-                                >
-                                    Activos
-                                </button>
-                            </div>
+                                <select name="status" defaultValue={status} aria-label="Filtrar por estado" className="h-10 rounded-xl border border-zinc-200 bg-white px-3 text-sm text-zinc-700">
+                                    <option value="ALL">Todos los estados</option>
+                                    <option value="ACTIVE">Activos</option>
+                                    <option value="INACTIVE">Inactivos</option>
+                                    <option value="SUSPENDED">Suspendidos</option>
+                                </select>
+                                <button type="submit" className="h-10 rounded-xl bg-zinc-900 px-4 text-sm font-semibold text-white transition hover:bg-zinc-700">Buscar</button>
+                            </form>
                         </div>
                     </div>
 
@@ -243,6 +288,13 @@ export default async function UsersPage() {
                             </thead>
 
                             <tbody className="divide-y divide-zinc-100">
+                                {operators.length === 0 && (
+                                    <tr>
+                                        <td colSpan={6} className="px-5 py-12 text-center text-sm text-zinc-500">
+                                            No se encontraron operadores con esos criterios.
+                                        </td>
+                                    </tr>
+                                )}
                                 {operators.map((operator) => {
                                     const initials = operator.name
                                         .split(" ")
@@ -251,7 +303,7 @@ export default async function UsersPage() {
                                         .join("")
                                         .toUpperCase();
 
-                                    const vehicle = operator.vehicles[0];
+                                    const assignedVehicles = operator.vehicles.map((vehicle) => vehicle.economicNumber).join(", ");
 
                                     const status = getOperatorStatus(operator);
                                     return (
@@ -290,7 +342,7 @@ export default async function UsersPage() {
 
                                                     <div>
                                                         <p className="text-sm font-medium text-zinc-700">
-                                                            {operator.licenseNumber ?? "Sin licencia"}
+                                                            {operator.licenseNumber || "Sin licencia"}
                                                         </p>
 
                                                         <p className="mt-0.5 text-xs text-zinc-400">
@@ -300,7 +352,7 @@ export default async function UsersPage() {
                                                         <div className="mt-1 flex items-center gap-1 text-xs text-zinc-400">
                                                             <CalendarDays className="size-3.5" />
                                                             {operator.licenseExpiresAt
-                                                                ? operator.licenseExpiresAt.toLocaleDateString("es-MX")
+                                                                ? operator.licenseExpiresAt.toLocaleDateString("es-MX", { timeZone: "UTC" })
                                                                 : "Sin fecha"}
                                                         </div>
                                                     </div>
@@ -310,13 +362,13 @@ export default async function UsersPage() {
                                             {/* Unit */}
                                             <td className="px-5 py-4">
                                                 <p className="text-sm font-semibold text-zinc-700">
-                                                    {vehicle?.economicNumber ?? "Sin asignar"}
+                                                    {assignedVehicles || "Sin asignar"}
                                                 </p>
                                             </td>
 
                                             {/* Operation */}
                                             <td className="px-5 py-4">
-                                                {vehicle?.status === "IN_ROUTE" ? (
+                                                {operator.vehicles.some((assignedVehicle) => assignedVehicle.status === "IN_ROUTE") ? (
                                                     <>
                                                         <div className="flex items-center gap-2 text-sm text-zinc-600">
                                                             <MapPin className="size-4 text-zinc-400" />
@@ -365,6 +417,11 @@ export default async function UsersPage() {
 
                     {/* Mobile cards */}
                     <div className="divide-y divide-zinc-100 md:hidden">
+                        {operators.length === 0 && (
+                            <p className="px-5 py-12 text-center text-sm text-zinc-500">
+                                No se encontraron operadores con esos criterios.
+                            </p>
+                        )}
                         {operators.map((operator) => {
                             const initialsmovile = operator.name
                                 .split(" ")
@@ -373,7 +430,7 @@ export default async function UsersPage() {
                                 .join("")
                                 .toUpperCase();
 
-                            const vehicle = operator.vehicles[0];
+                            const assignedVehicles = operator.vehicles.map((vehicle) => vehicle.economicNumber).join(", ");
 
                             const status = getOperatorStatus(operator);
                             return (
@@ -398,10 +455,10 @@ export default async function UsersPage() {
 
                                         <span
                                             className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-inset ${statusStyles(
-                                                operator.status,
+                                                status,
                                             )}`}
                                         >
-                                            {operator.status}
+                                            {status}
                                         </span>
                                     </div>
 
@@ -414,7 +471,7 @@ export default async function UsersPage() {
 
                                             <p className="mt-1 flex items-center gap-1.5 text-sm font-medium text-zinc-700">
                                                 <Phone className="size-3.5" />
-                                                {operator.phone}
+                                                {operator.phone || "Sin teléfono"}
                                             </p>
                                         </div>
 
@@ -424,7 +481,7 @@ export default async function UsersPage() {
                                             </p>
 
                                             <p className="mt-1 text-sm font-medium text-zinc-700">
-                                                {vehicle?.economicNumber ?? "Sin asignar"}
+                                                {assignedVehicles || "Sin asignar"}
                                             </p>
                                         </div>
 
@@ -434,7 +491,7 @@ export default async function UsersPage() {
                                             </p>
 
                                             <p className="mt-1 text-sm font-medium text-zinc-700">
-                                                {operator.licenseNumber ?? "Sin licencia"}
+                                                {operator.licenseNumber || "Sin licencia"}
                                             </p>
 
                                             <p className="mt-0.5 text-xs text-zinc-400">
@@ -450,7 +507,7 @@ export default async function UsersPage() {
                                             <p className="mt-1 flex items-center gap-1.5 text-sm font-medium text-zinc-700">
                                                 <CalendarDays className="size-3.5" />
                                                 {operator.licenseExpiresAt
-                                                    ? operator.licenseExpiresAt.toLocaleDateString("es-MX")
+                                                    ? operator.licenseExpiresAt.toLocaleDateString("es-MX", { timeZone: "UTC" })
                                                     : "Sin fecha"}
                                             </p>
                                         </div>
@@ -470,13 +527,13 @@ export default async function UsersPage() {
                                         </div>
                                     )} */}
 
-                                    <button
-                                        type="button"
+                                    <Link
+                                        href={`/users/${operator.id}`}
                                         className="mt-4 flex w-full items-center justify-center gap-1 rounded-xl border border-zinc-200 py-2.5 text-sm font-semibold text-company-600 transition hover:bg-company-50"
                                     >
                                         Ver detalles
                                         <ChevronRight className="size-4" />
-                                    </button>
+                                    </Link>
                                 </div>
                             );
                         })}
@@ -485,25 +542,18 @@ export default async function UsersPage() {
                     {/* Footer */}
                     <div className="flex flex-col gap-3 border-t border-zinc-100 px-5 py-4 text-xs text-zinc-500 sm:flex-row sm:items-center sm:justify-between">
                         <span>
-                            Mostrando 5 de 16 operadores
+                            Mostrando {rangeStart}–{rangeEnd} de {filteredOperators.length} operadores
                         </span>
 
                         <div className="flex items-center gap-2">
-                            <button
-                                type="button"
-                                disabled
-                                className="rounded-lg border border-zinc-200 px-3 py-2 disabled:cursor-not-allowed disabled:opacity-40"
-                            >
+                            <Link href={pageHref(Math.max(1, currentPage - 1))} aria-disabled={currentPage === 1} className={`rounded-lg border border-zinc-200 px-3 py-2 ${currentPage === 1 ? "pointer-events-none opacity-40" : "hover:bg-zinc-50"}`}>
                                 Anterior
-                            </button>
+                            </Link>
 
-                            <button
-                                type="button"
-                                disabled
-                                className="rounded-lg border border-zinc-200 px-3 py-2 transition hover:bg-zinc-50"
-                            >
+                            <span className="px-2">{currentPage} / {pageCount}</span>
+                            <Link href={pageHref(Math.min(pageCount, currentPage + 1))} aria-disabled={currentPage === pageCount} className={`rounded-lg border border-zinc-200 px-3 py-2 ${currentPage === pageCount ? "pointer-events-none opacity-40" : "hover:bg-zinc-50"}`}>
                                 Siguiente
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </section>
@@ -517,16 +567,13 @@ export default async function UsersPage() {
 
                         <div>
                             <h2 className="font-semibold text-amber-900">
-                                {operatorsToRenew === 0
-                                    ? "No hay operadores con documentación próxima a vencer"
-                                    : operatorsToRenew === 1
-                                        ? "1 operador tiene documentación próxima a vencer"
-                                        : `${operatorsToRenew} operadores tienen documentación próxima a vencer`}
+                                {expiredLicenses > 0
+                                    ? `${expiredLicenses} licencias vencidas; ${operatorsToRenew} próximas a vencer`
+                                    : `${operatorsToRenew} licencias próximas a vencer`}
                             </h2>
 
                             <p className="mt-1 text-sm text-amber-800">
-                                Revisa las licencias y documentos de los operadores para
-                                mantener la flota disponible para operación.
+                                {licensesWithoutExpiration} operadores no tienen registrada la vigencia de su licencia. Revisa la documentación para mantener la flota disponible.
                             </p>
                         </div>
                     </div>

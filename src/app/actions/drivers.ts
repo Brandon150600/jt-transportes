@@ -6,6 +6,19 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { requireAnyRole } from "@/lib/auth/session";
 
+function isValidDateOnly(value: string) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+    const [year, month, day] = value.split("-").map(Number);
+    const date = new Date(Date.UTC(year, month - 1, day));
+    return date.getUTCFullYear() === year && date.getUTCMonth() === month - 1 && date.getUTCDate() === day;
+}
+
+function parseLicenseDate(value: string | undefined) {
+    if (!value) return null;
+    const [year, month, day] = value.split("-").map(Number);
+    return new Date(Date.UTC(year, month - 1, day));
+}
+
 const driverSchema = z.object({
     name: z
         .string()
@@ -81,6 +94,13 @@ export async function createDriver(
 
     const data = parsed.data;
 
+    if (data.licenseExpiresAt && !isValidDateOnly(data.licenseExpiresAt)) {
+        return {
+            error: "Revisa los campos marcados.",
+            fieldErrors: { licenseExpiresAt: "La fecha de vigencia no es válida." },
+        };
+    }
+
     if (data.licenseNumber) {
         const existingDriver = await prisma.driver.findFirst({
             where: {
@@ -98,19 +118,14 @@ export async function createDriver(
         }
     }
 
-    const driver = await prisma.driver.create({
+    await prisma.driver.create({
         data: {
             name: data.name,
             phone: data.phone || null,
             licenseNumber: data.licenseNumber || null,
             licenseType: data.licenseType || null,
-            licenseExpiresAt: data.licenseExpiresAt
-                ? new Date(`${data.licenseExpiresAt}T00:00:00`)
-                : null,
+            licenseExpiresAt: parseLicenseDate(data.licenseExpiresAt),
             status: data.status,
-        },
-        select: {
-            id: true,
         },
     });
 
@@ -152,22 +167,31 @@ export async function updateDriver(
 
     const data = parsed.data;
 
-    const existingDriver = await prisma.driver.findFirst({
-        where: {
-            licenseNumber: data.licenseNumber,
-            NOT: {
-                id: data.id,
-            },
-        },
-        select: {
-            id: true,
-        },
-    });
-
-    if (existingDriver) {
+    if (data.licenseExpiresAt && !isValidDateOnly(data.licenseExpiresAt)) {
         return {
-            error: "Ya existe otro operador con ese número de licencia.",
+            error: "Revisa los campos marcados.",
+            fieldErrors: { licenseExpiresAt: "La fecha de vigencia no es válida." },
         };
+    }
+
+    if (data.licenseNumber) {
+        const existingDriver = await prisma.driver.findFirst({
+            where: {
+                licenseNumber: data.licenseNumber,
+                NOT: {
+                    id: data.id,
+                },
+            },
+            select: {
+                id: true,
+            },
+        });
+
+        if (existingDriver) {
+            return {
+                error: "Ya existe otro operador con ese número de licencia.",
+            };
+        }
     }
 
     try {
@@ -178,11 +202,9 @@ export async function updateDriver(
             data: {
                 name: data.name,
                 phone: data.phone || null,
-                licenseNumber: data.licenseNumber,
-                licenseType: data.licenseType,
-                licenseExpiresAt: data.licenseExpiresAt
-                    ? new Date(data.licenseExpiresAt)
-                    : null,
+                licenseNumber: data.licenseNumber || null,
+                licenseType: data.licenseType || null,
+                licenseExpiresAt: parseLicenseDate(data.licenseExpiresAt),
                 status: data.status,
             },
         });

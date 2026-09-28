@@ -26,10 +26,12 @@ export default async function EditVehiclePage({
         },
     });
 
+    if (!vehicle) {
+        notFound();
+    }
+
     const drivers = await prisma.driver.findMany({
-        where: {
-            status: "ACTIVE",
-        },
+        where: { OR: [{ status: "ACTIVE" }, ...(vehicle.driverId ? [{ id: vehicle.driverId }] : [])] },
         orderBy: {
             name: "asc",
         },
@@ -37,12 +39,9 @@ export default async function EditVehiclePage({
             id: true,
             name: true,
             licenseNumber: true,
+            status: true,
         },
     });
-
-    if (!vehicle) {
-        notFound();
-    }
 
     return (
         <main className="min-h-screen bg-zinc-50">

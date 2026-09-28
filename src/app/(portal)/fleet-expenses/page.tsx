@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { requireAnyRole } from "@/lib/auth/session";
 
 const categoryLabels: Record<string, string> = {
+  FUEL: "Combustible", TOLLS: "Casetas", PER_DIEM: "Viáticos",
   PARTS: "Refacciones", MAINTENANCE: "Mantenimiento", WASH: "Lavado", TIRES: "Llantas", OTHER: "Otro",
 };
 

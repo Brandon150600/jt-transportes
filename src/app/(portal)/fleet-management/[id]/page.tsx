@@ -17,6 +17,15 @@ import {
 
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { requireUser } from "@/lib/auth/session";
+
+function documentState(value: string | null) {
+    if (value === "VALID") return { label: "Vigente", style: "bg-emerald-50 text-emerald-700", icon: CheckCircle2 };
+    if (value === "EXPIRING") return { label: "Por vencer", style: "bg-amber-50 text-amber-700", icon: CircleDot };
+    if (value === "EXPIRED") return { label: "Vencido", style: "bg-red-50 text-red-700", icon: CircleDot };
+    if (value) return { label: value, style: "bg-zinc-100 text-zinc-700", icon: CircleDot };
+    return { label: "Sin registrar", style: "bg-zinc-100 text-zinc-600", icon: CircleDot };
+}
 
 
 
@@ -47,6 +56,8 @@ export default async function FleetVehiclePage({
 }: {
     params: Promise<{ id: string }>;
 }) {
+    const user = await requireUser();
+    const canManageFleet = user.role === "ADMIN" || user.role === "SUPER_ADMIN";
     const { id } = await params;
 
     const vehicle = await prisma.vehicle.findUnique({
@@ -105,6 +116,8 @@ export default async function FleetVehiclePage({
         }
     }
     const statusStyles = getStatusStyles(statusLabel);
+    const insurance = documentState(vehicle.insuranceStatus);
+    const registration = documentState(vehicle.registrationStatus);
 
     return (
         <main className="min-h-screen bg-zinc-50">
@@ -154,14 +167,15 @@ export default async function FleetVehiclePage({
                         </div>
 
                         <div className="flex flex-wrap gap-3">
-                            <button
-                                type="button"
+                            {canManageFleet && <Link
+                                href={`/fleet-management/${vehicle.id}/edit#maintenance`}
                                 className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-zinc-200 bg-white px-4 text-sm font-semibold text-zinc-700 shadow-sm transition hover:bg-zinc-50"
                             >
                                 <Wrench className="size-4" />
                                 Mantenimiento
-                            </button>
+                            </Link>}
 
+                            {canManageFleet && (
                             <Link
                                 href={`/fleet-management/${vehicle.id}/edit`}
                                 className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-zinc-200 bg-white px-4 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50"
@@ -169,6 +183,7 @@ export default async function FleetVehiclePage({
                                 <Pencil className="size-4" />
                                 Editar unidad
                             </Link>
+                            )}
                         </div>
                     </div>
                 </header>
@@ -297,7 +312,7 @@ export default async function FleetVehiclePage({
                                     </div>
                                     <p className="mt-2 text-sm font-semibold text-zinc-900">
                                         {vehicle.lastServiceAt
-                                            ? vehicle.lastServiceAt.toLocaleDateString("es-MX")
+                                            ? vehicle.lastServiceAt.toLocaleDateString("es-MX", { timeZone: "UTC" })
                                             : "Sin registro"}
                                     </p>
                                 </div>
@@ -310,7 +325,7 @@ export default async function FleetVehiclePage({
 
                                     <p className="mt-2 text-sm font-semibold text-zinc-900">
                                         {vehicle.nextServiceAt
-                                            ? vehicle.nextServiceAt.toLocaleDateString("es-MX")
+                                            ? vehicle.nextServiceAt.toLocaleDateString("es-MX", { timeZone: "UTC" })
                                             : "No programado"}
                                     </p>
                                 </div>
@@ -338,15 +353,13 @@ export default async function FleetVehiclePage({
                                             <p className="text-sm font-semibold text-zinc-900">
                                                 Póliza de seguro
                                             </p>
-                                            <p className="text-xs text-zinc-500">
-                                                Documento vigente
-                                            </p>
+                                            <p className="text-xs text-zinc-500">Estado de la póliza</p>
                                         </div>
                                     </div>
 
-                                    <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
-                                        <CheckCircle2 className="size-3.5" />
-                                        {vehicle.insuranceStatus ?? "No registrada"}
+                                    <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ${insurance.style}`}>
+                                        <insurance.icon className="size-3.5" />
+                                        {insurance.label}
                                     </span>
                                 </div>
 
@@ -360,15 +373,13 @@ export default async function FleetVehiclePage({
                                             <p className="text-sm font-semibold text-zinc-900">
                                                 Tarjeta de circulación
                                             </p>
-                                            <p className="text-xs text-zinc-500">
-                                                Documento vigente
-                                            </p>
+                                            <p className="text-xs text-zinc-500">Estado de la tarjeta</p>
                                         </div>
                                     </div>
 
-                                    <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
-                                        <CheckCircle2 className="size-3.5" />
-                                        {vehicle.registrationStatus ?? "No registrada"}
+                                    <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ${registration.style}`}>
+                                        <registration.icon className="size-3.5" />
+                                        {registration.label}
                                     </span>
                                 </div>
                             </div>
@@ -417,40 +428,40 @@ export default async function FleetVehiclePage({
                                 </div>
                             </div>
 
-                            {vehicle.driver && (
-                                <button
-                                    type="button"
+                            {vehicle.driver && canManageFleet && (
+                                <Link
+                                    href={`/users/${vehicle.driver.id}`}
                                     className="mt-4 flex w-full items-center justify-between rounded-xl border border-zinc-200 px-3 py-2.5 text-left text-sm font-semibold text-zinc-700 transition hover:bg-zinc-50"
                                 >
                                     Ver perfil
                                     <ChevronRight className="size-4 text-zinc-400" />
-                                </button>
+                                </Link>
                             )}
                         </section>
 
                         {/* Quick actions */}
-                        <section className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm">
+                        {canManageFleet && <section className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm">
                             <h2 className="font-semibold text-zinc-900">
                                 Acciones rápidas
                             </h2>
 
                             <div className="mt-4 space-y-2">
-                                <button
-                                    type="button"
+                                <Link
+                                    href={`/fleet-management/${vehicle.id}/edit#maintenance`}
                                     className="flex w-full items-center justify-between rounded-xl border border-zinc-200 p-3 text-left transition hover:border-company-200 hover:bg-company-50"
                                 >
                                     <span className="flex items-center gap-3">
                                         <Wrench className="size-4 text-company-600" />
                                         <span className="text-sm font-medium">
-                                            Registrar mantenimiento
+                                            Actualizar fechas de servicio
                                         </span>
                                     </span>
 
                                     <ChevronRight className="size-4 text-zinc-400" />
-                                </button>
+                                </Link>
 
-                                <button
-                                    type="button"
+                                {canManageFleet && <Link
+                                    href={`/fleet-management/${vehicle.id}/edit#driver`}
                                     className="flex w-full items-center justify-between rounded-xl border border-zinc-200 p-3 text-left transition hover:border-company-200 hover:bg-company-50"
                                 >
                                     <span className="flex items-center gap-3">
@@ -461,23 +472,23 @@ export default async function FleetVehiclePage({
                                     </span>
 
                                     <ChevronRight className="size-4 text-zinc-400" />
-                                </button>
+                                </Link>}
 
-                                <button
-                                    type="button"
+                                <Link
+                                    href={`/fleet-management/${vehicle.id}/edit#documents`}
                                     className="flex w-full items-center justify-between rounded-xl border border-zinc-200 p-3 text-left transition hover:border-company-200 hover:bg-company-50"
                                 >
                                     <span className="flex items-center gap-3">
                                         <FileText className="size-4 text-company-600" />
                                         <span className="text-sm font-medium">
-                                            Ver documentos
+                                            Actualizar estado documental
                                         </span>
                                     </span>
 
                                     <ChevronRight className="size-4 text-zinc-400" />
-                                </button>
+                                </Link>
                             </div>
-                        </section>
+                        </section>}
                     </aside>
                 </div>
             </div>

@@ -50,6 +50,9 @@ export type DriverStatus = (typeof DriverStatus)[keyof typeof DriverStatus]
 
 
 export const ExpenseCategory = {
+  FUEL: 'FUEL',
+  TOLLS: 'TOLLS',
+  PER_DIEM: 'PER_DIEM',
   PARTS: 'PARTS',
   MAINTENANCE: 'MAINTENANCE',
   WASH: 'WASH',
@@ -85,3 +88,13 @@ export const PaymentStatus = {
 } as const
 
 export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
+
+
+export const TripStatus = {
+  SCHEDULED: 'SCHEDULED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type TripStatus = (typeof TripStatus)[keyof typeof TripStatus]

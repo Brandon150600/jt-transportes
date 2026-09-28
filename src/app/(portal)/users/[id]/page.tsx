@@ -13,12 +13,14 @@ import {
 } from "lucide-react";
 
 import { prisma } from "@/lib/prisma";
+import { requireAnyRole } from "@/lib/auth/session";
 
 export default async function DriverPage({
     params,
 }: {
     params: Promise<{ id: string }>;
 }) {
+    await requireAnyRole("ADMIN", "SUPER_ADMIN");
     const { id } = await params;
 
     const driver = await prisma.driver.findUnique({
@@ -50,9 +52,10 @@ export default async function DriverPage({
         SUSPENDED: "Suspendido",
     }[driver.status];
 
-    const statusClass =
-        driver.status === "ACTIVE"
-            ? "bg-emerald-50 text-emerald-700"
+    const statusClass = driver.status === "ACTIVE"
+        ? "bg-emerald-50 text-emerald-700"
+        : driver.status === "SUSPENDED"
+            ? "bg-amber-50 text-amber-700"
             : "bg-zinc-100 text-zinc-600";
 
     return (
@@ -101,7 +104,7 @@ export default async function DriverPage({
                                 </div>
 
                                 <p className="mt-1 text-sm text-zinc-500">
-                                    Operador · {driver.licenseNumber}
+                                    Operador · {driver.licenseNumber || "Sin licencia registrada"}
                                 </p>
                             </div>
                         </div>
@@ -158,6 +161,7 @@ export default async function DriverPage({
                                               day: "2-digit",
                                               month: "long",
                                               year: "numeric",
+                                              timeZone: "UTC",
                                           }).format(
                                               driver.licenseExpiresAt,
                                           )
@@ -247,7 +251,7 @@ export default async function DriverPage({
                             </p>
 
                             <p className="mt-1 text-sm text-zinc-400">
-                                {driver.licenseNumber}
+                                {driver.licenseNumber || "No registrada"}
                             </p>
                         </div>
                     </section>

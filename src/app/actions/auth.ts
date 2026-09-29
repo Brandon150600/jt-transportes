@@ -55,7 +55,7 @@ export async function login(
   }
 
   await createSession(user.id, parsed.data.remember);
-  redirect(user.role === "ADMIN" ? "/admin" : "/dashboard");
+  redirect("/dashboard");
 }
 
 export async function logout() {

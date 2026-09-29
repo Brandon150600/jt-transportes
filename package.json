@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "create-user": "tsx scripts/create-user.ts"
+    "create-user": "tsx scripts/create-user.ts",
+    "change-password": "tsx scripts/change-password.ts"
   },
   "dependencies": {
     "@auth/core": "^0.41.3",

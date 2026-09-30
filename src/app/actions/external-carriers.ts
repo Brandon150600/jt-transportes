@@ -44,9 +44,9 @@ export async function createExternalCarrier(_state: ExternalCarrierFormState, fo
   await requireAnyRole("ADMIN", "SUPER_ADMIN");
   const parsed = parse(formData);
   if (!parsed.success) return { error: "Revisa los campos marcados.", fieldErrors: fieldErrors(parsed.error) };
-  const carrier = await prisma.externalCarrier.create({ data: clean(parsed.data), select: { id: true } });
+  await prisma.externalCarrier.create({ data: clean(parsed.data) });
   revalidatePath("/external-carriers");
-  redirect(`/external-carriers/${carrier.id}/edit`);
+  redirect("/external-carriers");
 }
 
 export async function updateExternalCarrier(_state: ExternalCarrierFormState, formData: FormData): Promise<ExternalCarrierFormState> {

@@ -30,18 +30,21 @@ export type TripAvgAggregateOutputType = {
   mileageStart: number | null
   mileageEnd: number | null
   revenue: runtime.Decimal | null
+  subcontractorCost: runtime.Decimal | null
 }
 
 export type TripSumAggregateOutputType = {
   mileageStart: number | null
   mileageEnd: number | null
   revenue: runtime.Decimal | null
+  subcontractorCost: runtime.Decimal | null
 }
 
 export type TripMinAggregateOutputType = {
   id: string | null
   tripNumber: string | null
   status: $Enums.TripStatus | null
+  executionType: $Enums.TripExecutionType | null
   clientId: string | null
   destinationAddressId: string | null
   clientNameSnapshot: string | null
@@ -50,6 +53,10 @@ export type TripMinAggregateOutputType = {
   origin: string | null
   vehicleId: string | null
   driverId: string | null
+  externalCarrierId: string | null
+  externalCarrierNameSnapshot: string | null
+  externalVehicleDescription: string | null
+  externalDriverName: string | null
   scheduledStartAt: Date | null
   startedAt: Date | null
   completedAt: Date | null
@@ -57,6 +64,13 @@ export type TripMinAggregateOutputType = {
   mileageStart: number | null
   mileageEnd: number | null
   revenue: runtime.Decimal | null
+  subcontractorCost: runtime.Decimal | null
+  customerPaymentStatus: $Enums.PaymentStatus | null
+  customerPaidAt: Date | null
+  customerPaidByUserId: string | null
+  subcontractorPaymentStatus: $Enums.PaymentStatus | null
+  subcontractorPaidAt: Date | null
+  subcontractorPaidByUserId: string | null
   notes: string | null
   createdById: string | null
   updatedById: string | null
@@ -68,6 +82,7 @@ export type TripMaxAggregateOutputType = {
   id: string | null
   tripNumber: string | null
   status: $Enums.TripStatus | null
+  executionType: $Enums.TripExecutionType | null
   clientId: string | null
   destinationAddressId: string | null
   clientNameSnapshot: string | null
@@ -76,6 +91,10 @@ export type TripMaxAggregateOutputType = {
   origin: string | null
   vehicleId: string | null
   driverId: string | null
+  externalCarrierId: string | null
+  externalCarrierNameSnapshot: string | null
+  externalVehicleDescription: string | null
+  externalDriverName: string | null
   scheduledStartAt: Date | null
   startedAt: Date | null
   completedAt: Date | null
@@ -83,6 +102,13 @@ export type TripMaxAggregateOutputType = {
   mileageStart: number | null
   mileageEnd: number | null
   revenue: runtime.Decimal | null
+  subcontractorCost: runtime.Decimal | null
+  customerPaymentStatus: $Enums.PaymentStatus | null
+  customerPaidAt: Date | null
+  customerPaidByUserId: string | null
+  subcontractorPaymentStatus: $Enums.PaymentStatus | null
+  subcontractorPaidAt: Date | null
+  subcontractorPaidByUserId: string | null
   notes: string | null
   createdById: string | null
   updatedById: string | null
@@ -94,6 +120,7 @@ export type TripCountAggregateOutputType = {
   id: number
   tripNumber: number
   status: number
+  executionType: number
   clientId: number
   destinationAddressId: number
   clientNameSnapshot: number
@@ -102,6 +129,10 @@ export type TripCountAggregateOutputType = {
   origin: number
   vehicleId: number
   driverId: number
+  externalCarrierId: number
+  externalCarrierNameSnapshot: number
+  externalVehicleDescription: number
+  externalDriverName: number
   scheduledStartAt: number
   startedAt: number
   completedAt: number
@@ -109,6 +140,13 @@ export type TripCountAggregateOutputType = {
   mileageStart: number
   mileageEnd: number
   revenue: number
+  subcontractorCost: number
+  customerPaymentStatus: number
+  customerPaidAt: number
+  customerPaidByUserId: number
+  subcontractorPaymentStatus: number
+  subcontractorPaidAt: number
+  subcontractorPaidByUserId: number
   notes: number
   createdById: number
   updatedById: number
@@ -122,18 +160,21 @@ export type TripAvgAggregateInputType = {
   mileageStart?: true
   mileageEnd?: true
   revenue?: true
+  subcontractorCost?: true
 }
 
 export type TripSumAggregateInputType = {
   mileageStart?: true
   mileageEnd?: true
   revenue?: true
+  subcontractorCost?: true
 }
 
 export type TripMinAggregateInputType = {
   id?: true
   tripNumber?: true
   status?: true
+  executionType?: true
   clientId?: true
   destinationAddressId?: true
   clientNameSnapshot?: true
@@ -142,6 +183,10 @@ export type TripMinAggregateInputType = {
   origin?: true
   vehicleId?: true
   driverId?: true
+  externalCarrierId?: true
+  externalCarrierNameSnapshot?: true
+  externalVehicleDescription?: true
+  externalDriverName?: true
   scheduledStartAt?: true
   startedAt?: true
   completedAt?: true
@@ -149,6 +194,13 @@ export type TripMinAggregateInputType = {
   mileageStart?: true
   mileageEnd?: true
   revenue?: true
+  subcontractorCost?: true
+  customerPaymentStatus?: true
+  customerPaidAt?: true
+  customerPaidByUserId?: true
+  subcontractorPaymentStatus?: true
+  subcontractorPaidAt?: true
+  subcontractorPaidByUserId?: true
   notes?: true
   createdById?: true
   updatedById?: true
@@ -160,6 +212,7 @@ export type TripMaxAggregateInputType = {
   id?: true
   tripNumber?: true
   status?: true
+  executionType?: true
   clientId?: true
   destinationAddressId?: true
   clientNameSnapshot?: true
@@ -168,6 +221,10 @@ export type TripMaxAggregateInputType = {
   origin?: true
   vehicleId?: true
   driverId?: true
+  externalCarrierId?: true
+  externalCarrierNameSnapshot?: true
+  externalVehicleDescription?: true
+  externalDriverName?: true
   scheduledStartAt?: true
   startedAt?: true
   completedAt?: true
@@ -175,6 +232,13 @@ export type TripMaxAggregateInputType = {
   mileageStart?: true
   mileageEnd?: true
   revenue?: true
+  subcontractorCost?: true
+  customerPaymentStatus?: true
+  customerPaidAt?: true
+  customerPaidByUserId?: true
+  subcontractorPaymentStatus?: true
+  subcontractorPaidAt?: true
+  subcontractorPaidByUserId?: true
   notes?: true
   createdById?: true
   updatedById?: true
@@ -186,6 +250,7 @@ export type TripCountAggregateInputType = {
   id?: true
   tripNumber?: true
   status?: true
+  executionType?: true
   clientId?: true
   destinationAddressId?: true
   clientNameSnapshot?: true
@@ -194,6 +259,10 @@ export type TripCountAggregateInputType = {
   origin?: true
   vehicleId?: true
   driverId?: true
+  externalCarrierId?: true
+  externalCarrierNameSnapshot?: true
+  externalVehicleDescription?: true
+  externalDriverName?: true
   scheduledStartAt?: true
   startedAt?: true
   completedAt?: true
@@ -201,6 +270,13 @@ export type TripCountAggregateInputType = {
   mileageStart?: true
   mileageEnd?: true
   revenue?: true
+  subcontractorCost?: true
+  customerPaymentStatus?: true
+  customerPaidAt?: true
+  customerPaidByUserId?: true
+  subcontractorPaymentStatus?: true
+  subcontractorPaidAt?: true
+  subcontractorPaidByUserId?: true
   notes?: true
   createdById?: true
   updatedById?: true
@@ -299,21 +375,33 @@ export type TripGroupByOutputType = {
   id: string
   tripNumber: string
   status: $Enums.TripStatus
+  executionType: $Enums.TripExecutionType
   clientId: string
   destinationAddressId: string
   clientNameSnapshot: string
   destinationNameSnapshot: string
   destinationSnapshot: string
   origin: string
-  vehicleId: string
-  driverId: string
+  vehicleId: string | null
+  driverId: string | null
+  externalCarrierId: string | null
+  externalCarrierNameSnapshot: string | null
+  externalVehicleDescription: string | null
+  externalDriverName: string | null
   scheduledStartAt: Date
   startedAt: Date | null
   completedAt: Date | null
   cancelledAt: Date | null
-  mileageStart: number
+  mileageStart: number | null
   mileageEnd: number | null
   revenue: runtime.Decimal
+  subcontractorCost: runtime.Decimal | null
+  customerPaymentStatus: $Enums.PaymentStatus | null
+  customerPaidAt: Date | null
+  customerPaidByUserId: string | null
+  subcontractorPaymentStatus: $Enums.PaymentStatus | null
+  subcontractorPaidAt: Date | null
+  subcontractorPaidByUserId: string | null
   notes: string | null
   createdById: string
   updatedById: string
@@ -348,21 +436,33 @@ export type TripWhereInput = {
   id?: Prisma.StringFilter<"Trip"> | string
   tripNumber?: Prisma.StringFilter<"Trip"> | string
   status?: Prisma.EnumTripStatusFilter<"Trip"> | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFilter<"Trip"> | $Enums.TripExecutionType
   clientId?: Prisma.StringFilter<"Trip"> | string
   destinationAddressId?: Prisma.StringFilter<"Trip"> | string
   clientNameSnapshot?: Prisma.StringFilter<"Trip"> | string
   destinationNameSnapshot?: Prisma.StringFilter<"Trip"> | string
   destinationSnapshot?: Prisma.StringFilter<"Trip"> | string
   origin?: Prisma.StringFilter<"Trip"> | string
-  vehicleId?: Prisma.StringFilter<"Trip"> | string
-  driverId?: Prisma.StringFilter<"Trip"> | string
+  vehicleId?: Prisma.StringNullableFilter<"Trip"> | string | null
+  driverId?: Prisma.StringNullableFilter<"Trip"> | string | null
+  externalCarrierId?: Prisma.StringNullableFilter<"Trip"> | string | null
+  externalCarrierNameSnapshot?: Prisma.StringNullableFilter<"Trip"> | string | null
+  externalVehicleDescription?: Prisma.StringNullableFilter<"Trip"> | string | null
+  externalDriverName?: Prisma.StringNullableFilter<"Trip"> | string | null
   scheduledStartAt?: Prisma.DateTimeFilter<"Trip"> | Date | string
   startedAt?: Prisma.DateTimeNullableFilter<"Trip"> | Date | string | null
   completedAt?: Prisma.DateTimeNullableFilter<"Trip"> | Date | string | null
   cancelledAt?: Prisma.DateTimeNullableFilter<"Trip"> | Date | string | null
-  mileageStart?: Prisma.IntFilter<"Trip"> | number
+  mileageStart?: Prisma.IntNullableFilter<"Trip"> | number | null
   mileageEnd?: Prisma.IntNullableFilter<"Trip"> | number | null
   revenue?: Prisma.DecimalFilter<"Trip"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.DecimalNullableFilter<"Trip"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.EnumPaymentStatusNullableFilter<"Trip"> | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.DateTimeNullableFilter<"Trip"> | Date | string | null
+  customerPaidByUserId?: Prisma.StringNullableFilter<"Trip"> | string | null
+  subcontractorPaymentStatus?: Prisma.EnumPaymentStatusNullableFilter<"Trip"> | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.DateTimeNullableFilter<"Trip"> | Date | string | null
+  subcontractorPaidByUserId?: Prisma.StringNullableFilter<"Trip"> | string | null
   notes?: Prisma.StringNullableFilter<"Trip"> | string | null
   createdById?: Prisma.StringFilter<"Trip"> | string
   updatedById?: Prisma.StringFilter<"Trip"> | string
@@ -370,8 +470,11 @@ export type TripWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Trip"> | Date | string
   client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
   destination?: Prisma.XOR<Prisma.ClientAddressScalarRelationFilter, Prisma.ClientAddressWhereInput>
-  vehicle?: Prisma.XOR<Prisma.VehicleScalarRelationFilter, Prisma.VehicleWhereInput>
-  driver?: Prisma.XOR<Prisma.DriverScalarRelationFilter, Prisma.DriverWhereInput>
+  vehicle?: Prisma.XOR<Prisma.VehicleNullableScalarRelationFilter, Prisma.VehicleWhereInput> | null
+  driver?: Prisma.XOR<Prisma.DriverNullableScalarRelationFilter, Prisma.DriverWhereInput> | null
+  externalCarrier?: Prisma.XOR<Prisma.ExternalCarrierNullableScalarRelationFilter, Prisma.ExternalCarrierWhereInput> | null
+  customerPaidBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  subcontractorPaidBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   expenses?: Prisma.FleetExpenseListRelationFilter
@@ -381,21 +484,33 @@ export type TripOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   tripNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  executionType?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
   destinationAddressId?: Prisma.SortOrder
   clientNameSnapshot?: Prisma.SortOrder
   destinationNameSnapshot?: Prisma.SortOrder
   destinationSnapshot?: Prisma.SortOrder
   origin?: Prisma.SortOrder
-  vehicleId?: Prisma.SortOrder
-  driverId?: Prisma.SortOrder
+  vehicleId?: Prisma.SortOrderInput | Prisma.SortOrder
+  driverId?: Prisma.SortOrderInput | Prisma.SortOrder
+  externalCarrierId?: Prisma.SortOrderInput | Prisma.SortOrder
+  externalCarrierNameSnapshot?: Prisma.SortOrderInput | Prisma.SortOrder
+  externalVehicleDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  externalDriverName?: Prisma.SortOrderInput | Prisma.SortOrder
   scheduledStartAt?: Prisma.SortOrder
   startedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   cancelledAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  mileageStart?: Prisma.SortOrder
+  mileageStart?: Prisma.SortOrderInput | Prisma.SortOrder
   mileageEnd?: Prisma.SortOrderInput | Prisma.SortOrder
   revenue?: Prisma.SortOrder
+  subcontractorCost?: Prisma.SortOrderInput | Prisma.SortOrder
+  customerPaymentStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  customerPaidAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  customerPaidByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
+  subcontractorPaymentStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  subcontractorPaidAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  subcontractorPaidByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
@@ -405,6 +520,9 @@ export type TripOrderByWithRelationInput = {
   destination?: Prisma.ClientAddressOrderByWithRelationInput
   vehicle?: Prisma.VehicleOrderByWithRelationInput
   driver?: Prisma.DriverOrderByWithRelationInput
+  externalCarrier?: Prisma.ExternalCarrierOrderByWithRelationInput
+  customerPaidBy?: Prisma.UserOrderByWithRelationInput
+  subcontractorPaidBy?: Prisma.UserOrderByWithRelationInput
   createdBy?: Prisma.UserOrderByWithRelationInput
   updatedBy?: Prisma.UserOrderByWithRelationInput
   expenses?: Prisma.FleetExpenseOrderByRelationAggregateInput
@@ -417,21 +535,33 @@ export type TripWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.TripWhereInput[]
   NOT?: Prisma.TripWhereInput | Prisma.TripWhereInput[]
   status?: Prisma.EnumTripStatusFilter<"Trip"> | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFilter<"Trip"> | $Enums.TripExecutionType
   clientId?: Prisma.StringFilter<"Trip"> | string
   destinationAddressId?: Prisma.StringFilter<"Trip"> | string
   clientNameSnapshot?: Prisma.StringFilter<"Trip"> | string
   destinationNameSnapshot?: Prisma.StringFilter<"Trip"> | string
   destinationSnapshot?: Prisma.StringFilter<"Trip"> | string
   origin?: Prisma.StringFilter<"Trip"> | string
-  vehicleId?: Prisma.StringFilter<"Trip"> | string
-  driverId?: Prisma.StringFilter<"Trip"> | string
+  vehicleId?: Prisma.StringNullableFilter<"Trip"> | string | null
+  driverId?: Prisma.StringNullableFilter<"Trip"> | string | null
+  externalCarrierId?: Prisma.StringNullableFilter<"Trip"> | string | null
+  externalCarrierNameSnapshot?: Prisma.StringNullableFilter<"Trip"> | string | null
+  externalVehicleDescription?: Prisma.StringNullableFilter<"Trip"> | string | null
+  externalDriverName?: Prisma.StringNullableFilter<"Trip"> | string | null
   scheduledStartAt?: Prisma.DateTimeFilter<"Trip"> | Date | string
   startedAt?: Prisma.DateTimeNullableFilter<"Trip"> | Date | string | null
   completedAt?: Prisma.DateTimeNullableFilter<"Trip"> | Date | string | null
   cancelledAt?: Prisma.DateTimeNullableFilter<"Trip"> | Date | string | null
-  mileageStart?: Prisma.IntFilter<"Trip"> | number
+  mileageStart?: Prisma.IntNullableFilter<"Trip"> | number | null
   mileageEnd?: Prisma.IntNullableFilter<"Trip"> | number | null
   revenue?: Prisma.DecimalFilter<"Trip"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.DecimalNullableFilter<"Trip"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.EnumPaymentStatusNullableFilter<"Trip"> | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.DateTimeNullableFilter<"Trip"> | Date | string | null
+  customerPaidByUserId?: Prisma.StringNullableFilter<"Trip"> | string | null
+  subcontractorPaymentStatus?: Prisma.EnumPaymentStatusNullableFilter<"Trip"> | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.DateTimeNullableFilter<"Trip"> | Date | string | null
+  subcontractorPaidByUserId?: Prisma.StringNullableFilter<"Trip"> | string | null
   notes?: Prisma.StringNullableFilter<"Trip"> | string | null
   createdById?: Prisma.StringFilter<"Trip"> | string
   updatedById?: Prisma.StringFilter<"Trip"> | string
@@ -439,8 +569,11 @@ export type TripWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Trip"> | Date | string
   client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
   destination?: Prisma.XOR<Prisma.ClientAddressScalarRelationFilter, Prisma.ClientAddressWhereInput>
-  vehicle?: Prisma.XOR<Prisma.VehicleScalarRelationFilter, Prisma.VehicleWhereInput>
-  driver?: Prisma.XOR<Prisma.DriverScalarRelationFilter, Prisma.DriverWhereInput>
+  vehicle?: Prisma.XOR<Prisma.VehicleNullableScalarRelationFilter, Prisma.VehicleWhereInput> | null
+  driver?: Prisma.XOR<Prisma.DriverNullableScalarRelationFilter, Prisma.DriverWhereInput> | null
+  externalCarrier?: Prisma.XOR<Prisma.ExternalCarrierNullableScalarRelationFilter, Prisma.ExternalCarrierWhereInput> | null
+  customerPaidBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  subcontractorPaidBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   updatedBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   expenses?: Prisma.FleetExpenseListRelationFilter
@@ -450,21 +583,33 @@ export type TripOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   tripNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  executionType?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
   destinationAddressId?: Prisma.SortOrder
   clientNameSnapshot?: Prisma.SortOrder
   destinationNameSnapshot?: Prisma.SortOrder
   destinationSnapshot?: Prisma.SortOrder
   origin?: Prisma.SortOrder
-  vehicleId?: Prisma.SortOrder
-  driverId?: Prisma.SortOrder
+  vehicleId?: Prisma.SortOrderInput | Prisma.SortOrder
+  driverId?: Prisma.SortOrderInput | Prisma.SortOrder
+  externalCarrierId?: Prisma.SortOrderInput | Prisma.SortOrder
+  externalCarrierNameSnapshot?: Prisma.SortOrderInput | Prisma.SortOrder
+  externalVehicleDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  externalDriverName?: Prisma.SortOrderInput | Prisma.SortOrder
   scheduledStartAt?: Prisma.SortOrder
   startedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   cancelledAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  mileageStart?: Prisma.SortOrder
+  mileageStart?: Prisma.SortOrderInput | Prisma.SortOrder
   mileageEnd?: Prisma.SortOrderInput | Prisma.SortOrder
   revenue?: Prisma.SortOrder
+  subcontractorCost?: Prisma.SortOrderInput | Prisma.SortOrder
+  customerPaymentStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  customerPaidAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  customerPaidByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
+  subcontractorPaymentStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  subcontractorPaidAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  subcontractorPaidByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
@@ -484,21 +629,33 @@ export type TripScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Trip"> | string
   tripNumber?: Prisma.StringWithAggregatesFilter<"Trip"> | string
   status?: Prisma.EnumTripStatusWithAggregatesFilter<"Trip"> | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeWithAggregatesFilter<"Trip"> | $Enums.TripExecutionType
   clientId?: Prisma.StringWithAggregatesFilter<"Trip"> | string
   destinationAddressId?: Prisma.StringWithAggregatesFilter<"Trip"> | string
   clientNameSnapshot?: Prisma.StringWithAggregatesFilter<"Trip"> | string
   destinationNameSnapshot?: Prisma.StringWithAggregatesFilter<"Trip"> | string
   destinationSnapshot?: Prisma.StringWithAggregatesFilter<"Trip"> | string
   origin?: Prisma.StringWithAggregatesFilter<"Trip"> | string
-  vehicleId?: Prisma.StringWithAggregatesFilter<"Trip"> | string
-  driverId?: Prisma.StringWithAggregatesFilter<"Trip"> | string
+  vehicleId?: Prisma.StringNullableWithAggregatesFilter<"Trip"> | string | null
+  driverId?: Prisma.StringNullableWithAggregatesFilter<"Trip"> | string | null
+  externalCarrierId?: Prisma.StringNullableWithAggregatesFilter<"Trip"> | string | null
+  externalCarrierNameSnapshot?: Prisma.StringNullableWithAggregatesFilter<"Trip"> | string | null
+  externalVehicleDescription?: Prisma.StringNullableWithAggregatesFilter<"Trip"> | string | null
+  externalDriverName?: Prisma.StringNullableWithAggregatesFilter<"Trip"> | string | null
   scheduledStartAt?: Prisma.DateTimeWithAggregatesFilter<"Trip"> | Date | string
   startedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Trip"> | Date | string | null
   completedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Trip"> | Date | string | null
   cancelledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Trip"> | Date | string | null
-  mileageStart?: Prisma.IntWithAggregatesFilter<"Trip"> | number
+  mileageStart?: Prisma.IntNullableWithAggregatesFilter<"Trip"> | number | null
   mileageEnd?: Prisma.IntNullableWithAggregatesFilter<"Trip"> | number | null
   revenue?: Prisma.DecimalWithAggregatesFilter<"Trip"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.DecimalNullableWithAggregatesFilter<"Trip"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.EnumPaymentStatusNullableWithAggregatesFilter<"Trip"> | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Trip"> | Date | string | null
+  customerPaidByUserId?: Prisma.StringNullableWithAggregatesFilter<"Trip"> | string | null
+  subcontractorPaymentStatus?: Prisma.EnumPaymentStatusNullableWithAggregatesFilter<"Trip"> | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Trip"> | Date | string | null
+  subcontractorPaidByUserId?: Prisma.StringNullableWithAggregatesFilter<"Trip"> | string | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"Trip"> | string | null
   createdById?: Prisma.StringWithAggregatesFilter<"Trip"> | string
   updatedById?: Prisma.StringWithAggregatesFilter<"Trip"> | string
@@ -510,24 +667,36 @@ export type TripCreateInput = {
   id?: string
   tripNumber: string
   status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
   clientNameSnapshot: string
   destinationNameSnapshot: string
   destinationSnapshot: string
   origin: string
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
   scheduledStartAt: Date | string
   startedAt?: Date | string | null
   completedAt?: Date | string | null
   cancelledAt?: Date | string | null
-  mileageStart: number
+  mileageStart?: number | null
   mileageEnd?: number | null
   revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   client: Prisma.ClientCreateNestedOneWithoutTripsInput
   destination: Prisma.ClientAddressCreateNestedOneWithoutTripsInput
-  vehicle: Prisma.VehicleCreateNestedOneWithoutTripsInput
-  driver: Prisma.DriverCreateNestedOneWithoutTripsInput
+  vehicle?: Prisma.VehicleCreateNestedOneWithoutTripsInput
+  driver?: Prisma.DriverCreateNestedOneWithoutTripsInput
+  externalCarrier?: Prisma.ExternalCarrierCreateNestedOneWithoutTripsInput
+  customerPaidBy?: Prisma.UserCreateNestedOneWithoutCustomerPaidTripsInput
+  subcontractorPaidBy?: Prisma.UserCreateNestedOneWithoutSubcontractorPaidTripsInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedTripsInput
   updatedBy: Prisma.UserCreateNestedOneWithoutUpdatedTripsInput
   expenses?: Prisma.FleetExpenseCreateNestedManyWithoutTripInput
@@ -537,21 +706,33 @@ export type TripUncheckedCreateInput = {
   id?: string
   tripNumber: string
   status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
   clientId: string
   destinationAddressId: string
   clientNameSnapshot: string
   destinationNameSnapshot: string
   destinationSnapshot: string
   origin: string
-  vehicleId: string
-  driverId: string
+  vehicleId?: string | null
+  driverId?: string | null
+  externalCarrierId?: string | null
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
   scheduledStartAt: Date | string
   startedAt?: Date | string | null
   completedAt?: Date | string | null
   cancelledAt?: Date | string | null
-  mileageStart: number
+  mileageStart?: number | null
   mileageEnd?: number | null
   revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  customerPaidByUserId?: string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
+  subcontractorPaidByUserId?: string | null
   notes?: string | null
   createdById: string
   updatedById: string
@@ -564,24 +745,36 @@ export type TripUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
   clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   origin?: Prisma.StringFieldUpdateOperationsInput | string
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  mileageStart?: Prisma.IntFieldUpdateOperationsInput | number
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.ClientUpdateOneRequiredWithoutTripsNestedInput
   destination?: Prisma.ClientAddressUpdateOneRequiredWithoutTripsNestedInput
-  vehicle?: Prisma.VehicleUpdateOneRequiredWithoutTripsNestedInput
-  driver?: Prisma.DriverUpdateOneRequiredWithoutTripsNestedInput
+  vehicle?: Prisma.VehicleUpdateOneWithoutTripsNestedInput
+  driver?: Prisma.DriverUpdateOneWithoutTripsNestedInput
+  externalCarrier?: Prisma.ExternalCarrierUpdateOneWithoutTripsNestedInput
+  customerPaidBy?: Prisma.UserUpdateOneWithoutCustomerPaidTripsNestedInput
+  subcontractorPaidBy?: Prisma.UserUpdateOneWithoutSubcontractorPaidTripsNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedTripsNestedInput
   updatedBy?: Prisma.UserUpdateOneRequiredWithoutUpdatedTripsNestedInput
   expenses?: Prisma.FleetExpenseUpdateManyWithoutTripNestedInput
@@ -591,21 +784,33 @@ export type TripUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   destinationAddressId?: Prisma.StringFieldUpdateOperationsInput | string
   clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   origin?: Prisma.StringFieldUpdateOperationsInput | string
-  vehicleId?: Prisma.StringFieldUpdateOperationsInput | string
-  driverId?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  mileageStart?: Prisma.IntFieldUpdateOperationsInput | number
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  customerPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
@@ -618,21 +823,33 @@ export type TripCreateManyInput = {
   id?: string
   tripNumber: string
   status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
   clientId: string
   destinationAddressId: string
   clientNameSnapshot: string
   destinationNameSnapshot: string
   destinationSnapshot: string
   origin: string
-  vehicleId: string
-  driverId: string
+  vehicleId?: string | null
+  driverId?: string | null
+  externalCarrierId?: string | null
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
   scheduledStartAt: Date | string
   startedAt?: Date | string | null
   completedAt?: Date | string | null
   cancelledAt?: Date | string | null
-  mileageStart: number
+  mileageStart?: number | null
   mileageEnd?: number | null
   revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  customerPaidByUserId?: string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
+  subcontractorPaidByUserId?: string | null
   notes?: string | null
   createdById: string
   updatedById: string
@@ -644,17 +861,26 @@ export type TripUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
   clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   origin?: Prisma.StringFieldUpdateOperationsInput | string
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  mileageStart?: Prisma.IntFieldUpdateOperationsInput | number
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -664,21 +890,33 @@ export type TripUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   destinationAddressId?: Prisma.StringFieldUpdateOperationsInput | string
   clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   origin?: Prisma.StringFieldUpdateOperationsInput | string
-  vehicleId?: Prisma.StringFieldUpdateOperationsInput | string
-  driverId?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  mileageStart?: Prisma.IntFieldUpdateOperationsInput | number
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  customerPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
@@ -705,6 +943,7 @@ export type TripCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   tripNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  executionType?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
   destinationAddressId?: Prisma.SortOrder
   clientNameSnapshot?: Prisma.SortOrder
@@ -713,6 +952,10 @@ export type TripCountOrderByAggregateInput = {
   origin?: Prisma.SortOrder
   vehicleId?: Prisma.SortOrder
   driverId?: Prisma.SortOrder
+  externalCarrierId?: Prisma.SortOrder
+  externalCarrierNameSnapshot?: Prisma.SortOrder
+  externalVehicleDescription?: Prisma.SortOrder
+  externalDriverName?: Prisma.SortOrder
   scheduledStartAt?: Prisma.SortOrder
   startedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
@@ -720,6 +963,13 @@ export type TripCountOrderByAggregateInput = {
   mileageStart?: Prisma.SortOrder
   mileageEnd?: Prisma.SortOrder
   revenue?: Prisma.SortOrder
+  subcontractorCost?: Prisma.SortOrder
+  customerPaymentStatus?: Prisma.SortOrder
+  customerPaidAt?: Prisma.SortOrder
+  customerPaidByUserId?: Prisma.SortOrder
+  subcontractorPaymentStatus?: Prisma.SortOrder
+  subcontractorPaidAt?: Prisma.SortOrder
+  subcontractorPaidByUserId?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
@@ -731,12 +981,14 @@ export type TripAvgOrderByAggregateInput = {
   mileageStart?: Prisma.SortOrder
   mileageEnd?: Prisma.SortOrder
   revenue?: Prisma.SortOrder
+  subcontractorCost?: Prisma.SortOrder
 }
 
 export type TripMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   tripNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  executionType?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
   destinationAddressId?: Prisma.SortOrder
   clientNameSnapshot?: Prisma.SortOrder
@@ -745,6 +997,10 @@ export type TripMaxOrderByAggregateInput = {
   origin?: Prisma.SortOrder
   vehicleId?: Prisma.SortOrder
   driverId?: Prisma.SortOrder
+  externalCarrierId?: Prisma.SortOrder
+  externalCarrierNameSnapshot?: Prisma.SortOrder
+  externalVehicleDescription?: Prisma.SortOrder
+  externalDriverName?: Prisma.SortOrder
   scheduledStartAt?: Prisma.SortOrder
   startedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
@@ -752,6 +1008,13 @@ export type TripMaxOrderByAggregateInput = {
   mileageStart?: Prisma.SortOrder
   mileageEnd?: Prisma.SortOrder
   revenue?: Prisma.SortOrder
+  subcontractorCost?: Prisma.SortOrder
+  customerPaymentStatus?: Prisma.SortOrder
+  customerPaidAt?: Prisma.SortOrder
+  customerPaidByUserId?: Prisma.SortOrder
+  subcontractorPaymentStatus?: Prisma.SortOrder
+  subcontractorPaidAt?: Prisma.SortOrder
+  subcontractorPaidByUserId?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
@@ -763,6 +1026,7 @@ export type TripMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   tripNumber?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  executionType?: Prisma.SortOrder
   clientId?: Prisma.SortOrder
   destinationAddressId?: Prisma.SortOrder
   clientNameSnapshot?: Prisma.SortOrder
@@ -771,6 +1035,10 @@ export type TripMinOrderByAggregateInput = {
   origin?: Prisma.SortOrder
   vehicleId?: Prisma.SortOrder
   driverId?: Prisma.SortOrder
+  externalCarrierId?: Prisma.SortOrder
+  externalCarrierNameSnapshot?: Prisma.SortOrder
+  externalVehicleDescription?: Prisma.SortOrder
+  externalDriverName?: Prisma.SortOrder
   scheduledStartAt?: Prisma.SortOrder
   startedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
@@ -778,6 +1046,13 @@ export type TripMinOrderByAggregateInput = {
   mileageStart?: Prisma.SortOrder
   mileageEnd?: Prisma.SortOrder
   revenue?: Prisma.SortOrder
+  subcontractorCost?: Prisma.SortOrder
+  customerPaymentStatus?: Prisma.SortOrder
+  customerPaidAt?: Prisma.SortOrder
+  customerPaidByUserId?: Prisma.SortOrder
+  subcontractorPaymentStatus?: Prisma.SortOrder
+  subcontractorPaidAt?: Prisma.SortOrder
+  subcontractorPaidByUserId?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   updatedById?: Prisma.SortOrder
@@ -789,6 +1064,7 @@ export type TripSumOrderByAggregateInput = {
   mileageStart?: Prisma.SortOrder
   mileageEnd?: Prisma.SortOrder
   revenue?: Prisma.SortOrder
+  subcontractorCost?: Prisma.SortOrder
 }
 
 export type TripCreateNestedManyWithoutCreatedByInput = {
@@ -805,6 +1081,20 @@ export type TripCreateNestedManyWithoutUpdatedByInput = {
   connect?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
 }
 
+export type TripCreateNestedManyWithoutCustomerPaidByInput = {
+  create?: Prisma.XOR<Prisma.TripCreateWithoutCustomerPaidByInput, Prisma.TripUncheckedCreateWithoutCustomerPaidByInput> | Prisma.TripCreateWithoutCustomerPaidByInput[] | Prisma.TripUncheckedCreateWithoutCustomerPaidByInput[]
+  connectOrCreate?: Prisma.TripCreateOrConnectWithoutCustomerPaidByInput | Prisma.TripCreateOrConnectWithoutCustomerPaidByInput[]
+  createMany?: Prisma.TripCreateManyCustomerPaidByInputEnvelope
+  connect?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+}
+
+export type TripCreateNestedManyWithoutSubcontractorPaidByInput = {
+  create?: Prisma.XOR<Prisma.TripCreateWithoutSubcontractorPaidByInput, Prisma.TripUncheckedCreateWithoutSubcontractorPaidByInput> | Prisma.TripCreateWithoutSubcontractorPaidByInput[] | Prisma.TripUncheckedCreateWithoutSubcontractorPaidByInput[]
+  connectOrCreate?: Prisma.TripCreateOrConnectWithoutSubcontractorPaidByInput | Prisma.TripCreateOrConnectWithoutSubcontractorPaidByInput[]
+  createMany?: Prisma.TripCreateManySubcontractorPaidByInputEnvelope
+  connect?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+}
+
 export type TripUncheckedCreateNestedManyWithoutCreatedByInput = {
   create?: Prisma.XOR<Prisma.TripCreateWithoutCreatedByInput, Prisma.TripUncheckedCreateWithoutCreatedByInput> | Prisma.TripCreateWithoutCreatedByInput[] | Prisma.TripUncheckedCreateWithoutCreatedByInput[]
   connectOrCreate?: Prisma.TripCreateOrConnectWithoutCreatedByInput | Prisma.TripCreateOrConnectWithoutCreatedByInput[]
@@ -816,6 +1106,20 @@ export type TripUncheckedCreateNestedManyWithoutUpdatedByInput = {
   create?: Prisma.XOR<Prisma.TripCreateWithoutUpdatedByInput, Prisma.TripUncheckedCreateWithoutUpdatedByInput> | Prisma.TripCreateWithoutUpdatedByInput[] | Prisma.TripUncheckedCreateWithoutUpdatedByInput[]
   connectOrCreate?: Prisma.TripCreateOrConnectWithoutUpdatedByInput | Prisma.TripCreateOrConnectWithoutUpdatedByInput[]
   createMany?: Prisma.TripCreateManyUpdatedByInputEnvelope
+  connect?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+}
+
+export type TripUncheckedCreateNestedManyWithoutCustomerPaidByInput = {
+  create?: Prisma.XOR<Prisma.TripCreateWithoutCustomerPaidByInput, Prisma.TripUncheckedCreateWithoutCustomerPaidByInput> | Prisma.TripCreateWithoutCustomerPaidByInput[] | Prisma.TripUncheckedCreateWithoutCustomerPaidByInput[]
+  connectOrCreate?: Prisma.TripCreateOrConnectWithoutCustomerPaidByInput | Prisma.TripCreateOrConnectWithoutCustomerPaidByInput[]
+  createMany?: Prisma.TripCreateManyCustomerPaidByInputEnvelope
+  connect?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+}
+
+export type TripUncheckedCreateNestedManyWithoutSubcontractorPaidByInput = {
+  create?: Prisma.XOR<Prisma.TripCreateWithoutSubcontractorPaidByInput, Prisma.TripUncheckedCreateWithoutSubcontractorPaidByInput> | Prisma.TripCreateWithoutSubcontractorPaidByInput[] | Prisma.TripUncheckedCreateWithoutSubcontractorPaidByInput[]
+  connectOrCreate?: Prisma.TripCreateOrConnectWithoutSubcontractorPaidByInput | Prisma.TripCreateOrConnectWithoutSubcontractorPaidByInput[]
+  createMany?: Prisma.TripCreateManySubcontractorPaidByInputEnvelope
   connect?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
 }
 
@@ -847,6 +1151,34 @@ export type TripUpdateManyWithoutUpdatedByNestedInput = {
   deleteMany?: Prisma.TripScalarWhereInput | Prisma.TripScalarWhereInput[]
 }
 
+export type TripUpdateManyWithoutCustomerPaidByNestedInput = {
+  create?: Prisma.XOR<Prisma.TripCreateWithoutCustomerPaidByInput, Prisma.TripUncheckedCreateWithoutCustomerPaidByInput> | Prisma.TripCreateWithoutCustomerPaidByInput[] | Prisma.TripUncheckedCreateWithoutCustomerPaidByInput[]
+  connectOrCreate?: Prisma.TripCreateOrConnectWithoutCustomerPaidByInput | Prisma.TripCreateOrConnectWithoutCustomerPaidByInput[]
+  upsert?: Prisma.TripUpsertWithWhereUniqueWithoutCustomerPaidByInput | Prisma.TripUpsertWithWhereUniqueWithoutCustomerPaidByInput[]
+  createMany?: Prisma.TripCreateManyCustomerPaidByInputEnvelope
+  set?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+  disconnect?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+  delete?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+  connect?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+  update?: Prisma.TripUpdateWithWhereUniqueWithoutCustomerPaidByInput | Prisma.TripUpdateWithWhereUniqueWithoutCustomerPaidByInput[]
+  updateMany?: Prisma.TripUpdateManyWithWhereWithoutCustomerPaidByInput | Prisma.TripUpdateManyWithWhereWithoutCustomerPaidByInput[]
+  deleteMany?: Prisma.TripScalarWhereInput | Prisma.TripScalarWhereInput[]
+}
+
+export type TripUpdateManyWithoutSubcontractorPaidByNestedInput = {
+  create?: Prisma.XOR<Prisma.TripCreateWithoutSubcontractorPaidByInput, Prisma.TripUncheckedCreateWithoutSubcontractorPaidByInput> | Prisma.TripCreateWithoutSubcontractorPaidByInput[] | Prisma.TripUncheckedCreateWithoutSubcontractorPaidByInput[]
+  connectOrCreate?: Prisma.TripCreateOrConnectWithoutSubcontractorPaidByInput | Prisma.TripCreateOrConnectWithoutSubcontractorPaidByInput[]
+  upsert?: Prisma.TripUpsertWithWhereUniqueWithoutSubcontractorPaidByInput | Prisma.TripUpsertWithWhereUniqueWithoutSubcontractorPaidByInput[]
+  createMany?: Prisma.TripCreateManySubcontractorPaidByInputEnvelope
+  set?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+  disconnect?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+  delete?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+  connect?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+  update?: Prisma.TripUpdateWithWhereUniqueWithoutSubcontractorPaidByInput | Prisma.TripUpdateWithWhereUniqueWithoutSubcontractorPaidByInput[]
+  updateMany?: Prisma.TripUpdateManyWithWhereWithoutSubcontractorPaidByInput | Prisma.TripUpdateManyWithWhereWithoutSubcontractorPaidByInput[]
+  deleteMany?: Prisma.TripScalarWhereInput | Prisma.TripScalarWhereInput[]
+}
+
 export type TripUncheckedUpdateManyWithoutCreatedByNestedInput = {
   create?: Prisma.XOR<Prisma.TripCreateWithoutCreatedByInput, Prisma.TripUncheckedCreateWithoutCreatedByInput> | Prisma.TripCreateWithoutCreatedByInput[] | Prisma.TripUncheckedCreateWithoutCreatedByInput[]
   connectOrCreate?: Prisma.TripCreateOrConnectWithoutCreatedByInput | Prisma.TripCreateOrConnectWithoutCreatedByInput[]
@@ -872,6 +1204,34 @@ export type TripUncheckedUpdateManyWithoutUpdatedByNestedInput = {
   connect?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
   update?: Prisma.TripUpdateWithWhereUniqueWithoutUpdatedByInput | Prisma.TripUpdateWithWhereUniqueWithoutUpdatedByInput[]
   updateMany?: Prisma.TripUpdateManyWithWhereWithoutUpdatedByInput | Prisma.TripUpdateManyWithWhereWithoutUpdatedByInput[]
+  deleteMany?: Prisma.TripScalarWhereInput | Prisma.TripScalarWhereInput[]
+}
+
+export type TripUncheckedUpdateManyWithoutCustomerPaidByNestedInput = {
+  create?: Prisma.XOR<Prisma.TripCreateWithoutCustomerPaidByInput, Prisma.TripUncheckedCreateWithoutCustomerPaidByInput> | Prisma.TripCreateWithoutCustomerPaidByInput[] | Prisma.TripUncheckedCreateWithoutCustomerPaidByInput[]
+  connectOrCreate?: Prisma.TripCreateOrConnectWithoutCustomerPaidByInput | Prisma.TripCreateOrConnectWithoutCustomerPaidByInput[]
+  upsert?: Prisma.TripUpsertWithWhereUniqueWithoutCustomerPaidByInput | Prisma.TripUpsertWithWhereUniqueWithoutCustomerPaidByInput[]
+  createMany?: Prisma.TripCreateManyCustomerPaidByInputEnvelope
+  set?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+  disconnect?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+  delete?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+  connect?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+  update?: Prisma.TripUpdateWithWhereUniqueWithoutCustomerPaidByInput | Prisma.TripUpdateWithWhereUniqueWithoutCustomerPaidByInput[]
+  updateMany?: Prisma.TripUpdateManyWithWhereWithoutCustomerPaidByInput | Prisma.TripUpdateManyWithWhereWithoutCustomerPaidByInput[]
+  deleteMany?: Prisma.TripScalarWhereInput | Prisma.TripScalarWhereInput[]
+}
+
+export type TripUncheckedUpdateManyWithoutSubcontractorPaidByNestedInput = {
+  create?: Prisma.XOR<Prisma.TripCreateWithoutSubcontractorPaidByInput, Prisma.TripUncheckedCreateWithoutSubcontractorPaidByInput> | Prisma.TripCreateWithoutSubcontractorPaidByInput[] | Prisma.TripUncheckedCreateWithoutSubcontractorPaidByInput[]
+  connectOrCreate?: Prisma.TripCreateOrConnectWithoutSubcontractorPaidByInput | Prisma.TripCreateOrConnectWithoutSubcontractorPaidByInput[]
+  upsert?: Prisma.TripUpsertWithWhereUniqueWithoutSubcontractorPaidByInput | Prisma.TripUpsertWithWhereUniqueWithoutSubcontractorPaidByInput[]
+  createMany?: Prisma.TripCreateManySubcontractorPaidByInputEnvelope
+  set?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+  disconnect?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+  delete?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+  connect?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+  update?: Prisma.TripUpdateWithWhereUniqueWithoutSubcontractorPaidByInput | Prisma.TripUpdateWithWhereUniqueWithoutSubcontractorPaidByInput[]
+  updateMany?: Prisma.TripUpdateManyWithWhereWithoutSubcontractorPaidByInput | Prisma.TripUpdateManyWithWhereWithoutSubcontractorPaidByInput[]
   deleteMany?: Prisma.TripScalarWhereInput | Prisma.TripScalarWhereInput[]
 }
 
@@ -1059,32 +1419,102 @@ export type TripUncheckedUpdateManyWithoutDestinationNestedInput = {
   deleteMany?: Prisma.TripScalarWhereInput | Prisma.TripScalarWhereInput[]
 }
 
+export type TripCreateNestedManyWithoutExternalCarrierInput = {
+  create?: Prisma.XOR<Prisma.TripCreateWithoutExternalCarrierInput, Prisma.TripUncheckedCreateWithoutExternalCarrierInput> | Prisma.TripCreateWithoutExternalCarrierInput[] | Prisma.TripUncheckedCreateWithoutExternalCarrierInput[]
+  connectOrCreate?: Prisma.TripCreateOrConnectWithoutExternalCarrierInput | Prisma.TripCreateOrConnectWithoutExternalCarrierInput[]
+  createMany?: Prisma.TripCreateManyExternalCarrierInputEnvelope
+  connect?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+}
+
+export type TripUncheckedCreateNestedManyWithoutExternalCarrierInput = {
+  create?: Prisma.XOR<Prisma.TripCreateWithoutExternalCarrierInput, Prisma.TripUncheckedCreateWithoutExternalCarrierInput> | Prisma.TripCreateWithoutExternalCarrierInput[] | Prisma.TripUncheckedCreateWithoutExternalCarrierInput[]
+  connectOrCreate?: Prisma.TripCreateOrConnectWithoutExternalCarrierInput | Prisma.TripCreateOrConnectWithoutExternalCarrierInput[]
+  createMany?: Prisma.TripCreateManyExternalCarrierInputEnvelope
+  connect?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+}
+
+export type TripUpdateManyWithoutExternalCarrierNestedInput = {
+  create?: Prisma.XOR<Prisma.TripCreateWithoutExternalCarrierInput, Prisma.TripUncheckedCreateWithoutExternalCarrierInput> | Prisma.TripCreateWithoutExternalCarrierInput[] | Prisma.TripUncheckedCreateWithoutExternalCarrierInput[]
+  connectOrCreate?: Prisma.TripCreateOrConnectWithoutExternalCarrierInput | Prisma.TripCreateOrConnectWithoutExternalCarrierInput[]
+  upsert?: Prisma.TripUpsertWithWhereUniqueWithoutExternalCarrierInput | Prisma.TripUpsertWithWhereUniqueWithoutExternalCarrierInput[]
+  createMany?: Prisma.TripCreateManyExternalCarrierInputEnvelope
+  set?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+  disconnect?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+  delete?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+  connect?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+  update?: Prisma.TripUpdateWithWhereUniqueWithoutExternalCarrierInput | Prisma.TripUpdateWithWhereUniqueWithoutExternalCarrierInput[]
+  updateMany?: Prisma.TripUpdateManyWithWhereWithoutExternalCarrierInput | Prisma.TripUpdateManyWithWhereWithoutExternalCarrierInput[]
+  deleteMany?: Prisma.TripScalarWhereInput | Prisma.TripScalarWhereInput[]
+}
+
+export type TripUncheckedUpdateManyWithoutExternalCarrierNestedInput = {
+  create?: Prisma.XOR<Prisma.TripCreateWithoutExternalCarrierInput, Prisma.TripUncheckedCreateWithoutExternalCarrierInput> | Prisma.TripCreateWithoutExternalCarrierInput[] | Prisma.TripUncheckedCreateWithoutExternalCarrierInput[]
+  connectOrCreate?: Prisma.TripCreateOrConnectWithoutExternalCarrierInput | Prisma.TripCreateOrConnectWithoutExternalCarrierInput[]
+  upsert?: Prisma.TripUpsertWithWhereUniqueWithoutExternalCarrierInput | Prisma.TripUpsertWithWhereUniqueWithoutExternalCarrierInput[]
+  createMany?: Prisma.TripCreateManyExternalCarrierInputEnvelope
+  set?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+  disconnect?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+  delete?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+  connect?: Prisma.TripWhereUniqueInput | Prisma.TripWhereUniqueInput[]
+  update?: Prisma.TripUpdateWithWhereUniqueWithoutExternalCarrierInput | Prisma.TripUpdateWithWhereUniqueWithoutExternalCarrierInput[]
+  updateMany?: Prisma.TripUpdateManyWithWhereWithoutExternalCarrierInput | Prisma.TripUpdateManyWithWhereWithoutExternalCarrierInput[]
+  deleteMany?: Prisma.TripScalarWhereInput | Prisma.TripScalarWhereInput[]
+}
+
 export type EnumTripStatusFieldUpdateOperationsInput = {
   set?: $Enums.TripStatus
+}
+
+export type EnumTripExecutionTypeFieldUpdateOperationsInput = {
+  set?: $Enums.TripExecutionType
+}
+
+export type NullableDecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
+export type NullableEnumPaymentStatusFieldUpdateOperationsInput = {
+  set?: $Enums.PaymentStatus | null
 }
 
 export type TripCreateWithoutCreatedByInput = {
   id?: string
   tripNumber: string
   status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
   clientNameSnapshot: string
   destinationNameSnapshot: string
   destinationSnapshot: string
   origin: string
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
   scheduledStartAt: Date | string
   startedAt?: Date | string | null
   completedAt?: Date | string | null
   cancelledAt?: Date | string | null
-  mileageStart: number
+  mileageStart?: number | null
   mileageEnd?: number | null
   revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   client: Prisma.ClientCreateNestedOneWithoutTripsInput
   destination: Prisma.ClientAddressCreateNestedOneWithoutTripsInput
-  vehicle: Prisma.VehicleCreateNestedOneWithoutTripsInput
-  driver: Prisma.DriverCreateNestedOneWithoutTripsInput
+  vehicle?: Prisma.VehicleCreateNestedOneWithoutTripsInput
+  driver?: Prisma.DriverCreateNestedOneWithoutTripsInput
+  externalCarrier?: Prisma.ExternalCarrierCreateNestedOneWithoutTripsInput
+  customerPaidBy?: Prisma.UserCreateNestedOneWithoutCustomerPaidTripsInput
+  subcontractorPaidBy?: Prisma.UserCreateNestedOneWithoutSubcontractorPaidTripsInput
   updatedBy: Prisma.UserCreateNestedOneWithoutUpdatedTripsInput
   expenses?: Prisma.FleetExpenseCreateNestedManyWithoutTripInput
 }
@@ -1093,21 +1523,33 @@ export type TripUncheckedCreateWithoutCreatedByInput = {
   id?: string
   tripNumber: string
   status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
   clientId: string
   destinationAddressId: string
   clientNameSnapshot: string
   destinationNameSnapshot: string
   destinationSnapshot: string
   origin: string
-  vehicleId: string
-  driverId: string
+  vehicleId?: string | null
+  driverId?: string | null
+  externalCarrierId?: string | null
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
   scheduledStartAt: Date | string
   startedAt?: Date | string | null
   completedAt?: Date | string | null
   cancelledAt?: Date | string | null
-  mileageStart: number
+  mileageStart?: number | null
   mileageEnd?: number | null
   revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  customerPaidByUserId?: string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
+  subcontractorPaidByUserId?: string | null
   notes?: string | null
   updatedById: string
   createdAt?: Date | string
@@ -1129,24 +1571,36 @@ export type TripCreateWithoutUpdatedByInput = {
   id?: string
   tripNumber: string
   status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
   clientNameSnapshot: string
   destinationNameSnapshot: string
   destinationSnapshot: string
   origin: string
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
   scheduledStartAt: Date | string
   startedAt?: Date | string | null
   completedAt?: Date | string | null
   cancelledAt?: Date | string | null
-  mileageStart: number
+  mileageStart?: number | null
   mileageEnd?: number | null
   revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   client: Prisma.ClientCreateNestedOneWithoutTripsInput
   destination: Prisma.ClientAddressCreateNestedOneWithoutTripsInput
-  vehicle: Prisma.VehicleCreateNestedOneWithoutTripsInput
-  driver: Prisma.DriverCreateNestedOneWithoutTripsInput
+  vehicle?: Prisma.VehicleCreateNestedOneWithoutTripsInput
+  driver?: Prisma.DriverCreateNestedOneWithoutTripsInput
+  externalCarrier?: Prisma.ExternalCarrierCreateNestedOneWithoutTripsInput
+  customerPaidBy?: Prisma.UserCreateNestedOneWithoutCustomerPaidTripsInput
+  subcontractorPaidBy?: Prisma.UserCreateNestedOneWithoutSubcontractorPaidTripsInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedTripsInput
   expenses?: Prisma.FleetExpenseCreateNestedManyWithoutTripInput
 }
@@ -1155,21 +1609,33 @@ export type TripUncheckedCreateWithoutUpdatedByInput = {
   id?: string
   tripNumber: string
   status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
   clientId: string
   destinationAddressId: string
   clientNameSnapshot: string
   destinationNameSnapshot: string
   destinationSnapshot: string
   origin: string
-  vehicleId: string
-  driverId: string
+  vehicleId?: string | null
+  driverId?: string | null
+  externalCarrierId?: string | null
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
   scheduledStartAt: Date | string
   startedAt?: Date | string | null
   completedAt?: Date | string | null
   cancelledAt?: Date | string | null
-  mileageStart: number
+  mileageStart?: number | null
   mileageEnd?: number | null
   revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  customerPaidByUserId?: string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
+  subcontractorPaidByUserId?: string | null
   notes?: string | null
   createdById: string
   createdAt?: Date | string
@@ -1184,6 +1650,178 @@ export type TripCreateOrConnectWithoutUpdatedByInput = {
 
 export type TripCreateManyUpdatedByInputEnvelope = {
   data: Prisma.TripCreateManyUpdatedByInput | Prisma.TripCreateManyUpdatedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type TripCreateWithoutCustomerPaidByInput = {
+  id?: string
+  tripNumber: string
+  status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
+  clientNameSnapshot: string
+  destinationNameSnapshot: string
+  destinationSnapshot: string
+  origin: string
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
+  scheduledStartAt: Date | string
+  startedAt?: Date | string | null
+  completedAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  mileageStart?: number | null
+  mileageEnd?: number | null
+  revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  client: Prisma.ClientCreateNestedOneWithoutTripsInput
+  destination: Prisma.ClientAddressCreateNestedOneWithoutTripsInput
+  vehicle?: Prisma.VehicleCreateNestedOneWithoutTripsInput
+  driver?: Prisma.DriverCreateNestedOneWithoutTripsInput
+  externalCarrier?: Prisma.ExternalCarrierCreateNestedOneWithoutTripsInput
+  subcontractorPaidBy?: Prisma.UserCreateNestedOneWithoutSubcontractorPaidTripsInput
+  createdBy: Prisma.UserCreateNestedOneWithoutCreatedTripsInput
+  updatedBy: Prisma.UserCreateNestedOneWithoutUpdatedTripsInput
+  expenses?: Prisma.FleetExpenseCreateNestedManyWithoutTripInput
+}
+
+export type TripUncheckedCreateWithoutCustomerPaidByInput = {
+  id?: string
+  tripNumber: string
+  status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
+  clientId: string
+  destinationAddressId: string
+  clientNameSnapshot: string
+  destinationNameSnapshot: string
+  destinationSnapshot: string
+  origin: string
+  vehicleId?: string | null
+  driverId?: string | null
+  externalCarrierId?: string | null
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
+  scheduledStartAt: Date | string
+  startedAt?: Date | string | null
+  completedAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  mileageStart?: number | null
+  mileageEnd?: number | null
+  revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
+  subcontractorPaidByUserId?: string | null
+  notes?: string | null
+  createdById: string
+  updatedById: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  expenses?: Prisma.FleetExpenseUncheckedCreateNestedManyWithoutTripInput
+}
+
+export type TripCreateOrConnectWithoutCustomerPaidByInput = {
+  where: Prisma.TripWhereUniqueInput
+  create: Prisma.XOR<Prisma.TripCreateWithoutCustomerPaidByInput, Prisma.TripUncheckedCreateWithoutCustomerPaidByInput>
+}
+
+export type TripCreateManyCustomerPaidByInputEnvelope = {
+  data: Prisma.TripCreateManyCustomerPaidByInput | Prisma.TripCreateManyCustomerPaidByInput[]
+  skipDuplicates?: boolean
+}
+
+export type TripCreateWithoutSubcontractorPaidByInput = {
+  id?: string
+  tripNumber: string
+  status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
+  clientNameSnapshot: string
+  destinationNameSnapshot: string
+  destinationSnapshot: string
+  origin: string
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
+  scheduledStartAt: Date | string
+  startedAt?: Date | string | null
+  completedAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  mileageStart?: number | null
+  mileageEnd?: number | null
+  revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  client: Prisma.ClientCreateNestedOneWithoutTripsInput
+  destination: Prisma.ClientAddressCreateNestedOneWithoutTripsInput
+  vehicle?: Prisma.VehicleCreateNestedOneWithoutTripsInput
+  driver?: Prisma.DriverCreateNestedOneWithoutTripsInput
+  externalCarrier?: Prisma.ExternalCarrierCreateNestedOneWithoutTripsInput
+  customerPaidBy?: Prisma.UserCreateNestedOneWithoutCustomerPaidTripsInput
+  createdBy: Prisma.UserCreateNestedOneWithoutCreatedTripsInput
+  updatedBy: Prisma.UserCreateNestedOneWithoutUpdatedTripsInput
+  expenses?: Prisma.FleetExpenseCreateNestedManyWithoutTripInput
+}
+
+export type TripUncheckedCreateWithoutSubcontractorPaidByInput = {
+  id?: string
+  tripNumber: string
+  status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
+  clientId: string
+  destinationAddressId: string
+  clientNameSnapshot: string
+  destinationNameSnapshot: string
+  destinationSnapshot: string
+  origin: string
+  vehicleId?: string | null
+  driverId?: string | null
+  externalCarrierId?: string | null
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
+  scheduledStartAt: Date | string
+  startedAt?: Date | string | null
+  completedAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  mileageStart?: number | null
+  mileageEnd?: number | null
+  revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  customerPaidByUserId?: string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
+  notes?: string | null
+  createdById: string
+  updatedById: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  expenses?: Prisma.FleetExpenseUncheckedCreateNestedManyWithoutTripInput
+}
+
+export type TripCreateOrConnectWithoutSubcontractorPaidByInput = {
+  where: Prisma.TripWhereUniqueInput
+  create: Prisma.XOR<Prisma.TripCreateWithoutSubcontractorPaidByInput, Prisma.TripUncheckedCreateWithoutSubcontractorPaidByInput>
+}
+
+export type TripCreateManySubcontractorPaidByInputEnvelope = {
+  data: Prisma.TripCreateManySubcontractorPaidByInput | Prisma.TripCreateManySubcontractorPaidByInput[]
   skipDuplicates?: boolean
 }
 
@@ -1210,21 +1848,33 @@ export type TripScalarWhereInput = {
   id?: Prisma.StringFilter<"Trip"> | string
   tripNumber?: Prisma.StringFilter<"Trip"> | string
   status?: Prisma.EnumTripStatusFilter<"Trip"> | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFilter<"Trip"> | $Enums.TripExecutionType
   clientId?: Prisma.StringFilter<"Trip"> | string
   destinationAddressId?: Prisma.StringFilter<"Trip"> | string
   clientNameSnapshot?: Prisma.StringFilter<"Trip"> | string
   destinationNameSnapshot?: Prisma.StringFilter<"Trip"> | string
   destinationSnapshot?: Prisma.StringFilter<"Trip"> | string
   origin?: Prisma.StringFilter<"Trip"> | string
-  vehicleId?: Prisma.StringFilter<"Trip"> | string
-  driverId?: Prisma.StringFilter<"Trip"> | string
+  vehicleId?: Prisma.StringNullableFilter<"Trip"> | string | null
+  driverId?: Prisma.StringNullableFilter<"Trip"> | string | null
+  externalCarrierId?: Prisma.StringNullableFilter<"Trip"> | string | null
+  externalCarrierNameSnapshot?: Prisma.StringNullableFilter<"Trip"> | string | null
+  externalVehicleDescription?: Prisma.StringNullableFilter<"Trip"> | string | null
+  externalDriverName?: Prisma.StringNullableFilter<"Trip"> | string | null
   scheduledStartAt?: Prisma.DateTimeFilter<"Trip"> | Date | string
   startedAt?: Prisma.DateTimeNullableFilter<"Trip"> | Date | string | null
   completedAt?: Prisma.DateTimeNullableFilter<"Trip"> | Date | string | null
   cancelledAt?: Prisma.DateTimeNullableFilter<"Trip"> | Date | string | null
-  mileageStart?: Prisma.IntFilter<"Trip"> | number
+  mileageStart?: Prisma.IntNullableFilter<"Trip"> | number | null
   mileageEnd?: Prisma.IntNullableFilter<"Trip"> | number | null
   revenue?: Prisma.DecimalFilter<"Trip"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.DecimalNullableFilter<"Trip"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.EnumPaymentStatusNullableFilter<"Trip"> | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.DateTimeNullableFilter<"Trip"> | Date | string | null
+  customerPaidByUserId?: Prisma.StringNullableFilter<"Trip"> | string | null
+  subcontractorPaymentStatus?: Prisma.EnumPaymentStatusNullableFilter<"Trip"> | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.DateTimeNullableFilter<"Trip"> | Date | string | null
+  subcontractorPaidByUserId?: Prisma.StringNullableFilter<"Trip"> | string | null
   notes?: Prisma.StringNullableFilter<"Trip"> | string | null
   createdById?: Prisma.StringFilter<"Trip"> | string
   updatedById?: Prisma.StringFilter<"Trip"> | string
@@ -1248,27 +1898,71 @@ export type TripUpdateManyWithWhereWithoutUpdatedByInput = {
   data: Prisma.XOR<Prisma.TripUpdateManyMutationInput, Prisma.TripUncheckedUpdateManyWithoutUpdatedByInput>
 }
 
+export type TripUpsertWithWhereUniqueWithoutCustomerPaidByInput = {
+  where: Prisma.TripWhereUniqueInput
+  update: Prisma.XOR<Prisma.TripUpdateWithoutCustomerPaidByInput, Prisma.TripUncheckedUpdateWithoutCustomerPaidByInput>
+  create: Prisma.XOR<Prisma.TripCreateWithoutCustomerPaidByInput, Prisma.TripUncheckedCreateWithoutCustomerPaidByInput>
+}
+
+export type TripUpdateWithWhereUniqueWithoutCustomerPaidByInput = {
+  where: Prisma.TripWhereUniqueInput
+  data: Prisma.XOR<Prisma.TripUpdateWithoutCustomerPaidByInput, Prisma.TripUncheckedUpdateWithoutCustomerPaidByInput>
+}
+
+export type TripUpdateManyWithWhereWithoutCustomerPaidByInput = {
+  where: Prisma.TripScalarWhereInput
+  data: Prisma.XOR<Prisma.TripUpdateManyMutationInput, Prisma.TripUncheckedUpdateManyWithoutCustomerPaidByInput>
+}
+
+export type TripUpsertWithWhereUniqueWithoutSubcontractorPaidByInput = {
+  where: Prisma.TripWhereUniqueInput
+  update: Prisma.XOR<Prisma.TripUpdateWithoutSubcontractorPaidByInput, Prisma.TripUncheckedUpdateWithoutSubcontractorPaidByInput>
+  create: Prisma.XOR<Prisma.TripCreateWithoutSubcontractorPaidByInput, Prisma.TripUncheckedCreateWithoutSubcontractorPaidByInput>
+}
+
+export type TripUpdateWithWhereUniqueWithoutSubcontractorPaidByInput = {
+  where: Prisma.TripWhereUniqueInput
+  data: Prisma.XOR<Prisma.TripUpdateWithoutSubcontractorPaidByInput, Prisma.TripUncheckedUpdateWithoutSubcontractorPaidByInput>
+}
+
+export type TripUpdateManyWithWhereWithoutSubcontractorPaidByInput = {
+  where: Prisma.TripScalarWhereInput
+  data: Prisma.XOR<Prisma.TripUpdateManyMutationInput, Prisma.TripUncheckedUpdateManyWithoutSubcontractorPaidByInput>
+}
+
 export type TripCreateWithoutDriverInput = {
   id?: string
   tripNumber: string
   status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
   clientNameSnapshot: string
   destinationNameSnapshot: string
   destinationSnapshot: string
   origin: string
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
   scheduledStartAt: Date | string
   startedAt?: Date | string | null
   completedAt?: Date | string | null
   cancelledAt?: Date | string | null
-  mileageStart: number
+  mileageStart?: number | null
   mileageEnd?: number | null
   revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   client: Prisma.ClientCreateNestedOneWithoutTripsInput
   destination: Prisma.ClientAddressCreateNestedOneWithoutTripsInput
-  vehicle: Prisma.VehicleCreateNestedOneWithoutTripsInput
+  vehicle?: Prisma.VehicleCreateNestedOneWithoutTripsInput
+  externalCarrier?: Prisma.ExternalCarrierCreateNestedOneWithoutTripsInput
+  customerPaidBy?: Prisma.UserCreateNestedOneWithoutCustomerPaidTripsInput
+  subcontractorPaidBy?: Prisma.UserCreateNestedOneWithoutSubcontractorPaidTripsInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedTripsInput
   updatedBy: Prisma.UserCreateNestedOneWithoutUpdatedTripsInput
   expenses?: Prisma.FleetExpenseCreateNestedManyWithoutTripInput
@@ -1278,20 +1972,32 @@ export type TripUncheckedCreateWithoutDriverInput = {
   id?: string
   tripNumber: string
   status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
   clientId: string
   destinationAddressId: string
   clientNameSnapshot: string
   destinationNameSnapshot: string
   destinationSnapshot: string
   origin: string
-  vehicleId: string
+  vehicleId?: string | null
+  externalCarrierId?: string | null
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
   scheduledStartAt: Date | string
   startedAt?: Date | string | null
   completedAt?: Date | string | null
   cancelledAt?: Date | string | null
-  mileageStart: number
+  mileageStart?: number | null
   mileageEnd?: number | null
   revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  customerPaidByUserId?: string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
+  subcontractorPaidByUserId?: string | null
   notes?: string | null
   createdById: string
   updatedById: string
@@ -1330,23 +2036,35 @@ export type TripCreateWithoutVehicleInput = {
   id?: string
   tripNumber: string
   status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
   clientNameSnapshot: string
   destinationNameSnapshot: string
   destinationSnapshot: string
   origin: string
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
   scheduledStartAt: Date | string
   startedAt?: Date | string | null
   completedAt?: Date | string | null
   cancelledAt?: Date | string | null
-  mileageStart: number
+  mileageStart?: number | null
   mileageEnd?: number | null
   revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   client: Prisma.ClientCreateNestedOneWithoutTripsInput
   destination: Prisma.ClientAddressCreateNestedOneWithoutTripsInput
-  driver: Prisma.DriverCreateNestedOneWithoutTripsInput
+  driver?: Prisma.DriverCreateNestedOneWithoutTripsInput
+  externalCarrier?: Prisma.ExternalCarrierCreateNestedOneWithoutTripsInput
+  customerPaidBy?: Prisma.UserCreateNestedOneWithoutCustomerPaidTripsInput
+  subcontractorPaidBy?: Prisma.UserCreateNestedOneWithoutSubcontractorPaidTripsInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedTripsInput
   updatedBy: Prisma.UserCreateNestedOneWithoutUpdatedTripsInput
   expenses?: Prisma.FleetExpenseCreateNestedManyWithoutTripInput
@@ -1356,20 +2074,32 @@ export type TripUncheckedCreateWithoutVehicleInput = {
   id?: string
   tripNumber: string
   status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
   clientId: string
   destinationAddressId: string
   clientNameSnapshot: string
   destinationNameSnapshot: string
   destinationSnapshot: string
   origin: string
-  driverId: string
+  driverId?: string | null
+  externalCarrierId?: string | null
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
   scheduledStartAt: Date | string
   startedAt?: Date | string | null
   completedAt?: Date | string | null
   cancelledAt?: Date | string | null
-  mileageStart: number
+  mileageStart?: number | null
   mileageEnd?: number | null
   revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  customerPaidByUserId?: string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
+  subcontractorPaidByUserId?: string | null
   notes?: string | null
   createdById: string
   updatedById: string
@@ -1408,24 +2138,36 @@ export type TripCreateWithoutExpensesInput = {
   id?: string
   tripNumber: string
   status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
   clientNameSnapshot: string
   destinationNameSnapshot: string
   destinationSnapshot: string
   origin: string
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
   scheduledStartAt: Date | string
   startedAt?: Date | string | null
   completedAt?: Date | string | null
   cancelledAt?: Date | string | null
-  mileageStart: number
+  mileageStart?: number | null
   mileageEnd?: number | null
   revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   client: Prisma.ClientCreateNestedOneWithoutTripsInput
   destination: Prisma.ClientAddressCreateNestedOneWithoutTripsInput
-  vehicle: Prisma.VehicleCreateNestedOneWithoutTripsInput
-  driver: Prisma.DriverCreateNestedOneWithoutTripsInput
+  vehicle?: Prisma.VehicleCreateNestedOneWithoutTripsInput
+  driver?: Prisma.DriverCreateNestedOneWithoutTripsInput
+  externalCarrier?: Prisma.ExternalCarrierCreateNestedOneWithoutTripsInput
+  customerPaidBy?: Prisma.UserCreateNestedOneWithoutCustomerPaidTripsInput
+  subcontractorPaidBy?: Prisma.UserCreateNestedOneWithoutSubcontractorPaidTripsInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedTripsInput
   updatedBy: Prisma.UserCreateNestedOneWithoutUpdatedTripsInput
 }
@@ -1434,21 +2176,33 @@ export type TripUncheckedCreateWithoutExpensesInput = {
   id?: string
   tripNumber: string
   status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
   clientId: string
   destinationAddressId: string
   clientNameSnapshot: string
   destinationNameSnapshot: string
   destinationSnapshot: string
   origin: string
-  vehicleId: string
-  driverId: string
+  vehicleId?: string | null
+  driverId?: string | null
+  externalCarrierId?: string | null
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
   scheduledStartAt: Date | string
   startedAt?: Date | string | null
   completedAt?: Date | string | null
   cancelledAt?: Date | string | null
-  mileageStart: number
+  mileageStart?: number | null
   mileageEnd?: number | null
   revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  customerPaidByUserId?: string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
+  subcontractorPaidByUserId?: string | null
   notes?: string | null
   createdById: string
   updatedById: string
@@ -1476,24 +2230,36 @@ export type TripUpdateWithoutExpensesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
   clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   origin?: Prisma.StringFieldUpdateOperationsInput | string
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  mileageStart?: Prisma.IntFieldUpdateOperationsInput | number
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.ClientUpdateOneRequiredWithoutTripsNestedInput
   destination?: Prisma.ClientAddressUpdateOneRequiredWithoutTripsNestedInput
-  vehicle?: Prisma.VehicleUpdateOneRequiredWithoutTripsNestedInput
-  driver?: Prisma.DriverUpdateOneRequiredWithoutTripsNestedInput
+  vehicle?: Prisma.VehicleUpdateOneWithoutTripsNestedInput
+  driver?: Prisma.DriverUpdateOneWithoutTripsNestedInput
+  externalCarrier?: Prisma.ExternalCarrierUpdateOneWithoutTripsNestedInput
+  customerPaidBy?: Prisma.UserUpdateOneWithoutCustomerPaidTripsNestedInput
+  subcontractorPaidBy?: Prisma.UserUpdateOneWithoutSubcontractorPaidTripsNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedTripsNestedInput
   updatedBy?: Prisma.UserUpdateOneRequiredWithoutUpdatedTripsNestedInput
 }
@@ -1502,21 +2268,33 @@ export type TripUncheckedUpdateWithoutExpensesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   destinationAddressId?: Prisma.StringFieldUpdateOperationsInput | string
   clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   origin?: Prisma.StringFieldUpdateOperationsInput | string
-  vehicleId?: Prisma.StringFieldUpdateOperationsInput | string
-  driverId?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  mileageStart?: Prisma.IntFieldUpdateOperationsInput | number
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  customerPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1528,23 +2306,35 @@ export type TripCreateWithoutClientInput = {
   id?: string
   tripNumber: string
   status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
   clientNameSnapshot: string
   destinationNameSnapshot: string
   destinationSnapshot: string
   origin: string
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
   scheduledStartAt: Date | string
   startedAt?: Date | string | null
   completedAt?: Date | string | null
   cancelledAt?: Date | string | null
-  mileageStart: number
+  mileageStart?: number | null
   mileageEnd?: number | null
   revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   destination: Prisma.ClientAddressCreateNestedOneWithoutTripsInput
-  vehicle: Prisma.VehicleCreateNestedOneWithoutTripsInput
-  driver: Prisma.DriverCreateNestedOneWithoutTripsInput
+  vehicle?: Prisma.VehicleCreateNestedOneWithoutTripsInput
+  driver?: Prisma.DriverCreateNestedOneWithoutTripsInput
+  externalCarrier?: Prisma.ExternalCarrierCreateNestedOneWithoutTripsInput
+  customerPaidBy?: Prisma.UserCreateNestedOneWithoutCustomerPaidTripsInput
+  subcontractorPaidBy?: Prisma.UserCreateNestedOneWithoutSubcontractorPaidTripsInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedTripsInput
   updatedBy: Prisma.UserCreateNestedOneWithoutUpdatedTripsInput
   expenses?: Prisma.FleetExpenseCreateNestedManyWithoutTripInput
@@ -1554,20 +2344,32 @@ export type TripUncheckedCreateWithoutClientInput = {
   id?: string
   tripNumber: string
   status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
   destinationAddressId: string
   clientNameSnapshot: string
   destinationNameSnapshot: string
   destinationSnapshot: string
   origin: string
-  vehicleId: string
-  driverId: string
+  vehicleId?: string | null
+  driverId?: string | null
+  externalCarrierId?: string | null
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
   scheduledStartAt: Date | string
   startedAt?: Date | string | null
   completedAt?: Date | string | null
   cancelledAt?: Date | string | null
-  mileageStart: number
+  mileageStart?: number | null
   mileageEnd?: number | null
   revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  customerPaidByUserId?: string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
+  subcontractorPaidByUserId?: string | null
   notes?: string | null
   createdById: string
   updatedById: string
@@ -1606,23 +2408,35 @@ export type TripCreateWithoutDestinationInput = {
   id?: string
   tripNumber: string
   status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
   clientNameSnapshot: string
   destinationNameSnapshot: string
   destinationSnapshot: string
   origin: string
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
   scheduledStartAt: Date | string
   startedAt?: Date | string | null
   completedAt?: Date | string | null
   cancelledAt?: Date | string | null
-  mileageStart: number
+  mileageStart?: number | null
   mileageEnd?: number | null
   revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   client: Prisma.ClientCreateNestedOneWithoutTripsInput
-  vehicle: Prisma.VehicleCreateNestedOneWithoutTripsInput
-  driver: Prisma.DriverCreateNestedOneWithoutTripsInput
+  vehicle?: Prisma.VehicleCreateNestedOneWithoutTripsInput
+  driver?: Prisma.DriverCreateNestedOneWithoutTripsInput
+  externalCarrier?: Prisma.ExternalCarrierCreateNestedOneWithoutTripsInput
+  customerPaidBy?: Prisma.UserCreateNestedOneWithoutCustomerPaidTripsInput
+  subcontractorPaidBy?: Prisma.UserCreateNestedOneWithoutSubcontractorPaidTripsInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreatedTripsInput
   updatedBy: Prisma.UserCreateNestedOneWithoutUpdatedTripsInput
   expenses?: Prisma.FleetExpenseCreateNestedManyWithoutTripInput
@@ -1632,20 +2446,32 @@ export type TripUncheckedCreateWithoutDestinationInput = {
   id?: string
   tripNumber: string
   status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
   clientId: string
   clientNameSnapshot: string
   destinationNameSnapshot: string
   destinationSnapshot: string
   origin: string
-  vehicleId: string
-  driverId: string
+  vehicleId?: string | null
+  driverId?: string | null
+  externalCarrierId?: string | null
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
   scheduledStartAt: Date | string
   startedAt?: Date | string | null
   completedAt?: Date | string | null
   cancelledAt?: Date | string | null
-  mileageStart: number
+  mileageStart?: number | null
   mileageEnd?: number | null
   revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  customerPaidByUserId?: string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
+  subcontractorPaidByUserId?: string | null
   notes?: string | null
   createdById: string
   updatedById: string
@@ -1680,25 +2506,139 @@ export type TripUpdateManyWithWhereWithoutDestinationInput = {
   data: Prisma.XOR<Prisma.TripUpdateManyMutationInput, Prisma.TripUncheckedUpdateManyWithoutDestinationInput>
 }
 
-export type TripCreateManyCreatedByInput = {
+export type TripCreateWithoutExternalCarrierInput = {
   id?: string
   tripNumber: string
   status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
+  clientNameSnapshot: string
+  destinationNameSnapshot: string
+  destinationSnapshot: string
+  origin: string
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
+  scheduledStartAt: Date | string
+  startedAt?: Date | string | null
+  completedAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  mileageStart?: number | null
+  mileageEnd?: number | null
+  revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  client: Prisma.ClientCreateNestedOneWithoutTripsInput
+  destination: Prisma.ClientAddressCreateNestedOneWithoutTripsInput
+  vehicle?: Prisma.VehicleCreateNestedOneWithoutTripsInput
+  driver?: Prisma.DriverCreateNestedOneWithoutTripsInput
+  customerPaidBy?: Prisma.UserCreateNestedOneWithoutCustomerPaidTripsInput
+  subcontractorPaidBy?: Prisma.UserCreateNestedOneWithoutSubcontractorPaidTripsInput
+  createdBy: Prisma.UserCreateNestedOneWithoutCreatedTripsInput
+  updatedBy: Prisma.UserCreateNestedOneWithoutUpdatedTripsInput
+  expenses?: Prisma.FleetExpenseCreateNestedManyWithoutTripInput
+}
+
+export type TripUncheckedCreateWithoutExternalCarrierInput = {
+  id?: string
+  tripNumber: string
+  status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
   clientId: string
   destinationAddressId: string
   clientNameSnapshot: string
   destinationNameSnapshot: string
   destinationSnapshot: string
   origin: string
-  vehicleId: string
-  driverId: string
+  vehicleId?: string | null
+  driverId?: string | null
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
   scheduledStartAt: Date | string
   startedAt?: Date | string | null
   completedAt?: Date | string | null
   cancelledAt?: Date | string | null
-  mileageStart: number
+  mileageStart?: number | null
   mileageEnd?: number | null
   revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  customerPaidByUserId?: string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
+  subcontractorPaidByUserId?: string | null
+  notes?: string | null
+  createdById: string
+  updatedById: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  expenses?: Prisma.FleetExpenseUncheckedCreateNestedManyWithoutTripInput
+}
+
+export type TripCreateOrConnectWithoutExternalCarrierInput = {
+  where: Prisma.TripWhereUniqueInput
+  create: Prisma.XOR<Prisma.TripCreateWithoutExternalCarrierInput, Prisma.TripUncheckedCreateWithoutExternalCarrierInput>
+}
+
+export type TripCreateManyExternalCarrierInputEnvelope = {
+  data: Prisma.TripCreateManyExternalCarrierInput | Prisma.TripCreateManyExternalCarrierInput[]
+  skipDuplicates?: boolean
+}
+
+export type TripUpsertWithWhereUniqueWithoutExternalCarrierInput = {
+  where: Prisma.TripWhereUniqueInput
+  update: Prisma.XOR<Prisma.TripUpdateWithoutExternalCarrierInput, Prisma.TripUncheckedUpdateWithoutExternalCarrierInput>
+  create: Prisma.XOR<Prisma.TripCreateWithoutExternalCarrierInput, Prisma.TripUncheckedCreateWithoutExternalCarrierInput>
+}
+
+export type TripUpdateWithWhereUniqueWithoutExternalCarrierInput = {
+  where: Prisma.TripWhereUniqueInput
+  data: Prisma.XOR<Prisma.TripUpdateWithoutExternalCarrierInput, Prisma.TripUncheckedUpdateWithoutExternalCarrierInput>
+}
+
+export type TripUpdateManyWithWhereWithoutExternalCarrierInput = {
+  where: Prisma.TripScalarWhereInput
+  data: Prisma.XOR<Prisma.TripUpdateManyMutationInput, Prisma.TripUncheckedUpdateManyWithoutExternalCarrierInput>
+}
+
+export type TripCreateManyCreatedByInput = {
+  id?: string
+  tripNumber: string
+  status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
+  clientId: string
+  destinationAddressId: string
+  clientNameSnapshot: string
+  destinationNameSnapshot: string
+  destinationSnapshot: string
+  origin: string
+  vehicleId?: string | null
+  driverId?: string | null
+  externalCarrierId?: string | null
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
+  scheduledStartAt: Date | string
+  startedAt?: Date | string | null
+  completedAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  mileageStart?: number | null
+  mileageEnd?: number | null
+  revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  customerPaidByUserId?: string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
+  subcontractorPaidByUserId?: string | null
   notes?: string | null
   updatedById: string
   createdAt?: Date | string
@@ -1709,23 +2649,109 @@ export type TripCreateManyUpdatedByInput = {
   id?: string
   tripNumber: string
   status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
   clientId: string
   destinationAddressId: string
   clientNameSnapshot: string
   destinationNameSnapshot: string
   destinationSnapshot: string
   origin: string
-  vehicleId: string
-  driverId: string
+  vehicleId?: string | null
+  driverId?: string | null
+  externalCarrierId?: string | null
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
   scheduledStartAt: Date | string
   startedAt?: Date | string | null
   completedAt?: Date | string | null
   cancelledAt?: Date | string | null
-  mileageStart: number
+  mileageStart?: number | null
   mileageEnd?: number | null
   revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  customerPaidByUserId?: string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
+  subcontractorPaidByUserId?: string | null
   notes?: string | null
   createdById: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type TripCreateManyCustomerPaidByInput = {
+  id?: string
+  tripNumber: string
+  status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
+  clientId: string
+  destinationAddressId: string
+  clientNameSnapshot: string
+  destinationNameSnapshot: string
+  destinationSnapshot: string
+  origin: string
+  vehicleId?: string | null
+  driverId?: string | null
+  externalCarrierId?: string | null
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
+  scheduledStartAt: Date | string
+  startedAt?: Date | string | null
+  completedAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  mileageStart?: number | null
+  mileageEnd?: number | null
+  revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
+  subcontractorPaidByUserId?: string | null
+  notes?: string | null
+  createdById: string
+  updatedById: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type TripCreateManySubcontractorPaidByInput = {
+  id?: string
+  tripNumber: string
+  status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
+  clientId: string
+  destinationAddressId: string
+  clientNameSnapshot: string
+  destinationNameSnapshot: string
+  destinationSnapshot: string
+  origin: string
+  vehicleId?: string | null
+  driverId?: string | null
+  externalCarrierId?: string | null
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
+  scheduledStartAt: Date | string
+  startedAt?: Date | string | null
+  completedAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  mileageStart?: number | null
+  mileageEnd?: number | null
+  revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  customerPaidByUserId?: string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
+  notes?: string | null
+  createdById: string
+  updatedById: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1734,24 +2760,36 @@ export type TripUpdateWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
   clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   origin?: Prisma.StringFieldUpdateOperationsInput | string
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  mileageStart?: Prisma.IntFieldUpdateOperationsInput | number
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.ClientUpdateOneRequiredWithoutTripsNestedInput
   destination?: Prisma.ClientAddressUpdateOneRequiredWithoutTripsNestedInput
-  vehicle?: Prisma.VehicleUpdateOneRequiredWithoutTripsNestedInput
-  driver?: Prisma.DriverUpdateOneRequiredWithoutTripsNestedInput
+  vehicle?: Prisma.VehicleUpdateOneWithoutTripsNestedInput
+  driver?: Prisma.DriverUpdateOneWithoutTripsNestedInput
+  externalCarrier?: Prisma.ExternalCarrierUpdateOneWithoutTripsNestedInput
+  customerPaidBy?: Prisma.UserUpdateOneWithoutCustomerPaidTripsNestedInput
+  subcontractorPaidBy?: Prisma.UserUpdateOneWithoutSubcontractorPaidTripsNestedInput
   updatedBy?: Prisma.UserUpdateOneRequiredWithoutUpdatedTripsNestedInput
   expenses?: Prisma.FleetExpenseUpdateManyWithoutTripNestedInput
 }
@@ -1760,21 +2798,33 @@ export type TripUncheckedUpdateWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   destinationAddressId?: Prisma.StringFieldUpdateOperationsInput | string
   clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   origin?: Prisma.StringFieldUpdateOperationsInput | string
-  vehicleId?: Prisma.StringFieldUpdateOperationsInput | string
-  driverId?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  mileageStart?: Prisma.IntFieldUpdateOperationsInput | number
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  customerPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1786,21 +2836,33 @@ export type TripUncheckedUpdateManyWithoutCreatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   destinationAddressId?: Prisma.StringFieldUpdateOperationsInput | string
   clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   origin?: Prisma.StringFieldUpdateOperationsInput | string
-  vehicleId?: Prisma.StringFieldUpdateOperationsInput | string
-  driverId?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  mileageStart?: Prisma.IntFieldUpdateOperationsInput | number
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  customerPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1811,24 +2873,36 @@ export type TripUpdateWithoutUpdatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
   clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   origin?: Prisma.StringFieldUpdateOperationsInput | string
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  mileageStart?: Prisma.IntFieldUpdateOperationsInput | number
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.ClientUpdateOneRequiredWithoutTripsNestedInput
   destination?: Prisma.ClientAddressUpdateOneRequiredWithoutTripsNestedInput
-  vehicle?: Prisma.VehicleUpdateOneRequiredWithoutTripsNestedInput
-  driver?: Prisma.DriverUpdateOneRequiredWithoutTripsNestedInput
+  vehicle?: Prisma.VehicleUpdateOneWithoutTripsNestedInput
+  driver?: Prisma.DriverUpdateOneWithoutTripsNestedInput
+  externalCarrier?: Prisma.ExternalCarrierUpdateOneWithoutTripsNestedInput
+  customerPaidBy?: Prisma.UserUpdateOneWithoutCustomerPaidTripsNestedInput
+  subcontractorPaidBy?: Prisma.UserUpdateOneWithoutSubcontractorPaidTripsNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedTripsNestedInput
   expenses?: Prisma.FleetExpenseUpdateManyWithoutTripNestedInput
 }
@@ -1837,21 +2911,33 @@ export type TripUncheckedUpdateWithoutUpdatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   destinationAddressId?: Prisma.StringFieldUpdateOperationsInput | string
   clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   origin?: Prisma.StringFieldUpdateOperationsInput | string
-  vehicleId?: Prisma.StringFieldUpdateOperationsInput | string
-  driverId?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  mileageStart?: Prisma.IntFieldUpdateOperationsInput | number
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  customerPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1863,23 +2949,261 @@ export type TripUncheckedUpdateManyWithoutUpdatedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   destinationAddressId?: Prisma.StringFieldUpdateOperationsInput | string
   clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   origin?: Prisma.StringFieldUpdateOperationsInput | string
-  vehicleId?: Prisma.StringFieldUpdateOperationsInput | string
-  driverId?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  mileageStart?: Prisma.IntFieldUpdateOperationsInput | number
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  customerPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type TripUpdateWithoutCustomerPaidByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
+  clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  origin?: Prisma.StringFieldUpdateOperationsInput | string
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  client?: Prisma.ClientUpdateOneRequiredWithoutTripsNestedInput
+  destination?: Prisma.ClientAddressUpdateOneRequiredWithoutTripsNestedInput
+  vehicle?: Prisma.VehicleUpdateOneWithoutTripsNestedInput
+  driver?: Prisma.DriverUpdateOneWithoutTripsNestedInput
+  externalCarrier?: Prisma.ExternalCarrierUpdateOneWithoutTripsNestedInput
+  subcontractorPaidBy?: Prisma.UserUpdateOneWithoutSubcontractorPaidTripsNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedTripsNestedInput
+  updatedBy?: Prisma.UserUpdateOneRequiredWithoutUpdatedTripsNestedInput
+  expenses?: Prisma.FleetExpenseUpdateManyWithoutTripNestedInput
+}
+
+export type TripUncheckedUpdateWithoutCustomerPaidByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationAddressId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  origin?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedById?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expenses?: Prisma.FleetExpenseUncheckedUpdateManyWithoutTripNestedInput
+}
+
+export type TripUncheckedUpdateManyWithoutCustomerPaidByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationAddressId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  origin?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedById?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type TripUpdateWithoutSubcontractorPaidByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
+  clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  origin?: Prisma.StringFieldUpdateOperationsInput | string
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  client?: Prisma.ClientUpdateOneRequiredWithoutTripsNestedInput
+  destination?: Prisma.ClientAddressUpdateOneRequiredWithoutTripsNestedInput
+  vehicle?: Prisma.VehicleUpdateOneWithoutTripsNestedInput
+  driver?: Prisma.DriverUpdateOneWithoutTripsNestedInput
+  externalCarrier?: Prisma.ExternalCarrierUpdateOneWithoutTripsNestedInput
+  customerPaidBy?: Prisma.UserUpdateOneWithoutCustomerPaidTripsNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedTripsNestedInput
+  updatedBy?: Prisma.UserUpdateOneRequiredWithoutUpdatedTripsNestedInput
+  expenses?: Prisma.FleetExpenseUpdateManyWithoutTripNestedInput
+}
+
+export type TripUncheckedUpdateWithoutSubcontractorPaidByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationAddressId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  origin?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  customerPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedById?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expenses?: Prisma.FleetExpenseUncheckedUpdateManyWithoutTripNestedInput
+}
+
+export type TripUncheckedUpdateManyWithoutSubcontractorPaidByInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationAddressId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  origin?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  customerPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedById?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1888,20 +3212,32 @@ export type TripCreateManyDriverInput = {
   id?: string
   tripNumber: string
   status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
   clientId: string
   destinationAddressId: string
   clientNameSnapshot: string
   destinationNameSnapshot: string
   destinationSnapshot: string
   origin: string
-  vehicleId: string
+  vehicleId?: string | null
+  externalCarrierId?: string | null
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
   scheduledStartAt: Date | string
   startedAt?: Date | string | null
   completedAt?: Date | string | null
   cancelledAt?: Date | string | null
-  mileageStart: number
+  mileageStart?: number | null
   mileageEnd?: number | null
   revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  customerPaidByUserId?: string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
+  subcontractorPaidByUserId?: string | null
   notes?: string | null
   createdById: string
   updatedById: string
@@ -1913,23 +3249,35 @@ export type TripUpdateWithoutDriverInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
   clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   origin?: Prisma.StringFieldUpdateOperationsInput | string
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  mileageStart?: Prisma.IntFieldUpdateOperationsInput | number
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.ClientUpdateOneRequiredWithoutTripsNestedInput
   destination?: Prisma.ClientAddressUpdateOneRequiredWithoutTripsNestedInput
-  vehicle?: Prisma.VehicleUpdateOneRequiredWithoutTripsNestedInput
+  vehicle?: Prisma.VehicleUpdateOneWithoutTripsNestedInput
+  externalCarrier?: Prisma.ExternalCarrierUpdateOneWithoutTripsNestedInput
+  customerPaidBy?: Prisma.UserUpdateOneWithoutCustomerPaidTripsNestedInput
+  subcontractorPaidBy?: Prisma.UserUpdateOneWithoutSubcontractorPaidTripsNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedTripsNestedInput
   updatedBy?: Prisma.UserUpdateOneRequiredWithoutUpdatedTripsNestedInput
   expenses?: Prisma.FleetExpenseUpdateManyWithoutTripNestedInput
@@ -1939,20 +3287,32 @@ export type TripUncheckedUpdateWithoutDriverInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   destinationAddressId?: Prisma.StringFieldUpdateOperationsInput | string
   clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   origin?: Prisma.StringFieldUpdateOperationsInput | string
-  vehicleId?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  mileageStart?: Prisma.IntFieldUpdateOperationsInput | number
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  customerPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1965,20 +3325,32 @@ export type TripUncheckedUpdateManyWithoutDriverInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   destinationAddressId?: Prisma.StringFieldUpdateOperationsInput | string
   clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   origin?: Prisma.StringFieldUpdateOperationsInput | string
-  vehicleId?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  mileageStart?: Prisma.IntFieldUpdateOperationsInput | number
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  customerPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1990,20 +3362,32 @@ export type TripCreateManyVehicleInput = {
   id?: string
   tripNumber: string
   status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
   clientId: string
   destinationAddressId: string
   clientNameSnapshot: string
   destinationNameSnapshot: string
   destinationSnapshot: string
   origin: string
-  driverId: string
+  driverId?: string | null
+  externalCarrierId?: string | null
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
   scheduledStartAt: Date | string
   startedAt?: Date | string | null
   completedAt?: Date | string | null
   cancelledAt?: Date | string | null
-  mileageStart: number
+  mileageStart?: number | null
   mileageEnd?: number | null
   revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  customerPaidByUserId?: string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
+  subcontractorPaidByUserId?: string | null
   notes?: string | null
   createdById: string
   updatedById: string
@@ -2015,23 +3399,35 @@ export type TripUpdateWithoutVehicleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
   clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   origin?: Prisma.StringFieldUpdateOperationsInput | string
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  mileageStart?: Prisma.IntFieldUpdateOperationsInput | number
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.ClientUpdateOneRequiredWithoutTripsNestedInput
   destination?: Prisma.ClientAddressUpdateOneRequiredWithoutTripsNestedInput
-  driver?: Prisma.DriverUpdateOneRequiredWithoutTripsNestedInput
+  driver?: Prisma.DriverUpdateOneWithoutTripsNestedInput
+  externalCarrier?: Prisma.ExternalCarrierUpdateOneWithoutTripsNestedInput
+  customerPaidBy?: Prisma.UserUpdateOneWithoutCustomerPaidTripsNestedInput
+  subcontractorPaidBy?: Prisma.UserUpdateOneWithoutSubcontractorPaidTripsNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedTripsNestedInput
   updatedBy?: Prisma.UserUpdateOneRequiredWithoutUpdatedTripsNestedInput
   expenses?: Prisma.FleetExpenseUpdateManyWithoutTripNestedInput
@@ -2041,20 +3437,32 @@ export type TripUncheckedUpdateWithoutVehicleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   destinationAddressId?: Prisma.StringFieldUpdateOperationsInput | string
   clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   origin?: Prisma.StringFieldUpdateOperationsInput | string
-  driverId?: Prisma.StringFieldUpdateOperationsInput | string
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  mileageStart?: Prisma.IntFieldUpdateOperationsInput | number
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  customerPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2067,20 +3475,32 @@ export type TripUncheckedUpdateManyWithoutVehicleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   destinationAddressId?: Prisma.StringFieldUpdateOperationsInput | string
   clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   origin?: Prisma.StringFieldUpdateOperationsInput | string
-  driverId?: Prisma.StringFieldUpdateOperationsInput | string
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  mileageStart?: Prisma.IntFieldUpdateOperationsInput | number
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  customerPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2092,20 +3512,32 @@ export type TripCreateManyClientInput = {
   id?: string
   tripNumber: string
   status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
   destinationAddressId: string
   clientNameSnapshot: string
   destinationNameSnapshot: string
   destinationSnapshot: string
   origin: string
-  vehicleId: string
-  driverId: string
+  vehicleId?: string | null
+  driverId?: string | null
+  externalCarrierId?: string | null
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
   scheduledStartAt: Date | string
   startedAt?: Date | string | null
   completedAt?: Date | string | null
   cancelledAt?: Date | string | null
-  mileageStart: number
+  mileageStart?: number | null
   mileageEnd?: number | null
   revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  customerPaidByUserId?: string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
+  subcontractorPaidByUserId?: string | null
   notes?: string | null
   createdById: string
   updatedById: string
@@ -2117,23 +3549,35 @@ export type TripUpdateWithoutClientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
   clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   origin?: Prisma.StringFieldUpdateOperationsInput | string
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  mileageStart?: Prisma.IntFieldUpdateOperationsInput | number
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   destination?: Prisma.ClientAddressUpdateOneRequiredWithoutTripsNestedInput
-  vehicle?: Prisma.VehicleUpdateOneRequiredWithoutTripsNestedInput
-  driver?: Prisma.DriverUpdateOneRequiredWithoutTripsNestedInput
+  vehicle?: Prisma.VehicleUpdateOneWithoutTripsNestedInput
+  driver?: Prisma.DriverUpdateOneWithoutTripsNestedInput
+  externalCarrier?: Prisma.ExternalCarrierUpdateOneWithoutTripsNestedInput
+  customerPaidBy?: Prisma.UserUpdateOneWithoutCustomerPaidTripsNestedInput
+  subcontractorPaidBy?: Prisma.UserUpdateOneWithoutSubcontractorPaidTripsNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedTripsNestedInput
   updatedBy?: Prisma.UserUpdateOneRequiredWithoutUpdatedTripsNestedInput
   expenses?: Prisma.FleetExpenseUpdateManyWithoutTripNestedInput
@@ -2143,20 +3587,32 @@ export type TripUncheckedUpdateWithoutClientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
   destinationAddressId?: Prisma.StringFieldUpdateOperationsInput | string
   clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   origin?: Prisma.StringFieldUpdateOperationsInput | string
-  vehicleId?: Prisma.StringFieldUpdateOperationsInput | string
-  driverId?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  mileageStart?: Prisma.IntFieldUpdateOperationsInput | number
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  customerPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2169,20 +3625,32 @@ export type TripUncheckedUpdateManyWithoutClientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
   destinationAddressId?: Prisma.StringFieldUpdateOperationsInput | string
   clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   origin?: Prisma.StringFieldUpdateOperationsInput | string
-  vehicleId?: Prisma.StringFieldUpdateOperationsInput | string
-  driverId?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  mileageStart?: Prisma.IntFieldUpdateOperationsInput | number
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  customerPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2194,20 +3662,32 @@ export type TripCreateManyDestinationInput = {
   id?: string
   tripNumber: string
   status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
   clientId: string
   clientNameSnapshot: string
   destinationNameSnapshot: string
   destinationSnapshot: string
   origin: string
-  vehicleId: string
-  driverId: string
+  vehicleId?: string | null
+  driverId?: string | null
+  externalCarrierId?: string | null
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
   scheduledStartAt: Date | string
   startedAt?: Date | string | null
   completedAt?: Date | string | null
   cancelledAt?: Date | string | null
-  mileageStart: number
+  mileageStart?: number | null
   mileageEnd?: number | null
   revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  customerPaidByUserId?: string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
+  subcontractorPaidByUserId?: string | null
   notes?: string | null
   createdById: string
   updatedById: string
@@ -2219,23 +3699,35 @@ export type TripUpdateWithoutDestinationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
   clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   origin?: Prisma.StringFieldUpdateOperationsInput | string
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  mileageStart?: Prisma.IntFieldUpdateOperationsInput | number
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.ClientUpdateOneRequiredWithoutTripsNestedInput
-  vehicle?: Prisma.VehicleUpdateOneRequiredWithoutTripsNestedInput
-  driver?: Prisma.DriverUpdateOneRequiredWithoutTripsNestedInput
+  vehicle?: Prisma.VehicleUpdateOneWithoutTripsNestedInput
+  driver?: Prisma.DriverUpdateOneWithoutTripsNestedInput
+  externalCarrier?: Prisma.ExternalCarrierUpdateOneWithoutTripsNestedInput
+  customerPaidBy?: Prisma.UserUpdateOneWithoutCustomerPaidTripsNestedInput
+  subcontractorPaidBy?: Prisma.UserUpdateOneWithoutSubcontractorPaidTripsNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedTripsNestedInput
   updatedBy?: Prisma.UserUpdateOneRequiredWithoutUpdatedTripsNestedInput
   expenses?: Prisma.FleetExpenseUpdateManyWithoutTripNestedInput
@@ -2245,20 +3737,32 @@ export type TripUncheckedUpdateWithoutDestinationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   origin?: Prisma.StringFieldUpdateOperationsInput | string
-  vehicleId?: Prisma.StringFieldUpdateOperationsInput | string
-  driverId?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  mileageStart?: Prisma.IntFieldUpdateOperationsInput | number
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  customerPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2271,20 +3775,182 @@ export type TripUncheckedUpdateManyWithoutDestinationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
   clientId?: Prisma.StringFieldUpdateOperationsInput | string
   clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
   origin?: Prisma.StringFieldUpdateOperationsInput | string
-  vehicleId?: Prisma.StringFieldUpdateOperationsInput | string
-  driverId?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  mileageStart?: Prisma.IntFieldUpdateOperationsInput | number
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  customerPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedById?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type TripCreateManyExternalCarrierInput = {
+  id?: string
+  tripNumber: string
+  status?: $Enums.TripStatus
+  executionType?: $Enums.TripExecutionType
+  clientId: string
+  destinationAddressId: string
+  clientNameSnapshot: string
+  destinationNameSnapshot: string
+  destinationSnapshot: string
+  origin: string
+  vehicleId?: string | null
+  driverId?: string | null
+  externalCarrierNameSnapshot?: string | null
+  externalVehicleDescription?: string | null
+  externalDriverName?: string | null
+  scheduledStartAt: Date | string
+  startedAt?: Date | string | null
+  completedAt?: Date | string | null
+  cancelledAt?: Date | string | null
+  mileageStart?: number | null
+  mileageEnd?: number | null
+  revenue: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: $Enums.PaymentStatus | null
+  customerPaidAt?: Date | string | null
+  customerPaidByUserId?: string | null
+  subcontractorPaymentStatus?: $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Date | string | null
+  subcontractorPaidByUserId?: string | null
+  notes?: string | null
+  createdById: string
+  updatedById: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type TripUpdateWithoutExternalCarrierInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
+  clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  origin?: Prisma.StringFieldUpdateOperationsInput | string
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  client?: Prisma.ClientUpdateOneRequiredWithoutTripsNestedInput
+  destination?: Prisma.ClientAddressUpdateOneRequiredWithoutTripsNestedInput
+  vehicle?: Prisma.VehicleUpdateOneWithoutTripsNestedInput
+  driver?: Prisma.DriverUpdateOneWithoutTripsNestedInput
+  customerPaidBy?: Prisma.UserUpdateOneWithoutCustomerPaidTripsNestedInput
+  subcontractorPaidBy?: Prisma.UserUpdateOneWithoutSubcontractorPaidTripsNestedInput
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreatedTripsNestedInput
+  updatedBy?: Prisma.UserUpdateOneRequiredWithoutUpdatedTripsNestedInput
+  expenses?: Prisma.FleetExpenseUpdateManyWithoutTripNestedInput
+}
+
+export type TripUncheckedUpdateWithoutExternalCarrierInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationAddressId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  origin?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  customerPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdById?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedById?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  expenses?: Prisma.FleetExpenseUncheckedUpdateManyWithoutTripNestedInput
+}
+
+export type TripUncheckedUpdateManyWithoutExternalCarrierInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tripNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumTripStatusFieldUpdateOperationsInput | $Enums.TripStatus
+  executionType?: Prisma.EnumTripExecutionTypeFieldUpdateOperationsInput | $Enums.TripExecutionType
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationAddressId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationNameSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  destinationSnapshot?: Prisma.StringFieldUpdateOperationsInput | string
+  origin?: Prisma.StringFieldUpdateOperationsInput | string
+  vehicleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  driverId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalCarrierNameSnapshot?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalVehicleDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  externalDriverName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  scheduledStartAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  mileageStart?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  mileageEnd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  revenue?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subcontractorCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  customerPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  customerPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  customerPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subcontractorPaymentStatus?: Prisma.NullableEnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus | null
+  subcontractorPaidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  subcontractorPaidByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   updatedById?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2327,6 +3993,7 @@ export type TripSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   id?: boolean
   tripNumber?: boolean
   status?: boolean
+  executionType?: boolean
   clientId?: boolean
   destinationAddressId?: boolean
   clientNameSnapshot?: boolean
@@ -2335,6 +4002,10 @@ export type TripSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   origin?: boolean
   vehicleId?: boolean
   driverId?: boolean
+  externalCarrierId?: boolean
+  externalCarrierNameSnapshot?: boolean
+  externalVehicleDescription?: boolean
+  externalDriverName?: boolean
   scheduledStartAt?: boolean
   startedAt?: boolean
   completedAt?: boolean
@@ -2342,6 +4013,13 @@ export type TripSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   mileageStart?: boolean
   mileageEnd?: boolean
   revenue?: boolean
+  subcontractorCost?: boolean
+  customerPaymentStatus?: boolean
+  customerPaidAt?: boolean
+  customerPaidByUserId?: boolean
+  subcontractorPaymentStatus?: boolean
+  subcontractorPaidAt?: boolean
+  subcontractorPaidByUserId?: boolean
   notes?: boolean
   createdById?: boolean
   updatedById?: boolean
@@ -2349,8 +4027,11 @@ export type TripSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedAt?: boolean
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   destination?: boolean | Prisma.ClientAddressDefaultArgs<ExtArgs>
-  vehicle?: boolean | Prisma.VehicleDefaultArgs<ExtArgs>
-  driver?: boolean | Prisma.DriverDefaultArgs<ExtArgs>
+  vehicle?: boolean | Prisma.Trip$vehicleArgs<ExtArgs>
+  driver?: boolean | Prisma.Trip$driverArgs<ExtArgs>
+  externalCarrier?: boolean | Prisma.Trip$externalCarrierArgs<ExtArgs>
+  customerPaidBy?: boolean | Prisma.Trip$customerPaidByArgs<ExtArgs>
+  subcontractorPaidBy?: boolean | Prisma.Trip$subcontractorPaidByArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   expenses?: boolean | Prisma.Trip$expensesArgs<ExtArgs>
@@ -2361,6 +4042,7 @@ export type TripSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   tripNumber?: boolean
   status?: boolean
+  executionType?: boolean
   clientId?: boolean
   destinationAddressId?: boolean
   clientNameSnapshot?: boolean
@@ -2369,6 +4051,10 @@ export type TripSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   origin?: boolean
   vehicleId?: boolean
   driverId?: boolean
+  externalCarrierId?: boolean
+  externalCarrierNameSnapshot?: boolean
+  externalVehicleDescription?: boolean
+  externalDriverName?: boolean
   scheduledStartAt?: boolean
   startedAt?: boolean
   completedAt?: boolean
@@ -2376,6 +4062,13 @@ export type TripSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   mileageStart?: boolean
   mileageEnd?: boolean
   revenue?: boolean
+  subcontractorCost?: boolean
+  customerPaymentStatus?: boolean
+  customerPaidAt?: boolean
+  customerPaidByUserId?: boolean
+  subcontractorPaymentStatus?: boolean
+  subcontractorPaidAt?: boolean
+  subcontractorPaidByUserId?: boolean
   notes?: boolean
   createdById?: boolean
   updatedById?: boolean
@@ -2383,8 +4076,11 @@ export type TripSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   updatedAt?: boolean
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   destination?: boolean | Prisma.ClientAddressDefaultArgs<ExtArgs>
-  vehicle?: boolean | Prisma.VehicleDefaultArgs<ExtArgs>
-  driver?: boolean | Prisma.DriverDefaultArgs<ExtArgs>
+  vehicle?: boolean | Prisma.Trip$vehicleArgs<ExtArgs>
+  driver?: boolean | Prisma.Trip$driverArgs<ExtArgs>
+  externalCarrier?: boolean | Prisma.Trip$externalCarrierArgs<ExtArgs>
+  customerPaidBy?: boolean | Prisma.Trip$customerPaidByArgs<ExtArgs>
+  subcontractorPaidBy?: boolean | Prisma.Trip$subcontractorPaidByArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["trip"]>
@@ -2393,6 +4089,7 @@ export type TripSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   tripNumber?: boolean
   status?: boolean
+  executionType?: boolean
   clientId?: boolean
   destinationAddressId?: boolean
   clientNameSnapshot?: boolean
@@ -2401,6 +4098,10 @@ export type TripSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   origin?: boolean
   vehicleId?: boolean
   driverId?: boolean
+  externalCarrierId?: boolean
+  externalCarrierNameSnapshot?: boolean
+  externalVehicleDescription?: boolean
+  externalDriverName?: boolean
   scheduledStartAt?: boolean
   startedAt?: boolean
   completedAt?: boolean
@@ -2408,6 +4109,13 @@ export type TripSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   mileageStart?: boolean
   mileageEnd?: boolean
   revenue?: boolean
+  subcontractorCost?: boolean
+  customerPaymentStatus?: boolean
+  customerPaidAt?: boolean
+  customerPaidByUserId?: boolean
+  subcontractorPaymentStatus?: boolean
+  subcontractorPaidAt?: boolean
+  subcontractorPaidByUserId?: boolean
   notes?: boolean
   createdById?: boolean
   updatedById?: boolean
@@ -2415,8 +4123,11 @@ export type TripSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   updatedAt?: boolean
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   destination?: boolean | Prisma.ClientAddressDefaultArgs<ExtArgs>
-  vehicle?: boolean | Prisma.VehicleDefaultArgs<ExtArgs>
-  driver?: boolean | Prisma.DriverDefaultArgs<ExtArgs>
+  vehicle?: boolean | Prisma.Trip$vehicleArgs<ExtArgs>
+  driver?: boolean | Prisma.Trip$driverArgs<ExtArgs>
+  externalCarrier?: boolean | Prisma.Trip$externalCarrierArgs<ExtArgs>
+  customerPaidBy?: boolean | Prisma.Trip$customerPaidByArgs<ExtArgs>
+  subcontractorPaidBy?: boolean | Prisma.Trip$subcontractorPaidByArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["trip"]>
@@ -2425,6 +4136,7 @@ export type TripSelectScalar = {
   id?: boolean
   tripNumber?: boolean
   status?: boolean
+  executionType?: boolean
   clientId?: boolean
   destinationAddressId?: boolean
   clientNameSnapshot?: boolean
@@ -2433,6 +4145,10 @@ export type TripSelectScalar = {
   origin?: boolean
   vehicleId?: boolean
   driverId?: boolean
+  externalCarrierId?: boolean
+  externalCarrierNameSnapshot?: boolean
+  externalVehicleDescription?: boolean
+  externalDriverName?: boolean
   scheduledStartAt?: boolean
   startedAt?: boolean
   completedAt?: boolean
@@ -2440,6 +4156,13 @@ export type TripSelectScalar = {
   mileageStart?: boolean
   mileageEnd?: boolean
   revenue?: boolean
+  subcontractorCost?: boolean
+  customerPaymentStatus?: boolean
+  customerPaidAt?: boolean
+  customerPaidByUserId?: boolean
+  subcontractorPaymentStatus?: boolean
+  subcontractorPaidAt?: boolean
+  subcontractorPaidByUserId?: boolean
   notes?: boolean
   createdById?: boolean
   updatedById?: boolean
@@ -2447,12 +4170,15 @@ export type TripSelectScalar = {
   updatedAt?: boolean
 }
 
-export type TripOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tripNumber" | "status" | "clientId" | "destinationAddressId" | "clientNameSnapshot" | "destinationNameSnapshot" | "destinationSnapshot" | "origin" | "vehicleId" | "driverId" | "scheduledStartAt" | "startedAt" | "completedAt" | "cancelledAt" | "mileageStart" | "mileageEnd" | "revenue" | "notes" | "createdById" | "updatedById" | "createdAt" | "updatedAt", ExtArgs["result"]["trip"]>
+export type TripOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tripNumber" | "status" | "executionType" | "clientId" | "destinationAddressId" | "clientNameSnapshot" | "destinationNameSnapshot" | "destinationSnapshot" | "origin" | "vehicleId" | "driverId" | "externalCarrierId" | "externalCarrierNameSnapshot" | "externalVehicleDescription" | "externalDriverName" | "scheduledStartAt" | "startedAt" | "completedAt" | "cancelledAt" | "mileageStart" | "mileageEnd" | "revenue" | "subcontractorCost" | "customerPaymentStatus" | "customerPaidAt" | "customerPaidByUserId" | "subcontractorPaymentStatus" | "subcontractorPaidAt" | "subcontractorPaidByUserId" | "notes" | "createdById" | "updatedById" | "createdAt" | "updatedAt", ExtArgs["result"]["trip"]>
 export type TripInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   destination?: boolean | Prisma.ClientAddressDefaultArgs<ExtArgs>
-  vehicle?: boolean | Prisma.VehicleDefaultArgs<ExtArgs>
-  driver?: boolean | Prisma.DriverDefaultArgs<ExtArgs>
+  vehicle?: boolean | Prisma.Trip$vehicleArgs<ExtArgs>
+  driver?: boolean | Prisma.Trip$driverArgs<ExtArgs>
+  externalCarrier?: boolean | Prisma.Trip$externalCarrierArgs<ExtArgs>
+  customerPaidBy?: boolean | Prisma.Trip$customerPaidByArgs<ExtArgs>
+  subcontractorPaidBy?: boolean | Prisma.Trip$subcontractorPaidByArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   expenses?: boolean | Prisma.Trip$expensesArgs<ExtArgs>
@@ -2461,16 +4187,22 @@ export type TripInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 export type TripIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   destination?: boolean | Prisma.ClientAddressDefaultArgs<ExtArgs>
-  vehicle?: boolean | Prisma.VehicleDefaultArgs<ExtArgs>
-  driver?: boolean | Prisma.DriverDefaultArgs<ExtArgs>
+  vehicle?: boolean | Prisma.Trip$vehicleArgs<ExtArgs>
+  driver?: boolean | Prisma.Trip$driverArgs<ExtArgs>
+  externalCarrier?: boolean | Prisma.Trip$externalCarrierArgs<ExtArgs>
+  customerPaidBy?: boolean | Prisma.Trip$customerPaidByArgs<ExtArgs>
+  subcontractorPaidBy?: boolean | Prisma.Trip$subcontractorPaidByArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type TripIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   destination?: boolean | Prisma.ClientAddressDefaultArgs<ExtArgs>
-  vehicle?: boolean | Prisma.VehicleDefaultArgs<ExtArgs>
-  driver?: boolean | Prisma.DriverDefaultArgs<ExtArgs>
+  vehicle?: boolean | Prisma.Trip$vehicleArgs<ExtArgs>
+  driver?: boolean | Prisma.Trip$driverArgs<ExtArgs>
+  externalCarrier?: boolean | Prisma.Trip$externalCarrierArgs<ExtArgs>
+  customerPaidBy?: boolean | Prisma.Trip$customerPaidByArgs<ExtArgs>
+  subcontractorPaidBy?: boolean | Prisma.Trip$subcontractorPaidByArgs<ExtArgs>
   createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   updatedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -2480,8 +4212,11 @@ export type $TripPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     client: Prisma.$ClientPayload<ExtArgs>
     destination: Prisma.$ClientAddressPayload<ExtArgs>
-    vehicle: Prisma.$VehiclePayload<ExtArgs>
-    driver: Prisma.$DriverPayload<ExtArgs>
+    vehicle: Prisma.$VehiclePayload<ExtArgs> | null
+    driver: Prisma.$DriverPayload<ExtArgs> | null
+    externalCarrier: Prisma.$ExternalCarrierPayload<ExtArgs> | null
+    customerPaidBy: Prisma.$UserPayload<ExtArgs> | null
+    subcontractorPaidBy: Prisma.$UserPayload<ExtArgs> | null
     createdBy: Prisma.$UserPayload<ExtArgs>
     updatedBy: Prisma.$UserPayload<ExtArgs>
     expenses: Prisma.$FleetExpensePayload<ExtArgs>[]
@@ -2490,21 +4225,33 @@ export type $TripPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     id: string
     tripNumber: string
     status: $Enums.TripStatus
+    executionType: $Enums.TripExecutionType
     clientId: string
     destinationAddressId: string
     clientNameSnapshot: string
     destinationNameSnapshot: string
     destinationSnapshot: string
     origin: string
-    vehicleId: string
-    driverId: string
+    vehicleId: string | null
+    driverId: string | null
+    externalCarrierId: string | null
+    externalCarrierNameSnapshot: string | null
+    externalVehicleDescription: string | null
+    externalDriverName: string | null
     scheduledStartAt: Date
     startedAt: Date | null
     completedAt: Date | null
     cancelledAt: Date | null
-    mileageStart: number
+    mileageStart: number | null
     mileageEnd: number | null
     revenue: runtime.Decimal
+    subcontractorCost: runtime.Decimal | null
+    customerPaymentStatus: $Enums.PaymentStatus | null
+    customerPaidAt: Date | null
+    customerPaidByUserId: string | null
+    subcontractorPaymentStatus: $Enums.PaymentStatus | null
+    subcontractorPaidAt: Date | null
+    subcontractorPaidByUserId: string | null
     notes: string | null
     createdById: string
     updatedById: string
@@ -2906,8 +4653,11 @@ export interface Prisma__TripClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   client<T extends Prisma.ClientDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClientDefaultArgs<ExtArgs>>): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   destination<T extends Prisma.ClientAddressDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClientAddressDefaultArgs<ExtArgs>>): Prisma.Prisma__ClientAddressClient<runtime.Types.Result.GetResult<Prisma.$ClientAddressPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  vehicle<T extends Prisma.VehicleDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.VehicleDefaultArgs<ExtArgs>>): Prisma.Prisma__VehicleClient<runtime.Types.Result.GetResult<Prisma.$VehiclePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  driver<T extends Prisma.DriverDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DriverDefaultArgs<ExtArgs>>): Prisma.Prisma__DriverClient<runtime.Types.Result.GetResult<Prisma.$DriverPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  vehicle<T extends Prisma.Trip$vehicleArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Trip$vehicleArgs<ExtArgs>>): Prisma.Prisma__VehicleClient<runtime.Types.Result.GetResult<Prisma.$VehiclePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  driver<T extends Prisma.Trip$driverArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Trip$driverArgs<ExtArgs>>): Prisma.Prisma__DriverClient<runtime.Types.Result.GetResult<Prisma.$DriverPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  externalCarrier<T extends Prisma.Trip$externalCarrierArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Trip$externalCarrierArgs<ExtArgs>>): Prisma.Prisma__ExternalCarrierClient<runtime.Types.Result.GetResult<Prisma.$ExternalCarrierPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  customerPaidBy<T extends Prisma.Trip$customerPaidByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Trip$customerPaidByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  subcontractorPaidBy<T extends Prisma.Trip$subcontractorPaidByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Trip$subcontractorPaidByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   createdBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   updatedBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   expenses<T extends Prisma.Trip$expensesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Trip$expensesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FleetExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2943,6 +4693,7 @@ export interface TripFieldRefs {
   readonly id: Prisma.FieldRef<"Trip", 'String'>
   readonly tripNumber: Prisma.FieldRef<"Trip", 'String'>
   readonly status: Prisma.FieldRef<"Trip", 'TripStatus'>
+  readonly executionType: Prisma.FieldRef<"Trip", 'TripExecutionType'>
   readonly clientId: Prisma.FieldRef<"Trip", 'String'>
   readonly destinationAddressId: Prisma.FieldRef<"Trip", 'String'>
   readonly clientNameSnapshot: Prisma.FieldRef<"Trip", 'String'>
@@ -2951,6 +4702,10 @@ export interface TripFieldRefs {
   readonly origin: Prisma.FieldRef<"Trip", 'String'>
   readonly vehicleId: Prisma.FieldRef<"Trip", 'String'>
   readonly driverId: Prisma.FieldRef<"Trip", 'String'>
+  readonly externalCarrierId: Prisma.FieldRef<"Trip", 'String'>
+  readonly externalCarrierNameSnapshot: Prisma.FieldRef<"Trip", 'String'>
+  readonly externalVehicleDescription: Prisma.FieldRef<"Trip", 'String'>
+  readonly externalDriverName: Prisma.FieldRef<"Trip", 'String'>
   readonly scheduledStartAt: Prisma.FieldRef<"Trip", 'DateTime'>
   readonly startedAt: Prisma.FieldRef<"Trip", 'DateTime'>
   readonly completedAt: Prisma.FieldRef<"Trip", 'DateTime'>
@@ -2958,6 +4713,13 @@ export interface TripFieldRefs {
   readonly mileageStart: Prisma.FieldRef<"Trip", 'Int'>
   readonly mileageEnd: Prisma.FieldRef<"Trip", 'Int'>
   readonly revenue: Prisma.FieldRef<"Trip", 'Decimal'>
+  readonly subcontractorCost: Prisma.FieldRef<"Trip", 'Decimal'>
+  readonly customerPaymentStatus: Prisma.FieldRef<"Trip", 'PaymentStatus'>
+  readonly customerPaidAt: Prisma.FieldRef<"Trip", 'DateTime'>
+  readonly customerPaidByUserId: Prisma.FieldRef<"Trip", 'String'>
+  readonly subcontractorPaymentStatus: Prisma.FieldRef<"Trip", 'PaymentStatus'>
+  readonly subcontractorPaidAt: Prisma.FieldRef<"Trip", 'DateTime'>
+  readonly subcontractorPaidByUserId: Prisma.FieldRef<"Trip", 'String'>
   readonly notes: Prisma.FieldRef<"Trip", 'String'>
   readonly createdById: Prisma.FieldRef<"Trip", 'String'>
   readonly updatedById: Prisma.FieldRef<"Trip", 'String'>
@@ -3361,6 +5123,101 @@ export type TripDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Trips to delete.
    */
   limit?: number
+}
+
+/**
+ * Trip.vehicle
+ */
+export type Trip$vehicleArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Vehicle
+   */
+  select?: Prisma.VehicleSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Vehicle
+   */
+  omit?: Prisma.VehicleOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.VehicleInclude<ExtArgs> | null
+  where?: Prisma.VehicleWhereInput
+}
+
+/**
+ * Trip.driver
+ */
+export type Trip$driverArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Driver
+   */
+  select?: Prisma.DriverSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Driver
+   */
+  omit?: Prisma.DriverOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DriverInclude<ExtArgs> | null
+  where?: Prisma.DriverWhereInput
+}
+
+/**
+ * Trip.externalCarrier
+ */
+export type Trip$externalCarrierArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ExternalCarrier
+   */
+  select?: Prisma.ExternalCarrierSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ExternalCarrier
+   */
+  omit?: Prisma.ExternalCarrierOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ExternalCarrierInclude<ExtArgs> | null
+  where?: Prisma.ExternalCarrierWhereInput
+}
+
+/**
+ * Trip.customerPaidBy
+ */
+export type Trip$customerPaidByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+}
+
+/**
+ * Trip.subcontractorPaidBy
+ */
+export type Trip$subcontractorPaidByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

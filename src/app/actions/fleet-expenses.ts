@@ -109,8 +109,8 @@ export async function saveFleetExpense(
     const expense = await prisma.$transaction(async (tx) => {
       let supplierId = data.supplierId || null;
       if (data.tripId) {
-        const trip = await tx.trip.findUnique({ where: { id: data.tripId }, select: { vehicleId: true, status: true } });
-        if (!trip || trip.vehicleId !== data.vehicleId || trip.status === "CANCELLED") throw new Error("INVALID_TRIP");
+        const trip = await tx.trip.findUnique({ where: { id: data.tripId }, select: { executionType: true, vehicleId: true, status: true } });
+        if (!trip || trip.executionType !== "OWN" || !trip.vehicleId || trip.vehicleId !== data.vehicleId || trip.status === "CANCELLED") throw new Error("INVALID_TRIP");
       }
       if (data.newSupplierName) {
         const supplier = await tx.supplier.create({

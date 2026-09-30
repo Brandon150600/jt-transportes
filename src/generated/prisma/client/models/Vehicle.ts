@@ -722,6 +722,11 @@ export type VehicleScalarRelationFilter = {
   isNot?: Prisma.VehicleWhereInput
 }
 
+export type VehicleNullableScalarRelationFilter = {
+  is?: Prisma.VehicleWhereInput | null
+  isNot?: Prisma.VehicleWhereInput | null
+}
+
 export type VehicleCreateNestedManyWithoutDriverInput = {
   create?: Prisma.XOR<Prisma.VehicleCreateWithoutDriverInput, Prisma.VehicleUncheckedCreateWithoutDriverInput> | Prisma.VehicleCreateWithoutDriverInput[] | Prisma.VehicleUncheckedCreateWithoutDriverInput[]
   connectOrCreate?: Prisma.VehicleCreateOrConnectWithoutDriverInput | Prisma.VehicleCreateOrConnectWithoutDriverInput[]
@@ -800,10 +805,12 @@ export type VehicleCreateNestedOneWithoutTripsInput = {
   connect?: Prisma.VehicleWhereUniqueInput
 }
 
-export type VehicleUpdateOneRequiredWithoutTripsNestedInput = {
+export type VehicleUpdateOneWithoutTripsNestedInput = {
   create?: Prisma.XOR<Prisma.VehicleCreateWithoutTripsInput, Prisma.VehicleUncheckedCreateWithoutTripsInput>
   connectOrCreate?: Prisma.VehicleCreateOrConnectWithoutTripsInput
   upsert?: Prisma.VehicleUpsertWithoutTripsInput
+  disconnect?: Prisma.VehicleWhereInput | boolean
+  delete?: Prisma.VehicleWhereInput | boolean
   connect?: Prisma.VehicleWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.VehicleUpdateToOneWithWhereWithoutTripsInput, Prisma.VehicleUpdateWithoutTripsInput>, Prisma.VehicleUncheckedUpdateWithoutTripsInput>
 }

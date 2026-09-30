@@ -412,11 +412,6 @@ export type DriverNullableScalarRelationFilter = {
   isNot?: Prisma.DriverWhereInput | null
 }
 
-export type DriverScalarRelationFilter = {
-  is?: Prisma.DriverWhereInput
-  isNot?: Prisma.DriverWhereInput
-}
-
 export type EnumDriverStatusFieldUpdateOperationsInput = {
   set?: $Enums.DriverStatus
 }
@@ -443,10 +438,12 @@ export type DriverCreateNestedOneWithoutTripsInput = {
   connect?: Prisma.DriverWhereUniqueInput
 }
 
-export type DriverUpdateOneRequiredWithoutTripsNestedInput = {
+export type DriverUpdateOneWithoutTripsNestedInput = {
   create?: Prisma.XOR<Prisma.DriverCreateWithoutTripsInput, Prisma.DriverUncheckedCreateWithoutTripsInput>
   connectOrCreate?: Prisma.DriverCreateOrConnectWithoutTripsInput
   upsert?: Prisma.DriverUpsertWithoutTripsInput
+  disconnect?: Prisma.DriverWhereInput | boolean
+  delete?: Prisma.DriverWhereInput | boolean
   connect?: Prisma.DriverWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.DriverUpdateToOneWithWhereWithoutTripsInput, Prisma.DriverUpdateWithoutTripsInput>, Prisma.DriverUncheckedUpdateWithoutTripsInput>
 }

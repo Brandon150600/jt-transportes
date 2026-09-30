@@ -408,6 +408,7 @@ export const ModelName = {
   ExpenseItem: 'ExpenseItem',
   Client: 'Client',
   ClientAddress: 'ClientAddress',
+  ExternalCarrier: 'ExternalCarrier',
   Trip: 'Trip'
 } as const
 
@@ -424,7 +425,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "notification" | "notificationRead" | "driver" | "vehicle" | "supplier" | "fleetExpense" | "expenseItem" | "client" | "clientAddress" | "trip"
+    modelProps: "user" | "session" | "notification" | "notificationRead" | "driver" | "vehicle" | "supplier" | "fleetExpense" | "expenseItem" | "client" | "clientAddress" | "externalCarrier" | "trip"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1242,6 +1243,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ExternalCarrier: {
+      payload: Prisma.$ExternalCarrierPayload<ExtArgs>
+      fields: Prisma.ExternalCarrierFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ExternalCarrierFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExternalCarrierPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ExternalCarrierFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExternalCarrierPayload>
+        }
+        findFirst: {
+          args: Prisma.ExternalCarrierFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExternalCarrierPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ExternalCarrierFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExternalCarrierPayload>
+        }
+        findMany: {
+          args: Prisma.ExternalCarrierFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExternalCarrierPayload>[]
+        }
+        create: {
+          args: Prisma.ExternalCarrierCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExternalCarrierPayload>
+        }
+        createMany: {
+          args: Prisma.ExternalCarrierCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ExternalCarrierCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExternalCarrierPayload>[]
+        }
+        delete: {
+          args: Prisma.ExternalCarrierDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExternalCarrierPayload>
+        }
+        update: {
+          args: Prisma.ExternalCarrierUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExternalCarrierPayload>
+        }
+        deleteMany: {
+          args: Prisma.ExternalCarrierDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ExternalCarrierUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ExternalCarrierUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExternalCarrierPayload>[]
+        }
+        upsert: {
+          args: Prisma.ExternalCarrierUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExternalCarrierPayload>
+        }
+        aggregate: {
+          args: Prisma.ExternalCarrierAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateExternalCarrier>
+        }
+        groupBy: {
+          args: Prisma.ExternalCarrierGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ExternalCarrierGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ExternalCarrierCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ExternalCarrierCountAggregateOutputType> | number
+        }
+      }
+    }
     Trip: {
       payload: Prisma.$TripPayload<ExtArgs>
       fields: Prisma.TripFieldRefs
@@ -1545,10 +1620,27 @@ export const ClientAddressScalarFieldEnum = {
 export type ClientAddressScalarFieldEnum = (typeof ClientAddressScalarFieldEnum)[keyof typeof ClientAddressScalarFieldEnum]
 
 
+export const ExternalCarrierScalarFieldEnum = {
+  id: 'id',
+  businessName: 'businessName',
+  contactName: 'contactName',
+  phone: 'phone',
+  email: 'email',
+  taxId: 'taxId',
+  notes: 'notes',
+  active: 'active',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ExternalCarrierScalarFieldEnum = (typeof ExternalCarrierScalarFieldEnum)[keyof typeof ExternalCarrierScalarFieldEnum]
+
+
 export const TripScalarFieldEnum = {
   id: 'id',
   tripNumber: 'tripNumber',
   status: 'status',
+  executionType: 'executionType',
   clientId: 'clientId',
   destinationAddressId: 'destinationAddressId',
   clientNameSnapshot: 'clientNameSnapshot',
@@ -1557,6 +1649,10 @@ export const TripScalarFieldEnum = {
   origin: 'origin',
   vehicleId: 'vehicleId',
   driverId: 'driverId',
+  externalCarrierId: 'externalCarrierId',
+  externalCarrierNameSnapshot: 'externalCarrierNameSnapshot',
+  externalVehicleDescription: 'externalVehicleDescription',
+  externalDriverName: 'externalDriverName',
   scheduledStartAt: 'scheduledStartAt',
   startedAt: 'startedAt',
   completedAt: 'completedAt',
@@ -1564,6 +1660,13 @@ export const TripScalarFieldEnum = {
   mileageStart: 'mileageStart',
   mileageEnd: 'mileageEnd',
   revenue: 'revenue',
+  subcontractorCost: 'subcontractorCost',
+  customerPaymentStatus: 'customerPaymentStatus',
+  customerPaidAt: 'customerPaidAt',
+  customerPaidByUserId: 'customerPaidByUserId',
+  subcontractorPaymentStatus: 'subcontractorPaymentStatus',
+  subcontractorPaidAt: 'subcontractorPaidAt',
+  subcontractorPaidByUserId: 'subcontractorPaidByUserId',
   notes: 'notes',
   createdById: 'createdById',
   updatedById: 'updatedById',
@@ -1822,6 +1925,20 @@ export type ListEnumTripStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$P
 
 
 /**
+ * Reference to a field of type 'TripExecutionType'
+ */
+export type EnumTripExecutionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TripExecutionType'>
+    
+
+
+/**
+ * Reference to a field of type 'TripExecutionType[]'
+ */
+export type ListEnumTripExecutionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TripExecutionType[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -1996,6 +2113,7 @@ export type GlobalOmitConfig = {
   expenseItem?: Prisma.ExpenseItemOmit
   client?: Prisma.ClientOmit
   clientAddress?: Prisma.ClientAddressOmit
+  externalCarrier?: Prisma.ExternalCarrierOmit
   trip?: Prisma.TripOmit
 }
 

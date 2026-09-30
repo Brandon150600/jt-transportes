@@ -20,10 +20,13 @@ export type Role = (typeof Role)[keyof typeof Role]
 
 export const NotificationType = {
   TRIP_CREATED: 'TRIP_CREATED',
+  TRIP_SUBCONTRACTED_CREATED: 'TRIP_SUBCONTRACTED_CREATED',
   TRIP_UPCOMING: 'TRIP_UPCOMING',
   TRIP_STARTED: 'TRIP_STARTED',
   TRIP_COMPLETED: 'TRIP_COMPLETED',
   TRIP_CANCELLED: 'TRIP_CANCELLED',
+  TRIP_CUSTOMER_PAYMENT_RECEIVED: 'TRIP_CUSTOMER_PAYMENT_RECEIVED',
+  TRIP_SUBCONTRACTOR_PAYMENT_COMPLETED: 'TRIP_SUBCONTRACTOR_PAYMENT_COMPLETED',
   EXPENSE_CREATED: 'EXPENSE_CREATED',
   VEHICLE_MAINTENANCE_DUE: 'VEHICLE_MAINTENANCE_DUE'
 } as const
@@ -120,3 +123,11 @@ export const TripStatus = {
 } as const
 
 export type TripStatus = (typeof TripStatus)[keyof typeof TripStatus]
+
+
+export const TripExecutionType = {
+  OWN: 'OWN',
+  SUBCONTRACTED: 'SUBCONTRACTED'
+} as const
+
+export type TripExecutionType = (typeof TripExecutionType)[keyof typeof TripExecutionType]

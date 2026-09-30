@@ -97,6 +97,11 @@ export type Client = Prisma.ClientModel
  */
 export type ClientAddress = Prisma.ClientAddressModel
 /**
+ * Model ExternalCarrier
+ * 
+ */
+export type ExternalCarrier = Prisma.ExternalCarrierModel
+/**
  * Model Trip
  * 
  */

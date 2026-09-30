@@ -220,6 +220,8 @@ export type UserWhereInput = {
   paidFleetExpenses?: Prisma.FleetExpenseListRelationFilter
   createdTrips?: Prisma.TripListRelationFilter
   updatedTrips?: Prisma.TripListRelationFilter
+  customerPaidTrips?: Prisma.TripListRelationFilter
+  subcontractorPaidTrips?: Prisma.TripListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -238,6 +240,8 @@ export type UserOrderByWithRelationInput = {
   paidFleetExpenses?: Prisma.FleetExpenseOrderByRelationAggregateInput
   createdTrips?: Prisma.TripOrderByRelationAggregateInput
   updatedTrips?: Prisma.TripOrderByRelationAggregateInput
+  customerPaidTrips?: Prisma.TripOrderByRelationAggregateInput
+  subcontractorPaidTrips?: Prisma.TripOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -259,6 +263,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   paidFleetExpenses?: Prisma.FleetExpenseListRelationFilter
   createdTrips?: Prisma.TripListRelationFilter
   updatedTrips?: Prisma.TripListRelationFilter
+  customerPaidTrips?: Prisma.TripListRelationFilter
+  subcontractorPaidTrips?: Prisma.TripListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -307,6 +313,8 @@ export type UserCreateInput = {
   paidFleetExpenses?: Prisma.FleetExpenseCreateNestedManyWithoutPaidByInput
   createdTrips?: Prisma.TripCreateNestedManyWithoutCreatedByInput
   updatedTrips?: Prisma.TripCreateNestedManyWithoutUpdatedByInput
+  customerPaidTrips?: Prisma.TripCreateNestedManyWithoutCustomerPaidByInput
+  subcontractorPaidTrips?: Prisma.TripCreateNestedManyWithoutSubcontractorPaidByInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -325,6 +333,8 @@ export type UserUncheckedCreateInput = {
   paidFleetExpenses?: Prisma.FleetExpenseUncheckedCreateNestedManyWithoutPaidByInput
   createdTrips?: Prisma.TripUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTrips?: Prisma.TripUncheckedCreateNestedManyWithoutUpdatedByInput
+  customerPaidTrips?: Prisma.TripUncheckedCreateNestedManyWithoutCustomerPaidByInput
+  subcontractorPaidTrips?: Prisma.TripUncheckedCreateNestedManyWithoutSubcontractorPaidByInput
 }
 
 export type UserUpdateInput = {
@@ -343,6 +353,8 @@ export type UserUpdateInput = {
   paidFleetExpenses?: Prisma.FleetExpenseUpdateManyWithoutPaidByNestedInput
   createdTrips?: Prisma.TripUpdateManyWithoutCreatedByNestedInput
   updatedTrips?: Prisma.TripUpdateManyWithoutUpdatedByNestedInput
+  customerPaidTrips?: Prisma.TripUpdateManyWithoutCustomerPaidByNestedInput
+  subcontractorPaidTrips?: Prisma.TripUpdateManyWithoutSubcontractorPaidByNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -361,6 +373,8 @@ export type UserUncheckedUpdateInput = {
   paidFleetExpenses?: Prisma.FleetExpenseUncheckedUpdateManyWithoutPaidByNestedInput
   createdTrips?: Prisma.TripUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTrips?: Prisma.TripUncheckedUpdateManyWithoutUpdatedByNestedInput
+  customerPaidTrips?: Prisma.TripUncheckedUpdateManyWithoutCustomerPaidByNestedInput
+  subcontractorPaidTrips?: Prisma.TripUncheckedUpdateManyWithoutSubcontractorPaidByNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -527,6 +541,18 @@ export type UserUpdateOneWithoutPaidFleetExpensesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPaidFleetExpensesInput, Prisma.UserUpdateWithoutPaidFleetExpensesInput>, Prisma.UserUncheckedUpdateWithoutPaidFleetExpensesInput>
 }
 
+export type UserCreateNestedOneWithoutCustomerPaidTripsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCustomerPaidTripsInput, Prisma.UserUncheckedCreateWithoutCustomerPaidTripsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCustomerPaidTripsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutSubcontractorPaidTripsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSubcontractorPaidTripsInput, Prisma.UserUncheckedCreateWithoutSubcontractorPaidTripsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSubcontractorPaidTripsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
 export type UserCreateNestedOneWithoutCreatedTripsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutCreatedTripsInput, Prisma.UserUncheckedCreateWithoutCreatedTripsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutCreatedTripsInput
@@ -537,6 +563,26 @@ export type UserCreateNestedOneWithoutUpdatedTripsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutUpdatedTripsInput, Prisma.UserUncheckedCreateWithoutUpdatedTripsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutUpdatedTripsInput
   connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutCustomerPaidTripsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCustomerPaidTripsInput, Prisma.UserUncheckedCreateWithoutCustomerPaidTripsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCustomerPaidTripsInput
+  upsert?: Prisma.UserUpsertWithoutCustomerPaidTripsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCustomerPaidTripsInput, Prisma.UserUpdateWithoutCustomerPaidTripsInput>, Prisma.UserUncheckedUpdateWithoutCustomerPaidTripsInput>
+}
+
+export type UserUpdateOneWithoutSubcontractorPaidTripsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSubcontractorPaidTripsInput, Prisma.UserUncheckedCreateWithoutSubcontractorPaidTripsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSubcontractorPaidTripsInput
+  upsert?: Prisma.UserUpsertWithoutSubcontractorPaidTripsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSubcontractorPaidTripsInput, Prisma.UserUpdateWithoutSubcontractorPaidTripsInput>, Prisma.UserUncheckedUpdateWithoutSubcontractorPaidTripsInput>
 }
 
 export type UserUpdateOneRequiredWithoutCreatedTripsNestedInput = {
@@ -570,6 +616,8 @@ export type UserCreateWithoutSessionsInput = {
   paidFleetExpenses?: Prisma.FleetExpenseCreateNestedManyWithoutPaidByInput
   createdTrips?: Prisma.TripCreateNestedManyWithoutCreatedByInput
   updatedTrips?: Prisma.TripCreateNestedManyWithoutUpdatedByInput
+  customerPaidTrips?: Prisma.TripCreateNestedManyWithoutCustomerPaidByInput
+  subcontractorPaidTrips?: Prisma.TripCreateNestedManyWithoutSubcontractorPaidByInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -587,6 +635,8 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   paidFleetExpenses?: Prisma.FleetExpenseUncheckedCreateNestedManyWithoutPaidByInput
   createdTrips?: Prisma.TripUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTrips?: Prisma.TripUncheckedCreateNestedManyWithoutUpdatedByInput
+  customerPaidTrips?: Prisma.TripUncheckedCreateNestedManyWithoutCustomerPaidByInput
+  subcontractorPaidTrips?: Prisma.TripUncheckedCreateNestedManyWithoutSubcontractorPaidByInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -620,6 +670,8 @@ export type UserUpdateWithoutSessionsInput = {
   paidFleetExpenses?: Prisma.FleetExpenseUpdateManyWithoutPaidByNestedInput
   createdTrips?: Prisma.TripUpdateManyWithoutCreatedByNestedInput
   updatedTrips?: Prisma.TripUpdateManyWithoutUpdatedByNestedInput
+  customerPaidTrips?: Prisma.TripUpdateManyWithoutCustomerPaidByNestedInput
+  subcontractorPaidTrips?: Prisma.TripUpdateManyWithoutSubcontractorPaidByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -637,6 +689,8 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   paidFleetExpenses?: Prisma.FleetExpenseUncheckedUpdateManyWithoutPaidByNestedInput
   createdTrips?: Prisma.TripUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTrips?: Prisma.TripUncheckedUpdateManyWithoutUpdatedByNestedInput
+  customerPaidTrips?: Prisma.TripUncheckedUpdateManyWithoutCustomerPaidByNestedInput
+  subcontractorPaidTrips?: Prisma.TripUncheckedUpdateManyWithoutSubcontractorPaidByNestedInput
 }
 
 export type UserCreateWithoutNotificationReadsInput = {
@@ -654,6 +708,8 @@ export type UserCreateWithoutNotificationReadsInput = {
   paidFleetExpenses?: Prisma.FleetExpenseCreateNestedManyWithoutPaidByInput
   createdTrips?: Prisma.TripCreateNestedManyWithoutCreatedByInput
   updatedTrips?: Prisma.TripCreateNestedManyWithoutUpdatedByInput
+  customerPaidTrips?: Prisma.TripCreateNestedManyWithoutCustomerPaidByInput
+  subcontractorPaidTrips?: Prisma.TripCreateNestedManyWithoutSubcontractorPaidByInput
 }
 
 export type UserUncheckedCreateWithoutNotificationReadsInput = {
@@ -671,6 +727,8 @@ export type UserUncheckedCreateWithoutNotificationReadsInput = {
   paidFleetExpenses?: Prisma.FleetExpenseUncheckedCreateNestedManyWithoutPaidByInput
   createdTrips?: Prisma.TripUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTrips?: Prisma.TripUncheckedCreateNestedManyWithoutUpdatedByInput
+  customerPaidTrips?: Prisma.TripUncheckedCreateNestedManyWithoutCustomerPaidByInput
+  subcontractorPaidTrips?: Prisma.TripUncheckedCreateNestedManyWithoutSubcontractorPaidByInput
 }
 
 export type UserCreateOrConnectWithoutNotificationReadsInput = {
@@ -704,6 +762,8 @@ export type UserUpdateWithoutNotificationReadsInput = {
   paidFleetExpenses?: Prisma.FleetExpenseUpdateManyWithoutPaidByNestedInput
   createdTrips?: Prisma.TripUpdateManyWithoutCreatedByNestedInput
   updatedTrips?: Prisma.TripUpdateManyWithoutUpdatedByNestedInput
+  customerPaidTrips?: Prisma.TripUpdateManyWithoutCustomerPaidByNestedInput
+  subcontractorPaidTrips?: Prisma.TripUpdateManyWithoutSubcontractorPaidByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationReadsInput = {
@@ -721,6 +781,8 @@ export type UserUncheckedUpdateWithoutNotificationReadsInput = {
   paidFleetExpenses?: Prisma.FleetExpenseUncheckedUpdateManyWithoutPaidByNestedInput
   createdTrips?: Prisma.TripUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTrips?: Prisma.TripUncheckedUpdateManyWithoutUpdatedByNestedInput
+  customerPaidTrips?: Prisma.TripUncheckedUpdateManyWithoutCustomerPaidByNestedInput
+  subcontractorPaidTrips?: Prisma.TripUncheckedUpdateManyWithoutSubcontractorPaidByNestedInput
 }
 
 export type UserCreateWithoutCreatedFleetExpensesInput = {
@@ -738,6 +800,8 @@ export type UserCreateWithoutCreatedFleetExpensesInput = {
   paidFleetExpenses?: Prisma.FleetExpenseCreateNestedManyWithoutPaidByInput
   createdTrips?: Prisma.TripCreateNestedManyWithoutCreatedByInput
   updatedTrips?: Prisma.TripCreateNestedManyWithoutUpdatedByInput
+  customerPaidTrips?: Prisma.TripCreateNestedManyWithoutCustomerPaidByInput
+  subcontractorPaidTrips?: Prisma.TripCreateNestedManyWithoutSubcontractorPaidByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedFleetExpensesInput = {
@@ -755,6 +819,8 @@ export type UserUncheckedCreateWithoutCreatedFleetExpensesInput = {
   paidFleetExpenses?: Prisma.FleetExpenseUncheckedCreateNestedManyWithoutPaidByInput
   createdTrips?: Prisma.TripUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTrips?: Prisma.TripUncheckedCreateNestedManyWithoutUpdatedByInput
+  customerPaidTrips?: Prisma.TripUncheckedCreateNestedManyWithoutCustomerPaidByInput
+  subcontractorPaidTrips?: Prisma.TripUncheckedCreateNestedManyWithoutSubcontractorPaidByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedFleetExpensesInput = {
@@ -777,6 +843,8 @@ export type UserCreateWithoutPaidFleetExpensesInput = {
   createdFleetExpenses?: Prisma.FleetExpenseCreateNestedManyWithoutCreatedByInput
   createdTrips?: Prisma.TripCreateNestedManyWithoutCreatedByInput
   updatedTrips?: Prisma.TripCreateNestedManyWithoutUpdatedByInput
+  customerPaidTrips?: Prisma.TripCreateNestedManyWithoutCustomerPaidByInput
+  subcontractorPaidTrips?: Prisma.TripCreateNestedManyWithoutSubcontractorPaidByInput
 }
 
 export type UserUncheckedCreateWithoutPaidFleetExpensesInput = {
@@ -794,6 +862,8 @@ export type UserUncheckedCreateWithoutPaidFleetExpensesInput = {
   createdFleetExpenses?: Prisma.FleetExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   createdTrips?: Prisma.TripUncheckedCreateNestedManyWithoutCreatedByInput
   updatedTrips?: Prisma.TripUncheckedCreateNestedManyWithoutUpdatedByInput
+  customerPaidTrips?: Prisma.TripUncheckedCreateNestedManyWithoutCustomerPaidByInput
+  subcontractorPaidTrips?: Prisma.TripUncheckedCreateNestedManyWithoutSubcontractorPaidByInput
 }
 
 export type UserCreateOrConnectWithoutPaidFleetExpensesInput = {
@@ -827,6 +897,8 @@ export type UserUpdateWithoutCreatedFleetExpensesInput = {
   paidFleetExpenses?: Prisma.FleetExpenseUpdateManyWithoutPaidByNestedInput
   createdTrips?: Prisma.TripUpdateManyWithoutCreatedByNestedInput
   updatedTrips?: Prisma.TripUpdateManyWithoutUpdatedByNestedInput
+  customerPaidTrips?: Prisma.TripUpdateManyWithoutCustomerPaidByNestedInput
+  subcontractorPaidTrips?: Prisma.TripUpdateManyWithoutSubcontractorPaidByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedFleetExpensesInput = {
@@ -844,6 +916,8 @@ export type UserUncheckedUpdateWithoutCreatedFleetExpensesInput = {
   paidFleetExpenses?: Prisma.FleetExpenseUncheckedUpdateManyWithoutPaidByNestedInput
   createdTrips?: Prisma.TripUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTrips?: Prisma.TripUncheckedUpdateManyWithoutUpdatedByNestedInput
+  customerPaidTrips?: Prisma.TripUncheckedUpdateManyWithoutCustomerPaidByNestedInput
+  subcontractorPaidTrips?: Prisma.TripUncheckedUpdateManyWithoutSubcontractorPaidByNestedInput
 }
 
 export type UserUpsertWithoutPaidFleetExpensesInput = {
@@ -872,6 +946,8 @@ export type UserUpdateWithoutPaidFleetExpensesInput = {
   createdFleetExpenses?: Prisma.FleetExpenseUpdateManyWithoutCreatedByNestedInput
   createdTrips?: Prisma.TripUpdateManyWithoutCreatedByNestedInput
   updatedTrips?: Prisma.TripUpdateManyWithoutUpdatedByNestedInput
+  customerPaidTrips?: Prisma.TripUpdateManyWithoutCustomerPaidByNestedInput
+  subcontractorPaidTrips?: Prisma.TripUpdateManyWithoutSubcontractorPaidByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPaidFleetExpensesInput = {
@@ -889,6 +965,94 @@ export type UserUncheckedUpdateWithoutPaidFleetExpensesInput = {
   createdFleetExpenses?: Prisma.FleetExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   createdTrips?: Prisma.TripUncheckedUpdateManyWithoutCreatedByNestedInput
   updatedTrips?: Prisma.TripUncheckedUpdateManyWithoutUpdatedByNestedInput
+  customerPaidTrips?: Prisma.TripUncheckedUpdateManyWithoutCustomerPaidByNestedInput
+  subcontractorPaidTrips?: Prisma.TripUncheckedUpdateManyWithoutSubcontractorPaidByNestedInput
+}
+
+export type UserCreateWithoutCustomerPaidTripsInput = {
+  id?: string
+  email: string
+  name?: string | null
+  passwordHash: string
+  role?: $Enums.Role
+  isActive?: boolean
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  notificationReads?: Prisma.NotificationReadCreateNestedManyWithoutUserInput
+  createdFleetExpenses?: Prisma.FleetExpenseCreateNestedManyWithoutCreatedByInput
+  paidFleetExpenses?: Prisma.FleetExpenseCreateNestedManyWithoutPaidByInput
+  createdTrips?: Prisma.TripCreateNestedManyWithoutCreatedByInput
+  updatedTrips?: Prisma.TripCreateNestedManyWithoutUpdatedByInput
+  subcontractorPaidTrips?: Prisma.TripCreateNestedManyWithoutSubcontractorPaidByInput
+}
+
+export type UserUncheckedCreateWithoutCustomerPaidTripsInput = {
+  id?: string
+  email: string
+  name?: string | null
+  passwordHash: string
+  role?: $Enums.Role
+  isActive?: boolean
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  notificationReads?: Prisma.NotificationReadUncheckedCreateNestedManyWithoutUserInput
+  createdFleetExpenses?: Prisma.FleetExpenseUncheckedCreateNestedManyWithoutCreatedByInput
+  paidFleetExpenses?: Prisma.FleetExpenseUncheckedCreateNestedManyWithoutPaidByInput
+  createdTrips?: Prisma.TripUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTrips?: Prisma.TripUncheckedCreateNestedManyWithoutUpdatedByInput
+  subcontractorPaidTrips?: Prisma.TripUncheckedCreateNestedManyWithoutSubcontractorPaidByInput
+}
+
+export type UserCreateOrConnectWithoutCustomerPaidTripsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCustomerPaidTripsInput, Prisma.UserUncheckedCreateWithoutCustomerPaidTripsInput>
+}
+
+export type UserCreateWithoutSubcontractorPaidTripsInput = {
+  id?: string
+  email: string
+  name?: string | null
+  passwordHash: string
+  role?: $Enums.Role
+  isActive?: boolean
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  notificationReads?: Prisma.NotificationReadCreateNestedManyWithoutUserInput
+  createdFleetExpenses?: Prisma.FleetExpenseCreateNestedManyWithoutCreatedByInput
+  paidFleetExpenses?: Prisma.FleetExpenseCreateNestedManyWithoutPaidByInput
+  createdTrips?: Prisma.TripCreateNestedManyWithoutCreatedByInput
+  updatedTrips?: Prisma.TripCreateNestedManyWithoutUpdatedByInput
+  customerPaidTrips?: Prisma.TripCreateNestedManyWithoutCustomerPaidByInput
+}
+
+export type UserUncheckedCreateWithoutSubcontractorPaidTripsInput = {
+  id?: string
+  email: string
+  name?: string | null
+  passwordHash: string
+  role?: $Enums.Role
+  isActive?: boolean
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  notificationReads?: Prisma.NotificationReadUncheckedCreateNestedManyWithoutUserInput
+  createdFleetExpenses?: Prisma.FleetExpenseUncheckedCreateNestedManyWithoutCreatedByInput
+  paidFleetExpenses?: Prisma.FleetExpenseUncheckedCreateNestedManyWithoutPaidByInput
+  createdTrips?: Prisma.TripUncheckedCreateNestedManyWithoutCreatedByInput
+  updatedTrips?: Prisma.TripUncheckedCreateNestedManyWithoutUpdatedByInput
+  customerPaidTrips?: Prisma.TripUncheckedCreateNestedManyWithoutCustomerPaidByInput
+}
+
+export type UserCreateOrConnectWithoutSubcontractorPaidTripsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutSubcontractorPaidTripsInput, Prisma.UserUncheckedCreateWithoutSubcontractorPaidTripsInput>
 }
 
 export type UserCreateWithoutCreatedTripsInput = {
@@ -906,6 +1070,8 @@ export type UserCreateWithoutCreatedTripsInput = {
   createdFleetExpenses?: Prisma.FleetExpenseCreateNestedManyWithoutCreatedByInput
   paidFleetExpenses?: Prisma.FleetExpenseCreateNestedManyWithoutPaidByInput
   updatedTrips?: Prisma.TripCreateNestedManyWithoutUpdatedByInput
+  customerPaidTrips?: Prisma.TripCreateNestedManyWithoutCustomerPaidByInput
+  subcontractorPaidTrips?: Prisma.TripCreateNestedManyWithoutSubcontractorPaidByInput
 }
 
 export type UserUncheckedCreateWithoutCreatedTripsInput = {
@@ -923,6 +1089,8 @@ export type UserUncheckedCreateWithoutCreatedTripsInput = {
   createdFleetExpenses?: Prisma.FleetExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   paidFleetExpenses?: Prisma.FleetExpenseUncheckedCreateNestedManyWithoutPaidByInput
   updatedTrips?: Prisma.TripUncheckedCreateNestedManyWithoutUpdatedByInput
+  customerPaidTrips?: Prisma.TripUncheckedCreateNestedManyWithoutCustomerPaidByInput
+  subcontractorPaidTrips?: Prisma.TripUncheckedCreateNestedManyWithoutSubcontractorPaidByInput
 }
 
 export type UserCreateOrConnectWithoutCreatedTripsInput = {
@@ -945,6 +1113,8 @@ export type UserCreateWithoutUpdatedTripsInput = {
   createdFleetExpenses?: Prisma.FleetExpenseCreateNestedManyWithoutCreatedByInput
   paidFleetExpenses?: Prisma.FleetExpenseCreateNestedManyWithoutPaidByInput
   createdTrips?: Prisma.TripCreateNestedManyWithoutCreatedByInput
+  customerPaidTrips?: Prisma.TripCreateNestedManyWithoutCustomerPaidByInput
+  subcontractorPaidTrips?: Prisma.TripCreateNestedManyWithoutSubcontractorPaidByInput
 }
 
 export type UserUncheckedCreateWithoutUpdatedTripsInput = {
@@ -962,11 +1132,111 @@ export type UserUncheckedCreateWithoutUpdatedTripsInput = {
   createdFleetExpenses?: Prisma.FleetExpenseUncheckedCreateNestedManyWithoutCreatedByInput
   paidFleetExpenses?: Prisma.FleetExpenseUncheckedCreateNestedManyWithoutPaidByInput
   createdTrips?: Prisma.TripUncheckedCreateNestedManyWithoutCreatedByInput
+  customerPaidTrips?: Prisma.TripUncheckedCreateNestedManyWithoutCustomerPaidByInput
+  subcontractorPaidTrips?: Prisma.TripUncheckedCreateNestedManyWithoutSubcontractorPaidByInput
 }
 
 export type UserCreateOrConnectWithoutUpdatedTripsInput = {
   where: Prisma.UserWhereUniqueInput
   create: Prisma.XOR<Prisma.UserCreateWithoutUpdatedTripsInput, Prisma.UserUncheckedCreateWithoutUpdatedTripsInput>
+}
+
+export type UserUpsertWithoutCustomerPaidTripsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCustomerPaidTripsInput, Prisma.UserUncheckedUpdateWithoutCustomerPaidTripsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCustomerPaidTripsInput, Prisma.UserUncheckedCreateWithoutCustomerPaidTripsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCustomerPaidTripsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCustomerPaidTripsInput, Prisma.UserUncheckedUpdateWithoutCustomerPaidTripsInput>
+}
+
+export type UserUpdateWithoutCustomerPaidTripsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  notificationReads?: Prisma.NotificationReadUpdateManyWithoutUserNestedInput
+  createdFleetExpenses?: Prisma.FleetExpenseUpdateManyWithoutCreatedByNestedInput
+  paidFleetExpenses?: Prisma.FleetExpenseUpdateManyWithoutPaidByNestedInput
+  createdTrips?: Prisma.TripUpdateManyWithoutCreatedByNestedInput
+  updatedTrips?: Prisma.TripUpdateManyWithoutUpdatedByNestedInput
+  subcontractorPaidTrips?: Prisma.TripUpdateManyWithoutSubcontractorPaidByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCustomerPaidTripsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  notificationReads?: Prisma.NotificationReadUncheckedUpdateManyWithoutUserNestedInput
+  createdFleetExpenses?: Prisma.FleetExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
+  paidFleetExpenses?: Prisma.FleetExpenseUncheckedUpdateManyWithoutPaidByNestedInput
+  createdTrips?: Prisma.TripUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTrips?: Prisma.TripUncheckedUpdateManyWithoutUpdatedByNestedInput
+  subcontractorPaidTrips?: Prisma.TripUncheckedUpdateManyWithoutSubcontractorPaidByNestedInput
+}
+
+export type UserUpsertWithoutSubcontractorPaidTripsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSubcontractorPaidTripsInput, Prisma.UserUncheckedUpdateWithoutSubcontractorPaidTripsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSubcontractorPaidTripsInput, Prisma.UserUncheckedCreateWithoutSubcontractorPaidTripsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutSubcontractorPaidTripsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSubcontractorPaidTripsInput, Prisma.UserUncheckedUpdateWithoutSubcontractorPaidTripsInput>
+}
+
+export type UserUpdateWithoutSubcontractorPaidTripsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  notificationReads?: Prisma.NotificationReadUpdateManyWithoutUserNestedInput
+  createdFleetExpenses?: Prisma.FleetExpenseUpdateManyWithoutCreatedByNestedInput
+  paidFleetExpenses?: Prisma.FleetExpenseUpdateManyWithoutPaidByNestedInput
+  createdTrips?: Prisma.TripUpdateManyWithoutCreatedByNestedInput
+  updatedTrips?: Prisma.TripUpdateManyWithoutUpdatedByNestedInput
+  customerPaidTrips?: Prisma.TripUpdateManyWithoutCustomerPaidByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutSubcontractorPaidTripsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  notificationReads?: Prisma.NotificationReadUncheckedUpdateManyWithoutUserNestedInput
+  createdFleetExpenses?: Prisma.FleetExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
+  paidFleetExpenses?: Prisma.FleetExpenseUncheckedUpdateManyWithoutPaidByNestedInput
+  createdTrips?: Prisma.TripUncheckedUpdateManyWithoutCreatedByNestedInput
+  updatedTrips?: Prisma.TripUncheckedUpdateManyWithoutUpdatedByNestedInput
+  customerPaidTrips?: Prisma.TripUncheckedUpdateManyWithoutCustomerPaidByNestedInput
 }
 
 export type UserUpsertWithoutCreatedTripsInput = {
@@ -995,6 +1265,8 @@ export type UserUpdateWithoutCreatedTripsInput = {
   createdFleetExpenses?: Prisma.FleetExpenseUpdateManyWithoutCreatedByNestedInput
   paidFleetExpenses?: Prisma.FleetExpenseUpdateManyWithoutPaidByNestedInput
   updatedTrips?: Prisma.TripUpdateManyWithoutUpdatedByNestedInput
+  customerPaidTrips?: Prisma.TripUpdateManyWithoutCustomerPaidByNestedInput
+  subcontractorPaidTrips?: Prisma.TripUpdateManyWithoutSubcontractorPaidByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedTripsInput = {
@@ -1012,6 +1284,8 @@ export type UserUncheckedUpdateWithoutCreatedTripsInput = {
   createdFleetExpenses?: Prisma.FleetExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   paidFleetExpenses?: Prisma.FleetExpenseUncheckedUpdateManyWithoutPaidByNestedInput
   updatedTrips?: Prisma.TripUncheckedUpdateManyWithoutUpdatedByNestedInput
+  customerPaidTrips?: Prisma.TripUncheckedUpdateManyWithoutCustomerPaidByNestedInput
+  subcontractorPaidTrips?: Prisma.TripUncheckedUpdateManyWithoutSubcontractorPaidByNestedInput
 }
 
 export type UserUpsertWithoutUpdatedTripsInput = {
@@ -1040,6 +1314,8 @@ export type UserUpdateWithoutUpdatedTripsInput = {
   createdFleetExpenses?: Prisma.FleetExpenseUpdateManyWithoutCreatedByNestedInput
   paidFleetExpenses?: Prisma.FleetExpenseUpdateManyWithoutPaidByNestedInput
   createdTrips?: Prisma.TripUpdateManyWithoutCreatedByNestedInput
+  customerPaidTrips?: Prisma.TripUpdateManyWithoutCustomerPaidByNestedInput
+  subcontractorPaidTrips?: Prisma.TripUpdateManyWithoutSubcontractorPaidByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUpdatedTripsInput = {
@@ -1057,6 +1333,8 @@ export type UserUncheckedUpdateWithoutUpdatedTripsInput = {
   createdFleetExpenses?: Prisma.FleetExpenseUncheckedUpdateManyWithoutCreatedByNestedInput
   paidFleetExpenses?: Prisma.FleetExpenseUncheckedUpdateManyWithoutPaidByNestedInput
   createdTrips?: Prisma.TripUncheckedUpdateManyWithoutCreatedByNestedInput
+  customerPaidTrips?: Prisma.TripUncheckedUpdateManyWithoutCustomerPaidByNestedInput
+  subcontractorPaidTrips?: Prisma.TripUncheckedUpdateManyWithoutSubcontractorPaidByNestedInput
 }
 
 
@@ -1071,6 +1349,8 @@ export type UserCountOutputType = {
   paidFleetExpenses: number
   createdTrips: number
   updatedTrips: number
+  customerPaidTrips: number
+  subcontractorPaidTrips: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1080,6 +1360,8 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   paidFleetExpenses?: boolean | UserCountOutputTypeCountPaidFleetExpensesArgs
   createdTrips?: boolean | UserCountOutputTypeCountCreatedTripsArgs
   updatedTrips?: boolean | UserCountOutputTypeCountUpdatedTripsArgs
+  customerPaidTrips?: boolean | UserCountOutputTypeCountCustomerPaidTripsArgs
+  subcontractorPaidTrips?: boolean | UserCountOutputTypeCountSubcontractorPaidTripsArgs
 }
 
 /**
@@ -1134,6 +1416,20 @@ export type UserCountOutputTypeCountUpdatedTripsArgs<ExtArgs extends runtime.Typ
   where?: Prisma.TripWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCustomerPaidTripsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TripWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountSubcontractorPaidTripsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TripWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1151,6 +1447,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   paidFleetExpenses?: boolean | Prisma.User$paidFleetExpensesArgs<ExtArgs>
   createdTrips?: boolean | Prisma.User$createdTripsArgs<ExtArgs>
   updatedTrips?: boolean | Prisma.User$updatedTripsArgs<ExtArgs>
+  customerPaidTrips?: boolean | Prisma.User$customerPaidTripsArgs<ExtArgs>
+  subcontractorPaidTrips?: boolean | Prisma.User$subcontractorPaidTripsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1198,6 +1496,8 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   paidFleetExpenses?: boolean | Prisma.User$paidFleetExpensesArgs<ExtArgs>
   createdTrips?: boolean | Prisma.User$createdTripsArgs<ExtArgs>
   updatedTrips?: boolean | Prisma.User$updatedTripsArgs<ExtArgs>
+  customerPaidTrips?: boolean | Prisma.User$customerPaidTripsArgs<ExtArgs>
+  subcontractorPaidTrips?: boolean | Prisma.User$subcontractorPaidTripsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1212,6 +1512,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     paidFleetExpenses: Prisma.$FleetExpensePayload<ExtArgs>[]
     createdTrips: Prisma.$TripPayload<ExtArgs>[]
     updatedTrips: Prisma.$TripPayload<ExtArgs>[]
+    customerPaidTrips: Prisma.$TripPayload<ExtArgs>[]
+    subcontractorPaidTrips: Prisma.$TripPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1623,6 +1925,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   paidFleetExpenses<T extends Prisma.User$paidFleetExpensesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$paidFleetExpensesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FleetExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdTrips<T extends Prisma.User$createdTripsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdTripsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TripPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   updatedTrips<T extends Prisma.User$updatedTripsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$updatedTripsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TripPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  customerPaidTrips<T extends Prisma.User$customerPaidTripsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$customerPaidTripsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TripPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  subcontractorPaidTrips<T extends Prisma.User$subcontractorPaidTripsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$subcontractorPaidTripsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TripPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2177,6 +2481,54 @@ export type User$createdTripsArgs<ExtArgs extends runtime.Types.Extensions.Inter
  * User.updatedTrips
  */
 export type User$updatedTripsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Trip
+   */
+  select?: Prisma.TripSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Trip
+   */
+  omit?: Prisma.TripOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TripInclude<ExtArgs> | null
+  where?: Prisma.TripWhereInput
+  orderBy?: Prisma.TripOrderByWithRelationInput | Prisma.TripOrderByWithRelationInput[]
+  cursor?: Prisma.TripWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TripScalarFieldEnum | Prisma.TripScalarFieldEnum[]
+}
+
+/**
+ * User.customerPaidTrips
+ */
+export type User$customerPaidTripsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Trip
+   */
+  select?: Prisma.TripSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Trip
+   */
+  omit?: Prisma.TripOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TripInclude<ExtArgs> | null
+  where?: Prisma.TripWhereInput
+  orderBy?: Prisma.TripOrderByWithRelationInput | Prisma.TripOrderByWithRelationInput[]
+  cursor?: Prisma.TripWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TripScalarFieldEnum | Prisma.TripScalarFieldEnum[]
+}
+
+/**
+ * User.subcontractorPaidTrips
+ */
+export type User$subcontractorPaidTripsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Trip
    */

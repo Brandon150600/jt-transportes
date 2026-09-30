@@ -80,7 +80,7 @@ export default async function DashboardPage() {
       }),
       loadRecentExpenses(),
       prisma.trip.findMany({
-        where: { status: "COMPLETED", completedAt: { gte: tripMonthRange.start, lt: tripMonthRange.end } },
+        where: { executionType: "OWN", status: "COMPLETED", completedAt: { gte: tripMonthRange.start, lt: tripMonthRange.end } },
         select: {
           revenue: true,
           mileageStart: true,
@@ -106,7 +106,7 @@ export default async function DashboardPage() {
         .flatMap((expense) => expense.items)
         .filter((item) => ["l", "litro", "litros"].includes(item.unit?.trim().toLowerCase() ?? ""))
         .reduce((sum, item) => sum + Number(item.quantity), 0);
-      const distance = trip.mileageEnd === null ? 0 : Math.max(0, trip.mileageEnd - trip.mileageStart);
+      const distance = trip.mileageEnd === null || trip.mileageStart === null ? 0 : Math.max(0, trip.mileageEnd - trip.mileageStart);
       const hasEfficiencyData = fuelLiters > 0 && distance > 0;
       return {
         revenue: totals.revenue + Number(trip.revenue),
@@ -160,7 +160,7 @@ export default async function DashboardPage() {
             <div><h2 className="font-bold text-zinc-950">Seguimiento de viajes</h2><p className="mt-1 text-xs text-zinc-500">Viajes en curso y salidas programadas para los próximos 7 días.</p></div>
             <Link href="/trips" className="inline-flex items-center gap-1 text-sm font-semibold text-company-600 hover:text-company-700">Ver viajes<ChevronRight className="size-4" /></Link>
           </div>
-          {operationalTrips.length ? <div className="divide-y divide-zinc-100">{operationalTrips.map((trip, index) => <Link key={trip.id} href={`/trips/${trip.id}`} className={`${index > 2 ? "hidden sm:flex" : "flex"} flex-col gap-2 px-4 py-3 transition hover:bg-zinc-50 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-4`}><div className="flex min-w-0 items-start gap-3"><span className={`mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg sm:size-9 ${trip.status === "IN_PROGRESS" ? "bg-amber-50 text-amber-700" : "bg-blue-50 text-blue-700"}`}><Route className="size-4" /></span><div className="min-w-0"><p className="truncate text-sm font-semibold text-zinc-900 sm:text-base">{trip.tripNumber} · {trip.clientNameSnapshot}</p><p className="mt-1 truncate text-xs text-zinc-500">{trip.origin} → {trip.destinationNameSnapshot} · {trip.vehicle.economicNumber} · {trip.driver.name}</p></div></div><div className="flex items-center justify-between gap-4 pl-11 sm:justify-end sm:pl-0"><span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${trip.status === "IN_PROGRESS" ? "bg-amber-50 text-amber-700" : "bg-blue-50 text-blue-700"}`}>{trip.status === "IN_PROGRESS" ? "En curso" : "Programado"}</span><span className="text-xs text-zinc-500">{trip.scheduledStartAt.toLocaleString("es-MX", { dateStyle: "medium", timeStyle: "short", timeZone: "America/Mexico_City" })}</span></div></Link>)}</div> : <EmptyState icon={Route} title="Sin viajes próximos" description="No hay viajes en curso ni salidas programadas para los próximos 7 días." />}
+          {operationalTrips.length ? <div className="divide-y divide-zinc-100">{operationalTrips.map((trip, index) => <Link key={trip.id} href={`/trips/${trip.id}`} className={`${index > 2 ? "hidden sm:flex" : "flex"} flex-col gap-2 px-4 py-3 transition hover:bg-zinc-50 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-4`}><div className="flex min-w-0 items-start gap-3"><span className={`mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg sm:size-9 ${trip.status === "IN_PROGRESS" ? "bg-amber-50 text-amber-700" : "bg-blue-50 text-blue-700"}`}><Route className="size-4" /></span><div className="min-w-0"><p className="truncate text-sm font-semibold text-zinc-900 sm:text-base">{trip.tripNumber} · {trip.clientNameSnapshot}</p><p className="mt-1 truncate text-xs text-zinc-500">{trip.origin} → {trip.destinationNameSnapshot} · {trip.executionType === "OWN" ? `${trip.vehicle?.economicNumber ?? "Unidad pendiente"} · ${trip.driver?.name ?? "Operador pendiente"}` : trip.externalCarrierNameSnapshot ?? "Transportista externo"}</p></div></div><div className="flex items-center justify-between gap-4 pl-11 sm:justify-end sm:pl-0"><span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${trip.status === "IN_PROGRESS" ? "bg-amber-50 text-amber-700" : "bg-blue-50 text-blue-700"}`}>{trip.status === "IN_PROGRESS" ? "En curso" : "Programado"}</span><span className="text-xs text-zinc-500">{trip.scheduledStartAt.toLocaleString("es-MX", { dateStyle: "medium", timeStyle: "short", timeZone: "America/Mexico_City" })}</span></div></Link>)}</div> : <EmptyState icon={Route} title="Sin viajes próximos" description="No hay viajes en curso ni salidas programadas para los próximos 7 días." />}
         </section>
 
         <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">

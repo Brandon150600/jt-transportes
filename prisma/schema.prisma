@@ -15,10 +15,13 @@ enum Role {
 
 enum NotificationType {
   TRIP_CREATED
+  TRIP_SUBCONTRACTED_CREATED
   TRIP_UPCOMING
   TRIP_STARTED
   TRIP_COMPLETED
   TRIP_CANCELLED
+  TRIP_CUSTOMER_PAYMENT_RECEIVED
+  TRIP_SUBCONTRACTOR_PAYMENT_COMPLETED
   EXPENSE_CREATED
   VEHICLE_MAINTENANCE_DUE
 }
@@ -62,12 +65,14 @@ model User {
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 
-  sessions             Session[]
-  notificationReads    NotificationRead[]
-  createdFleetExpenses FleetExpense[]     @relation("FleetExpenseCreatedBy")
-  paidFleetExpenses    FleetExpense[]     @relation("FleetExpensePaidBy")
-  createdTrips         Trip[]             @relation("TripCreatedBy")
-  updatedTrips         Trip[]             @relation("TripUpdatedBy")
+  sessions               Session[]
+  notificationReads      NotificationRead[]
+  createdFleetExpenses   FleetExpense[]     @relation("FleetExpenseCreatedBy")
+  paidFleetExpenses      FleetExpense[]     @relation("FleetExpensePaidBy")
+  createdTrips           Trip[]             @relation("TripCreatedBy")
+  updatedTrips           Trip[]             @relation("TripUpdatedBy")
+  customerPaidTrips      Trip[]             @relation("TripCustomerPaidBy")
+  subcontractorPaidTrips Trip[]             @relation("TripSubcontractorPaidBy")
 }
 
 model Session {
@@ -325,42 +330,83 @@ enum TripStatus {
   CANCELLED
 }
 
-model Trip {
-  id                      String     @id @default(cuid())
-  tripNumber              String     @unique
-  status                  TripStatus @default(SCHEDULED)
-  clientId                String
-  destinationAddressId    String
-  clientNameSnapshot      String
-  destinationNameSnapshot String
-  destinationSnapshot     String
-  origin                  String
-  vehicleId               String
-  driverId                String
-  scheduledStartAt        DateTime
-  startedAt               DateTime?
-  completedAt             DateTime?
-  cancelledAt             DateTime?
-  mileageStart            Int
-  mileageEnd              Int?
-  revenue                 Decimal    @db.Decimal(12, 2)
-  notes                   String?
-  createdById             String
-  updatedById             String
-  createdAt               DateTime   @default(now())
-  updatedAt               DateTime   @updatedAt
+enum TripExecutionType {
+  OWN
+  SUBCONTRACTED
+}
 
-  client      Client         @relation(fields: [clientId], references: [id], onDelete: Restrict)
-  destination ClientAddress  @relation(fields: [destinationAddressId], references: [id], onDelete: Restrict)
-  vehicle     Vehicle        @relation(fields: [vehicleId], references: [id], onDelete: Restrict)
-  driver      Driver         @relation(fields: [driverId], references: [id], onDelete: Restrict)
-  createdBy   User           @relation("TripCreatedBy", fields: [createdById], references: [id], onDelete: Restrict)
-  updatedBy   User           @relation("TripUpdatedBy", fields: [updatedById], references: [id], onDelete: Restrict)
-  expenses    FleetExpense[]
+model ExternalCarrier {
+  id           String   @id @default(cuid())
+  businessName String
+  contactName  String?
+  phone        String?
+  email        String?
+  taxId        String?
+  notes        String?
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  trips Trip[]
+
+  @@index([active, businessName])
+  @@index([taxId])
+}
+
+model Trip {
+  id                          String            @id @default(cuid())
+  tripNumber                  String            @unique
+  status                      TripStatus        @default(SCHEDULED)
+  executionType               TripExecutionType @default(OWN)
+  clientId                    String
+  destinationAddressId        String
+  clientNameSnapshot          String
+  destinationNameSnapshot     String
+  destinationSnapshot         String
+  origin                      String
+  vehicleId                   String?
+  driverId                    String?
+  externalCarrierId           String?
+  externalCarrierNameSnapshot String?
+  externalVehicleDescription  String?
+  externalDriverName          String?
+  scheduledStartAt            DateTime
+  startedAt                   DateTime?
+  completedAt                 DateTime?
+  cancelledAt                 DateTime?
+  mileageStart                Int?
+  mileageEnd                  Int?
+  revenue                     Decimal           @db.Decimal(12, 2)
+  subcontractorCost           Decimal?          @db.Decimal(12, 2)
+  customerPaymentStatus       PaymentStatus?
+  customerPaidAt              DateTime?
+  customerPaidByUserId        String?
+  subcontractorPaymentStatus  PaymentStatus?
+  subcontractorPaidAt         DateTime?
+  subcontractorPaidByUserId   String?
+  notes                       String?
+  createdById                 String
+  updatedById                 String
+  createdAt                   DateTime          @default(now())
+  updatedAt                   DateTime          @updatedAt
+
+  client              Client           @relation(fields: [clientId], references: [id], onDelete: Restrict)
+  destination         ClientAddress    @relation(fields: [destinationAddressId], references: [id], onDelete: Restrict)
+  vehicle             Vehicle?         @relation(fields: [vehicleId], references: [id], onDelete: Restrict)
+  driver              Driver?          @relation(fields: [driverId], references: [id], onDelete: Restrict)
+  externalCarrier     ExternalCarrier? @relation(fields: [externalCarrierId], references: [id], onDelete: Restrict)
+  customerPaidBy      User?            @relation("TripCustomerPaidBy", fields: [customerPaidByUserId], references: [id], onDelete: Restrict)
+  subcontractorPaidBy User?            @relation("TripSubcontractorPaidBy", fields: [subcontractorPaidByUserId], references: [id], onDelete: Restrict)
+  createdBy           User             @relation("TripCreatedBy", fields: [createdById], references: [id], onDelete: Restrict)
+  updatedBy           User             @relation("TripUpdatedBy", fields: [updatedById], references: [id], onDelete: Restrict)
+  expenses            FleetExpense[]
 
   @@index([clientId, scheduledStartAt])
   @@index([destinationAddressId])
   @@index([vehicleId, scheduledStartAt])
   @@index([driverId, scheduledStartAt])
   @@index([status, scheduledStartAt])
+  @@index([executionType, status, scheduledStartAt])
+  @@index([clientId, executionType, customerPaymentStatus, scheduledStartAt])
+  @@index([externalCarrierId, subcontractorPaymentStatus, scheduledStartAt])
 }

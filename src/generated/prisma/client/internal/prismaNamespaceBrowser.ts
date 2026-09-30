@@ -62,6 +62,7 @@ export const ModelName = {
   ExpenseItem: 'ExpenseItem',
   Client: 'Client',
   ClientAddress: 'ClientAddress',
+  ExternalCarrier: 'ExternalCarrier',
   Trip: 'Trip'
 } as const
 
@@ -271,10 +272,27 @@ export const ClientAddressScalarFieldEnum = {
 export type ClientAddressScalarFieldEnum = (typeof ClientAddressScalarFieldEnum)[keyof typeof ClientAddressScalarFieldEnum]
 
 
+export const ExternalCarrierScalarFieldEnum = {
+  id: 'id',
+  businessName: 'businessName',
+  contactName: 'contactName',
+  phone: 'phone',
+  email: 'email',
+  taxId: 'taxId',
+  notes: 'notes',
+  active: 'active',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ExternalCarrierScalarFieldEnum = (typeof ExternalCarrierScalarFieldEnum)[keyof typeof ExternalCarrierScalarFieldEnum]
+
+
 export const TripScalarFieldEnum = {
   id: 'id',
   tripNumber: 'tripNumber',
   status: 'status',
+  executionType: 'executionType',
   clientId: 'clientId',
   destinationAddressId: 'destinationAddressId',
   clientNameSnapshot: 'clientNameSnapshot',
@@ -283,6 +301,10 @@ export const TripScalarFieldEnum = {
   origin: 'origin',
   vehicleId: 'vehicleId',
   driverId: 'driverId',
+  externalCarrierId: 'externalCarrierId',
+  externalCarrierNameSnapshot: 'externalCarrierNameSnapshot',
+  externalVehicleDescription: 'externalVehicleDescription',
+  externalDriverName: 'externalDriverName',
   scheduledStartAt: 'scheduledStartAt',
   startedAt: 'startedAt',
   completedAt: 'completedAt',
@@ -290,6 +312,13 @@ export const TripScalarFieldEnum = {
   mileageStart: 'mileageStart',
   mileageEnd: 'mileageEnd',
   revenue: 'revenue',
+  subcontractorCost: 'subcontractorCost',
+  customerPaymentStatus: 'customerPaymentStatus',
+  customerPaidAt: 'customerPaidAt',
+  customerPaidByUserId: 'customerPaidByUserId',
+  subcontractorPaymentStatus: 'subcontractorPaymentStatus',
+  subcontractorPaidAt: 'subcontractorPaidAt',
+  subcontractorPaidByUserId: 'subcontractorPaidByUserId',
   notes: 'notes',
   createdById: 'createdById',
   updatedById: 'updatedById',

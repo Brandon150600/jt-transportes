@@ -22,6 +22,7 @@ type CurrentModelDelegates = PrismaClient & {
   client?: unknown;
   clientAddress?: unknown;
   trip?: unknown;
+  externalCarrier?: unknown;
   notification?: unknown;
   notificationRead?: unknown;
 };
@@ -29,7 +30,7 @@ type CurrentModelDelegates = PrismaClient & {
 const cachedPrisma = globalForPrisma.prisma as CurrentModelDelegates | undefined;
 const hasCurrentSchema = Boolean(
   cachedPrisma?.fleetExpense && cachedPrisma.supplier && cachedPrisma.expenseItem &&
-  cachedPrisma.client && cachedPrisma.clientAddress && cachedPrisma.trip &&
+  cachedPrisma.client && cachedPrisma.clientAddress && cachedPrisma.trip && cachedPrisma.externalCarrier &&
   cachedPrisma.notification && cachedPrisma.notificationRead,
 );
 

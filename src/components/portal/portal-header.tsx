@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
     Building2,
+    BusFront,
     ChevronLeft,
     LayoutDashboard,
     LogOut,
@@ -52,6 +53,7 @@ const groups: { label: string; items: NavItem[] }[] = [
             { label: "Clientes", href: "/clients", icon: Building2, roles: ["ADMIN", "SUPER_ADMIN"] },
             { label: "Operadores", href: "/users", icon: Users, roles: ["ADMIN", "SUPER_ADMIN"] },
             { label: "Proveedores", href: "/suppliers", icon: Package, roles: ["ADMIN", "SUPER_ADMIN"] },
+            { label: "Transportistas", href: "/external-carriers", icon: BusFront, roles: ["ADMIN", "SUPER_ADMIN"] },
         ],
     },
 ];

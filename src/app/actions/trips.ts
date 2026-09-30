@@ -5,9 +5,16 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { requireAnyRole, requireUser } from "@/lib/auth/session";
+import { NotificationEntityType, NotificationType } from "@/generated/prisma/client/enums";
+import { createNotification, createUpcomingTripNotification } from "@/lib/notifications/service";
 
 export type TripFormState = { error?: string; fieldErrors?: Record<string, string> };
 const MAX_DATABASE_INT = 2_147_483_647;
+const UPCOMING_WINDOW_MS = 25 * 60 * 60 * 1000;
+
+function isWithinUpcomingWindow(scheduledStartAt: Date, now = new Date()) {
+  return scheduledStartAt > now && scheduledStartAt.getTime() <= now.getTime() + UPCOMING_WINDOW_MS;
+}
 
 const tripSchema = z.object({
   clientId: z.string().min(1, "Selecciona un cliente."),
@@ -79,29 +86,48 @@ export async function saveTrip(_previous: TripFormState, formData: FormData): Pr
     if (conflicts) return { error: "El operador o la unidad ya tiene un viaje en curso." };
 
     if (id) {
-      const existing = await prisma.trip.findUnique({ where: { id }, select: { status: true } });
-      if (!existing || existing.status !== "SCHEDULED") return { error: "Solo se pueden editar viajes programados." };
-      await prisma.trip.update({ where: { id }, data: {
-        clientId: data.clientId, destinationAddressId: data.destinationAddressId,
-        clientNameSnapshot: address.client.commercialName || address.client.businessName,
-        destinationNameSnapshot: address.name,
-        destinationSnapshot: formatAddress(address), origin: data.origin, vehicleId: data.vehicleId, driverId: data.driverId,
-        scheduledStartAt: date, mileageStart: data.mileageStart, revenue: data.revenue, notes: data.notes || null, updatedById: user.id,
-      } });
+      const updatedTrip = await prisma.$transaction(async (tx) => {
+        const existing = await tx.trip.findUnique({ where: { id }, select: { status: true } });
+        if (!existing || existing.status !== "SCHEDULED") return null;
+        const trip = await tx.trip.update({ where: { id }, data: {
+          clientId: data.clientId, destinationAddressId: data.destinationAddressId,
+          clientNameSnapshot: address.client.commercialName || address.client.businessName,
+          destinationNameSnapshot: address.name,
+          destinationSnapshot: formatAddress(address), origin: data.origin, vehicleId: data.vehicleId, driverId: data.driverId,
+          scheduledStartAt: date, mileageStart: data.mileageStart, revenue: data.revenue, notes: data.notes || null, updatedById: user.id,
+        }, select: { id: true, tripNumber: true, scheduledStartAt: true } });
+        if (isWithinUpcomingWindow(trip.scheduledStartAt)) await createUpcomingTripNotification(tx, trip);
+        return trip;
+      });
+      if (!updatedTrip) return { error: "Solo se pueden editar viajes programados." };
       revalidatePath(`/trips/${id}`);
       redirect(`/trips/${id}`);
     }
 
-    const sequence = await prisma.$queryRaw<Array<{ value: bigint }>>`SELECT nextval('"Trip_tripNumber_seq"') AS value`;
-    const tripNumber = `TRP-${String(sequence[0].value).padStart(6, "0")}`;
-    const trip = await prisma.trip.create({ data: {
-      tripNumber, clientId: data.clientId, destinationAddressId: data.destinationAddressId,
-      clientNameSnapshot: address.client.commercialName || address.client.businessName,
-      destinationNameSnapshot: address.name, destinationSnapshot: formatAddress(address),
-      origin: data.origin, vehicleId: data.vehicleId, driverId: data.driverId, scheduledStartAt: date,
-      mileageStart: data.mileageStart, revenue: data.revenue, notes: data.notes || null,
-      createdById: user.id, updatedById: user.id,
-    }, select: { id: true } });
+    const trip = await prisma.$transaction(async (tx) => {
+      const sequence = await tx.$queryRaw<Array<{ value: bigint }>>`SELECT nextval('"Trip_tripNumber_seq"') AS value`;
+      const tripNumber = `TRP-${String(sequence[0].value).padStart(6, "0")}`;
+      const createdTrip = await tx.trip.create({ data: {
+        tripNumber, clientId: data.clientId, destinationAddressId: data.destinationAddressId,
+        clientNameSnapshot: address.client.commercialName || address.client.businessName,
+        destinationNameSnapshot: address.name, destinationSnapshot: formatAddress(address),
+        origin: data.origin, vehicleId: data.vehicleId, driverId: data.driverId, scheduledStartAt: date,
+        mileageStart: data.mileageStart, revenue: data.revenue, notes: data.notes || null,
+        createdById: user.id, updatedById: user.id,
+      }, select: { id: true, tripNumber: true, scheduledStartAt: true } });
+      await createNotification(tx, {
+        eventKey: `TRIP_CREATED:${createdTrip.id}`,
+        type: NotificationType.TRIP_CREATED,
+        title: "Nuevo viaje",
+        message: `Se creó el viaje ${createdTrip.tripNumber}.`,
+        entityType: NotificationEntityType.TRIP,
+        entityId: createdTrip.id,
+      });
+      if (isWithinUpcomingWindow(createdTrip.scheduledStartAt)) {
+        await createUpcomingTripNotification(tx, createdTrip);
+      }
+      return createdTrip;
+    });
     redirect(`/trips/${trip.id}`);
   } catch (error) {
     if (error && typeof error === "object" && "digest" in error) throw error;
@@ -119,30 +145,59 @@ export async function transitionTrip(formData: FormData) {
   if (!parsed.success) return;
   const { id, action, mileageEnd } = parsed.data;
   if (action === "cancel" && user.role === "EMPLOYEE") return;
-  const trip = await prisma.trip.findUnique({ where: { id }, include: { vehicle: { select: { mileage: true } } } });
-  if (!trip) return;
-  if (action === "start") {
-    if (trip.status !== "SCHEDULED") return;
-    const active = await prisma.trip.findFirst({ where: { status: "IN_PROGRESS", OR: [{ vehicleId: trip.vehicleId }, { driverId: trip.driverId }] }, select: { id: true } });
-    if (active) return;
-    await prisma.$transaction([
-      prisma.trip.update({ where: { id }, data: { status: "IN_PROGRESS", startedAt: new Date(), updatedById: user.id } }),
-      prisma.vehicle.update({ where: { id: trip.vehicleId }, data: { status: "IN_ROUTE" } }),
-    ]);
-  } else if (action === "complete") {
-    if (trip.status !== "IN_PROGRESS" || mileageEnd === undefined || mileageEnd < trip.mileageStart) return;
-    await prisma.$transaction([
-      prisma.trip.update({ where: { id }, data: { status: "COMPLETED", completedAt: new Date(), mileageEnd, updatedById: user.id } }),
-      ...(mileageEnd > trip.vehicle.mileage ? [prisma.vehicle.update({ where: { id: trip.vehicleId }, data: { mileage: mileageEnd } })] : []),
-      prisma.vehicle.update({ where: { id: trip.vehicleId }, data: { status: "AVAILABLE" } }),
-    ]);
-  } else {
-    if (trip.status !== "SCHEDULED" && trip.status !== "IN_PROGRESS") return;
-    await prisma.$transaction([
-      prisma.trip.update({ where: { id }, data: { status: "CANCELLED", cancelledAt: new Date(), updatedById: user.id } }),
-      ...(trip.status === "IN_PROGRESS" ? [prisma.vehicle.update({ where: { id: trip.vehicleId }, data: { status: "AVAILABLE" } })] : []),
-    ]);
-  }
+  const transitioned = await prisma.$transaction(async (tx) => {
+    const trip = await tx.trip.findUnique({ where: { id }, include: { vehicle: { select: { mileage: true } } } });
+    if (!trip) return false;
+
+    let nextStatus: "IN_PROGRESS" | "COMPLETED" | "CANCELLED";
+    let tripUpdate: { status: "IN_PROGRESS" | "COMPLETED" | "CANCELLED"; startedAt?: Date; completedAt?: Date; cancelledAt?: Date; mileageEnd?: number; updatedById: string };
+    if (action === "start") {
+      if (trip.status !== "SCHEDULED") return false;
+      const active = await tx.trip.findFirst({ where: { status: "IN_PROGRESS", OR: [{ vehicleId: trip.vehicleId }, { driverId: trip.driverId }] }, select: { id: true } });
+      if (active) return false;
+      nextStatus = "IN_PROGRESS";
+      tripUpdate = { status: nextStatus, startedAt: new Date(), updatedById: user.id };
+    } else if (action === "complete") {
+      if (trip.status !== "IN_PROGRESS" || mileageEnd === undefined || mileageEnd < trip.mileageStart) return false;
+      nextStatus = "COMPLETED";
+      tripUpdate = { status: nextStatus, completedAt: new Date(), mileageEnd, updatedById: user.id };
+    } else {
+      if (trip.status !== "SCHEDULED" && trip.status !== "IN_PROGRESS") return false;
+      nextStatus = "CANCELLED";
+      tripUpdate = { status: nextStatus, cancelledAt: new Date(), updatedById: user.id };
+    }
+
+    const updated = await tx.trip.updateMany({ where: { id, status: trip.status }, data: tripUpdate });
+    if (updated.count !== 1) return false;
+
+    if (action === "start") {
+      await tx.vehicle.update({ where: { id: trip.vehicleId }, data: { status: "IN_ROUTE" } });
+    } else if (action === "complete") {
+      if (mileageEnd! > trip.vehicle.mileage) {
+        await tx.vehicle.update({ where: { id: trip.vehicleId }, data: { mileage: mileageEnd } });
+      }
+      await tx.vehicle.update({ where: { id: trip.vehicleId }, data: { status: "AVAILABLE" } });
+    } else if (trip.status === "IN_PROGRESS") {
+      await tx.vehicle.update({ where: { id: trip.vehicleId }, data: { status: "AVAILABLE" } });
+    }
+
+    const notificationType = action === "start"
+      ? NotificationType.TRIP_STARTED
+      : action === "complete"
+        ? NotificationType.TRIP_COMPLETED
+        : NotificationType.TRIP_CANCELLED;
+    const eventWord = action === "start" ? "ha iniciado" : action === "complete" ? "fue completado" : "fue cancelado";
+    await createNotification(tx, {
+      eventKey: `${notificationType}:${trip.id}`,
+      type: notificationType,
+      title: action === "start" ? "Viaje iniciado" : action === "complete" ? "Viaje completado" : "Viaje cancelado",
+      message: `El viaje ${trip.tripNumber} ${eventWord}.`,
+      entityType: NotificationEntityType.TRIP,
+      entityId: trip.id,
+    });
+    return true;
+  });
+  if (!transitioned) return;
   revalidatePath("/trips");
   revalidatePath(`/trips/${id}`);
   redirect(`/trips/${id}`);

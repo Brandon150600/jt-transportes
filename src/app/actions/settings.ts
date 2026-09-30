@@ -1,11 +1,12 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 import { prisma } from "@/lib/prisma";
 import { hashPassword, verifyPassword } from "@/lib/auth/password";
-import { requireUser } from "@/lib/auth/session";
+import { getCurrentSessionId, requireUser } from "@/lib/auth/session";
 
 const changePasswordSchema = z.object({
   currentPassword: z.string().min(1, "Ingresa tu contraseña actual."),
@@ -23,10 +24,74 @@ const changePasswordSchema = z.object({
   }
 });
 
+const updateProfileSchema = z.object({
+  name: z.string().trim().min(2, "El nombre debe tener al menos 2 caracteres.").max(120, "El nombre no puede superar 120 caracteres."),
+});
+
 export type ChangePasswordState = {
   error?: string;
   fieldErrors?: Record<string, string>;
 };
+
+export type UpdateProfileState = {
+  error?: string;
+  fieldErrors?: Record<string, string>;
+};
+
+export async function updateAccountProfile(
+  _previousState: UpdateProfileState,
+  formData: FormData,
+): Promise<UpdateProfileState> {
+  const currentUser = await requireUser();
+  const parsed = updateProfileSchema.safeParse({
+    name: formData.get("name"),
+  });
+
+  if (!parsed.success) {
+    const fieldErrors: Record<string, string> = {};
+    for (const issue of parsed.error.issues) {
+      const field = issue.path[0];
+      if (typeof field === "string" && !fieldErrors[field]) fieldErrors[field] = issue.message;
+    }
+    return { error: "Revisa los campos marcados.", fieldErrors };
+  }
+
+  await prisma.user.update({
+    where: { id: currentUser.id },
+    data: { name: parsed.data.name },
+  });
+
+  revalidatePath("/settings");
+  redirect("/settings?profileUpdated=1");
+}
+
+export async function revokeSession(formData: FormData): Promise<void> {
+  const currentUser = await requireUser();
+  const sessionId = z.string().min(1).safeParse(formData.get("sessionId"));
+  if (!sessionId.success) redirect("/settings?sessionsError=invalid");
+
+  const currentSessionId = await getCurrentSessionId();
+  if (!currentSessionId) redirect("/login");
+  if (sessionId.data === currentSessionId) redirect("/settings?sessionsError=current");
+
+  await prisma.session.deleteMany({
+    where: { id: sessionId.data, userId: currentUser.id },
+  });
+  revalidatePath("/settings");
+  redirect("/settings?sessionsUpdated=1");
+}
+
+export async function revokeOtherSessions(): Promise<void> {
+  const currentUser = await requireUser();
+  const currentSessionId = await getCurrentSessionId();
+  if (!currentSessionId) redirect("/login");
+
+  await prisma.session.deleteMany({
+    where: { userId: currentUser.id, id: { not: currentSessionId } },
+  });
+  revalidatePath("/settings");
+  redirect("/settings?sessionsUpdated=1");
+}
 
 export async function changePassword(
   _previousState: ChangePasswordState,

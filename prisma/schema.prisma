@@ -13,6 +13,22 @@ enum Role {
   SUPER_ADMIN
 }
 
+enum NotificationType {
+  TRIP_CREATED
+  TRIP_UPCOMING
+  TRIP_STARTED
+  TRIP_COMPLETED
+  TRIP_CANCELLED
+  EXPENSE_CREATED
+  VEHICLE_MAINTENANCE_DUE
+}
+
+enum NotificationEntityType {
+  TRIP
+  FLEET_EXPENSE
+  VEHICLE
+}
+
 enum VehicleType {
   TRACTOR
   TRUCK
@@ -47,10 +63,11 @@ model User {
   updatedAt    DateTime  @updatedAt
 
   sessions             Session[]
-  createdFleetExpenses FleetExpense[] @relation("FleetExpenseCreatedBy")
-  paidFleetExpenses    FleetExpense[] @relation("FleetExpensePaidBy")
-  createdTrips         Trip[]         @relation("TripCreatedBy")
-  updatedTrips         Trip[]         @relation("TripUpdatedBy")
+  notificationReads    NotificationRead[]
+  createdFleetExpenses FleetExpense[]     @relation("FleetExpenseCreatedBy")
+  paidFleetExpenses    FleetExpense[]     @relation("FleetExpensePaidBy")
+  createdTrips         Trip[]             @relation("TripCreatedBy")
+  updatedTrips         Trip[]             @relation("TripUpdatedBy")
 }
 
 model Session {
@@ -64,6 +81,33 @@ model Session {
 
   @@index([userId])
   @@index([expiresAt])
+}
+
+model Notification {
+  id         String                  @id @default(cuid())
+  eventKey   String                  @unique
+  type       NotificationType
+  title      String
+  message    String
+  entityType NotificationEntityType?
+  entityId   String?
+  createdAt  DateTime                @default(now())
+
+  reads NotificationRead[]
+
+  @@index([createdAt, id])
+}
+
+model NotificationRead {
+  userId         String
+  notificationId String
+  readAt         DateTime @default(now())
+
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  notification Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+
+  @@id([userId, notificationId])
+  @@index([notificationId])
 }
 
 model Driver {

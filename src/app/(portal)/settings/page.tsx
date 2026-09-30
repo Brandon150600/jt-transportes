@@ -3,13 +3,15 @@ import {
     ChevronRight,
     KeyRound,
     LockKeyhole,
-    Mail,
     ShieldCheck,
     UserRound,
 } from "lucide-react";
 
-import { requireUser } from "@/lib/auth/session";
+import { getCurrentSessionId, requireUser } from "@/lib/auth/session";
+import { prisma } from "@/lib/prisma";
 import { ChangePasswordForm } from "./change-password-form";
+import { ProfileForm } from "./profile-form";
+import { ActiveSessions } from "./active-sessions";
 
 export const metadata = {
     title: "Configuración | JT Transportes",
@@ -17,10 +19,18 @@ export const metadata = {
 };
 
 export default async function SettingsPage({ searchParams }: {
-    searchParams: Promise<{ passwordChanged?: string }>;
+    searchParams: Promise<{ passwordChanged?: string; profileUpdated?: string; sessionsUpdated?: string; sessionsError?: string }>;
 }) {
     const user = await requireUser();
     const params = await searchParams;
+    const [sessions, currentSessionId] = await Promise.all([
+        prisma.session.findMany({
+            where: { userId: user.id, expiresAt: { gt: new Date() } },
+            orderBy: { createdAt: "desc" },
+            select: { id: true, createdAt: true, expiresAt: true },
+        }),
+        getCurrentSessionId(),
+    ]);
 
     const roleLabel =
         user.role === "SUPER_ADMIN"
@@ -58,6 +68,21 @@ export default async function SettingsPage({ searchParams }: {
                             Tu contraseña se actualizó correctamente.
                         </div>
                     )}
+                    {params.profileUpdated === "1" && (
+                        <div role="status" className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-medium text-emerald-800">
+                            Los datos de tu cuenta se actualizaron correctamente.
+                        </div>
+                    )}
+                    {params.sessionsUpdated === "1" && (
+                        <div role="status" className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-medium text-emerald-800">
+                            La lista de sesiones se actualizó correctamente.
+                        </div>
+                    )}
+                    {params.sessionsError && (
+                        <div role="alert" className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-700">
+                            No se puede cerrar la sesión actual desde esta lista. Cierra sesión desde el menú del portal.
+                        </div>
+                    )}
 
                     {/* Account */}
                     <section className="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
@@ -81,49 +106,7 @@ export default async function SettingsPage({ searchParams }: {
 
                         <div className="divide-y divide-zinc-100">
 
-                            {/* Name */}
-                            <div className="flex flex-col gap-3 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
-                                <div>
-                                    <p className="text-xs font-medium text-zinc-400">
-                                        Nombre
-                                    </p>
-
-                                    <p className="mt-1 text-sm font-semibold text-zinc-900">
-                                        {user.name ?? "Sin nombre registrado"}
-                                    </p>
-                                </div>
-
-                                <button
-                                    type="button"
-                                    className="w-fit text-sm font-semibold text-company-600 transition hover:text-company-700"
-                                >
-                                    Editar
-                                </button>
-                            </div>
-
-                            {/* Email */}
-                            <div className="flex flex-col gap-3 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
-                                <div>
-                                    <p className="text-xs font-medium text-zinc-400">
-                                        Correo electrónico
-                                    </p>
-
-                                    <div className="mt-1 flex items-center gap-2">
-                                        <Mail className="size-4 text-zinc-400" />
-
-                                        <p className="text-sm font-semibold text-zinc-900">
-                                            {user.email}
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <button
-                                    type="button"
-                                    className="w-fit text-sm font-semibold text-company-600 transition hover:text-company-700"
-                                >
-                                    Cambiar correo
-                                </button>
-                            </div>
+                            <ProfileForm name={user.name ?? ""} email={user.email} />
 
                             {/* Role */}
                             <div className="flex flex-col gap-3 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
@@ -193,28 +176,21 @@ export default async function SettingsPage({ searchParams }: {
                                 <ChangePasswordForm />
                             </details>
 
-                            <button
-                                type="button"
-                                className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition hover:bg-zinc-50"
-                            >
-                                <div className="flex items-center gap-3">
-                                    <div className="flex size-9 items-center justify-center rounded-lg bg-zinc-100 text-zinc-600">
-                                        <ShieldCheck className="size-4" />
+                            <details className="group">
+                                <summary className="flex w-full cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-left transition hover:bg-zinc-50">
+                                    <div className="flex items-center gap-3">
+                                        <div className="flex size-9 items-center justify-center rounded-lg bg-zinc-100 text-zinc-600">
+                                            <ShieldCheck className="size-4" />
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-semibold text-zinc-900">Sesiones activas</p>
+                                            <p className="mt-0.5 text-xs text-zinc-500">Consulta y cierra sesiones que ya no reconozcas.</p>
+                                        </div>
                                     </div>
-
-                                    <div>
-                                        <p className="text-sm font-semibold text-zinc-900">
-                                            Sesiones activas
-                                        </p>
-
-                                        <p className="mt-0.5 text-xs text-zinc-500">
-                                            Consulta los dispositivos donde tienes una sesión abierta.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <ChevronRight className="size-4 shrink-0 text-zinc-400" />
-                            </button>
+                                    <ChevronRight className="size-4 shrink-0 text-zinc-400 transition group-open:rotate-90" />
+                                </summary>
+                                <ActiveSessions sessions={sessions} currentSessionId={currentSessionId} />
+                            </details>
                         </div>
                     </section>
 

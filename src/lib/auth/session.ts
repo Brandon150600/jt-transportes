@@ -64,6 +64,20 @@ export async function deleteCurrentSession() {
   cookieStore.delete(SESSION_COOKIE);
 }
 
+export async function getCurrentSessionId() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get(SESSION_COOKIE)?.value;
+  if (!token) return null;
+
+  const session = await prisma.session.findUnique({
+    where: { tokenHash: hashToken(token) },
+    select: { id: true, expiresAt: true },
+  });
+
+  if (!session || session.expiresAt <= new Date()) return null;
+  return session.id;
+}
+
 export async function getCurrentUser() {
   const cookieStore = await cookies();
 
@@ -83,6 +97,8 @@ export async function getCurrentUser() {
           email: true,
           name: true,
           role: true,
+          createdAt: true,
+          isActive: true,
         },
       },
     },
@@ -92,7 +108,7 @@ export async function getCurrentUser() {
     return null;
   }
 
-  return session.user;
+  return session.user.isActive ? session.user : null;
 }
 
 export async function requireUser() {

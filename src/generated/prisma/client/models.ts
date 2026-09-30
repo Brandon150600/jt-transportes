@@ -10,6 +10,8 @@
  */
 export type * from './models/User'
 export type * from './models/Session'
+export type * from './models/Notification'
+export type * from './models/NotificationRead'
 export type * from './models/Driver'
 export type * from './models/Vehicle'
 export type * from './models/Supplier'

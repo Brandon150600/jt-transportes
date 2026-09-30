@@ -18,6 +18,28 @@ export const Role = {
 export type Role = (typeof Role)[keyof typeof Role]
 
 
+export const NotificationType = {
+  TRIP_CREATED: 'TRIP_CREATED',
+  TRIP_UPCOMING: 'TRIP_UPCOMING',
+  TRIP_STARTED: 'TRIP_STARTED',
+  TRIP_COMPLETED: 'TRIP_COMPLETED',
+  TRIP_CANCELLED: 'TRIP_CANCELLED',
+  EXPENSE_CREATED: 'EXPENSE_CREATED',
+  VEHICLE_MAINTENANCE_DUE: 'VEHICLE_MAINTENANCE_DUE'
+} as const
+
+export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
+
+
+export const NotificationEntityType = {
+  TRIP: 'TRIP',
+  FLEET_EXPENSE: 'FLEET_EXPENSE',
+  VEHICLE: 'VEHICLE'
+} as const
+
+export type NotificationEntityType = (typeof NotificationEntityType)[keyof typeof NotificationEntityType]
+
+
 export const VehicleType = {
   TRACTOR: 'TRACTOR',
   TRUCK: 'TRUCK',

@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { logout } from "@/app/actions/auth";
+import { NotificationBell, type NotificationPreview } from "@/components/portal/notification-bell";
 
 type PortalUser = {
     name: string | null;
@@ -55,7 +56,12 @@ const groups: { label: string; items: NavItem[] }[] = [
     },
 ];
 
-export function PortalHeader({ user, children }: { user: PortalUser; children: ReactNode }) {
+export function PortalHeader({ user, children, unreadCount, notifications }: {
+    user: PortalUser;
+    children: ReactNode;
+    unreadCount: number;
+    notifications: NotificationPreview[];
+}) {
     const pathname = usePathname();
     const [collapsed, setCollapsed] = useState(false);
     const [hoverExpanded, setHoverExpanded] = useState(false);
@@ -63,7 +69,9 @@ export function PortalHeader({ user, children }: { user: PortalUser; children: R
     const visuallyCollapsed = collapsed && !hoverExpanded;
     const pageTitle = pathname.startsWith("/settings")
         ? "Configuración"
-        : [dashboard, ...groups.flatMap((group) => group.items)]
+        : pathname.startsWith("/notifications")
+            ? "Notificaciones"
+            : [dashboard, ...groups.flatMap((group) => group.items)]
             .find((item) => pathname === item.href || (item.href !== "/dashboard" && pathname.startsWith(`${item.href}/`)))?.label ?? "Portal";
     const firstName = user.name?.split(" ")[0] ?? "Usuario";
     const roleLabel = user.role === "SUPER_ADMIN" ? "Super administrador" : user.role === "ADMIN" ? "Administrador" : "Empleado";
@@ -102,6 +110,7 @@ export function PortalHeader({ user, children }: { user: PortalUser; children: R
                             <p className="hidden text-xs text-zinc-400 sm:block">JT Transportes · Portal interno</p>
                         </div>
                         <div className="ml-auto flex items-center gap-2">
+                            <NotificationBell unreadCount={unreadCount} notifications={notifications} />
                             <span className="flex size-9 items-center justify-center rounded-lg bg-company text-sm font-bold text-white">{firstName.charAt(0).toUpperCase()}</span>
                             <div className="hidden sm:block"><p className="max-w-40 truncate text-sm font-semibold text-zinc-800">{firstName}</p><p className="text-[11px] text-zinc-500">{roleLabel}</p></div>
                         </div>

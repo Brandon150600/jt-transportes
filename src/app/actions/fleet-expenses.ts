@@ -3,9 +3,10 @@
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
-import { ExpenseCategory } from "@/generated/prisma/client/enums";
+import { ExpenseCategory, NotificationEntityType, NotificationType } from "@/generated/prisma/client/enums";
 import { prisma } from "@/lib/prisma";
 import { requireAnyRole } from "@/lib/auth/session";
+import { createNotification } from "@/lib/notifications/service";
 
 const itemSchema = z.object({
   description: z.string().trim().min(1).max(200),
@@ -151,7 +152,7 @@ export async function saveFleetExpense(
         });
       }
 
-      return tx.fleetExpense.create({
+      const createdExpense = await tx.fleetExpense.create({
         data: {
           ...values,
           createdById: user.id,
@@ -160,8 +161,24 @@ export async function saveFleetExpense(
             ? { create: data.items.map((item, index) => ({ ...item, unit: item.unit || null, subtotal: itemSubtotals[index] })) }
             : undefined,
         },
-        select: { id: true },
+        select: {
+          id: true,
+          trip: { select: { tripNumber: true } },
+          vehicle: { select: { economicNumber: true } },
+        },
       });
+      const expenseContext = createdExpense.trip
+        ? `para el viaje ${createdExpense.trip.tripNumber}`
+        : `para la unidad ${createdExpense.vehicle.economicNumber}`;
+      await createNotification(tx, {
+        eventKey: `EXPENSE_CREATED:${createdExpense.id}`,
+        type: NotificationType.EXPENSE_CREATED,
+        title: "Nuevo gasto",
+        message: `Se registró un gasto ${expenseContext}.`,
+        entityType: NotificationEntityType.FLEET_EXPENSE,
+        entityId: createdExpense.id,
+      });
+      return { id: createdExpense.id };
     });
     redirect(`/fleet-expenses/${expense.id}`);
   } catch (error) {

@@ -73,5 +73,6 @@ export async function setExternalCarrierActive(formData: FormData) {
   if (!parsed.success) return;
   await prisma.externalCarrier.update({ where: { id: parsed.data.id }, data: { active: parsed.data.active !== "true" } });
   revalidatePath("/external-carriers");
+  revalidatePath(`/external-carriers/${parsed.data.id}`);
   revalidatePath("/trips");
 }

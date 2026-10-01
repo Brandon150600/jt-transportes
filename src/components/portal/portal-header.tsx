@@ -168,9 +168,9 @@ function SidebarContent({
 
         <div className={`shrink-0 border-t border-zinc-100 p-3 ${collapsed ? "space-y-2" : ""}`}>
             {!collapsed && <div className="mb-3 px-2"><p className="truncate text-sm font-semibold text-zinc-800">{user.name ?? user.email}</p><p className="mt-0.5 truncate text-xs text-zinc-500">{roleLabel}</p></div>}
-            {user.role === "SUPER_ADMIN" && <Link href="/settings" onClick={onClose} title={collapsed ? "Configuración" : undefined} className={`mb-1 flex h-10 items-center gap-3 rounded-xl text-sm font-medium text-zinc-600 transition hover:bg-zinc-100 hover:text-zinc-950 ${collapsed ? "justify-center px-0" : "px-3"}`}><Settings className="size-4 shrink-0" />{!collapsed && "Configuración"}</Link>}
+            {user.role !== "EMPLOYEE" && <Link href="/settings" onClick={onClose} title={collapsed ? "Configuración" : undefined} className={`mb-1 flex h-10 items-center gap-3 rounded-xl text-sm font-medium text-zinc-600 transition hover:bg-zinc-100 hover:text-zinc-950 ${collapsed ? "justify-center px-0" : "px-3"}`}><Settings className="size-4 shrink-0" />{!collapsed && "Configuración"}</Link>}
             <form action={logout}>
-                <button type="submit" onClick={onClose} title={collapsed ? "Cerrar sesión" : undefined} className={`flex h-10 w-full items-center gap-3 rounded-xl text-sm font-medium text-zinc-600 transition hover:bg-red-50 hover:text-red-700 ${collapsed ? "justify-center px-0" : "px-3"}`}><LogOut className="size-4 shrink-0" />{!collapsed && "Cerrar sesión"}</button>
+                <button type="submit" title={collapsed ? "Cerrar sesión" : undefined} className={`flex h-10 w-full items-center gap-3 rounded-xl text-sm font-medium text-zinc-600 transition hover:bg-red-50 hover:text-red-700 ${collapsed ? "justify-center px-0" : "px-3"}`}><LogOut className="size-4 shrink-0" />{!collapsed && "Cerrar sesión"}</button>
             </form>
         </div>
     </>;
